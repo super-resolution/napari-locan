@@ -4,7 +4,7 @@ contributions:
   commands:
     - id: napari-locan.make_sample_data
       python_name: napari_locan._sample_data:make_sample_data
-      title: Load sample data from napari-locan 
+      title: Load sample data from napari-locan
     - id: napari-locan.load_data_qwidget
       python_name: napari_locan._widget:LoadDataQWidget
       title: Make example QWidget
@@ -14,7 +14,7 @@ contributions:
   sample_data:
     - command: napari-locan.make_sample_data
       display_name: napari-locan
-      key: unique_id.1 
+      key: unique_id.1
   widgets:
     - command: napari-locan.load_data_qwidget
       display_name: Load SMLM Data

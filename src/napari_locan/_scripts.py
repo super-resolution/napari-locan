@@ -40,9 +40,9 @@ add_kwargs = {"name": Path(file_path).stem}
 lc.render_2d_napari(
     locdata=locdata,
     viewer=viewer,
-    n_bins=None, 
-    bin_size=10, 
-    bin_range=None, 
+    n_bins=None,
+    bin_size=10,
+    bin_range=None,
     bin_edges=None,
     rescale=lc.Trafo.EQUALIZE,
     cmap=lc.COLORMAP_CONTINUOUS,

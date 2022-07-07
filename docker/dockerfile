@@ -34,7 +34,7 @@ WORKDIR /napari-locan
 ENV VIRTUAL_ENV "/opt/venv"
 RUN python -m venv $VIRTUAL_ENV
 ENV PATH "$VIRTUAL_ENV/bin:$PATH"
-	
+
 # Update and install any needed packages and the project
 RUN pip install pip setuptools wheel --trusted-host pypi.org --upgrade --no-cache-dir && \
     # wheel, cython and numpy needs to be installed before hdbscan to build hdbscan correctly

@@ -1,8 +1,8 @@
 from pathlib import Path
 
-import numpy as np
-from napari_locan import LoadDataQWidget, RunScriptQWidget
 import locan as lc
+
+from napari_locan import LoadDataQWidget, RunScriptQWidget
 
 
 def test_LoadDataQWidget(make_napari_viewer, capsys):

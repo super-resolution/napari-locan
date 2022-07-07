@@ -3,22 +3,22 @@ napari-locan QWidget plugin for napari
 """
 from pathlib import Path
 
+import locan as lc
+from napari.viewer import Viewer
 from qtpy.QtWidgets import (
-    QHBoxLayout,
-    QVBoxLayout,
-    QWidget,
-    QPushButton,
-    QComboBox,
-    QSpinBox,
-    QDoubleSpinBox,
     QCheckBox,
+    QComboBox,
+    QDoubleSpinBox,
+    QFileDialog,
+    QHBoxLayout,
     QLabel,
     QLineEdit,
+    QPushButton,
+    QSpinBox,
     QTextEdit,
-    QFileDialog,
+    QVBoxLayout,
+    QWidget,
 )
-from napari.viewer import Viewer
-import locan as lc
 
 import napari_locan._scripts as nl_scripts
 
@@ -35,7 +35,7 @@ class LoadDataQWidget(QWidget):
         self._add_rescale()
         self._add_buttons()
         self._set_layout()
-        
+
     def _add_file_type(self):
         self._file_type_label = QLabel("File type:")
         self._file_type_combobox = QComboBox()
