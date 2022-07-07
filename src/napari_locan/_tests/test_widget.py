@@ -1,34 +1,43 @@
+from pathlib import Path
+
 import numpy as np
-from napari_locan import ExampleQWidget, example_magic_widget
+from napari_locan import LoadDataQWidget, RunScriptQWidget
+import locan as lc
 
 
-# make_napari_viewer is a pytest fixture that returns a napari viewer object
-# capsys is a pytest fixture that captures stdout and stderr output streams
-def test_example_q_widget(make_napari_viewer, capsys):
-    # make viewer and add an image layer using our fixture
+def test_LoadDataQWidget(make_napari_viewer, capsys):
     viewer = make_napari_viewer()
-    viewer.add_image(np.random.random((100, 100)))
+    my_widget = LoadDataQWidget(viewer)
 
-    # create our widget, passing in the viewer
-    my_widget = ExampleQWidget(viewer)
+    locan_test_data = Path(lc.__file__).resolve().parent / \
+                "tests/test_data" / \
+                "rapidSTORM_dstorm_data.txt"
 
-    # call our widget method
-    my_widget._on_click()
+    my_widget._file_path_edit.insert(str(locan_test_data))
+    my_widget._file_type_combobox.setCurrentIndex(lc.FileType.RAPIDSTORM.value)
 
-    # read captured output and check that it's as we expected
+    # needs user interaction:
+    #my_widget._file_path_select_button_on_click()
+
+    my_widget._load_button_on_click()
+    assert len(viewer.layers) == 1
+
     captured = capsys.readouterr()
-    assert captured.out == "napari has 1 layers\n"
+    assert captured.out == ""
 
-def test_example_magic_widget(make_napari_viewer, capsys):
+
+def test_RunScriptQWidget(make_napari_viewer, capsys):
+    import src.napari_locan._scripts as nl_scripts
     viewer = make_napari_viewer()
-    layer = viewer.add_image(np.random.random((100, 100)))
+    my_widget = RunScriptQWidget(viewer)
+    assert my_widget._script_combobox.currentText() == "HELLO"
+    assert my_widget._script_text_edit.toPlainText() == nl_scripts.script_hello
+    my_widget._run_button_on_click()
 
-    # this time, our widget will be a MagicFactory or FunctionGui instance
-    my_widget = example_magic_widget()
-
-    # if we "call" this object, it'll execute our function
-    my_widget(viewer.layers[0])
-
-    # read captured output and check that it's as we expected
     captured = capsys.readouterr()
-    assert captured.out == f"you have selected {layer}\n"
+    assert captured.out == "Hello world!\n"
+
+    my_widget._script_combobox.setCurrentText("LOAD")
+    assert my_widget._script_text_edit.toPlainText() == nl_scripts.script_load
+    my_widget._run_button_on_click()
+    assert len(viewer.layers) == 1
