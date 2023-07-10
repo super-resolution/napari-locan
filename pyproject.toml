@@ -1,14 +1,112 @@
 [build-system]
-requires = ["setuptools", "wheel", "setuptools_scm"]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "setuptools_scm[toml]>=3.4"
+    ]
 build-backend = "setuptools.build_meta"
-
 
 [tool.setuptools_scm]
 write_to = "src/napari_locan/_version.py"
 
+[project]
+name = "napari_locan"
+description = "Use locan methods in napari"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE.md"}
+authors = [
+  {name = "napari-locan Developers"},
+]
+maintainers = [
+  {name = "Sören Doose"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: napari",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dynamic = ["version"]
+dependencies = [
+    "locan",
+    "magicgui",
+    "numpy",
+    "qtpy",
+    "tomli>=1.1.0; python_version<'3.11'",
+]
+
+[project.optional-dependencies]
+testing =[
+    "napari",
+    "pyqt5",
+    "pytest",
+    "pytest-cov",
+    "pytest-qt",
+    "tox",
+]
+dev = [
+    "coverage",
+    "build",
+    "twine",
+    "black",
+    "pre-commit",
+    "ruff",
+    "mypy",
+]
+
+[project.urls]
+homepage = "https://github.com/super-resolution/napari-locan"
+documentation = "https://locan.readthedocs.io/"
+repository = "https://github.com/super-resolution/napari-locan"
+issues = "https://github.com/super-resolution/napari-locan/issues"
+changelog = "https://github.com/super-resolution/napari-locan"
+
+[project.entry-points."napari.manifest"]
+napari-locan = "napari_locan:napari.yaml"
+
 [tool.black]
 line-length = 79
 
-[tool.isort]
-profile = "black"
-line_length = 79
+[tool.coverage.run]
+include = [
+    "napari_locan/*"
+]
+omit = [
+    "napari_locan/src/napari_locan/_tests/*",
+    "napari_locan/src/napari_locan/scripts/*",
+    "napari_locan/src/napari_locan/napari.yaml",
+]
+
+[tool.ruff]
+line-length = 88
+show-source = false
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "Q",  # flake8-quotes
+    "YTT",  # flake8-2020
+    "S",  # flake8-bandit
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["E402", "F403", "F405"]
+"_version.py" = ["Q000"]
+"test_*.py" = ["S101", "S605", "S607"]
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
