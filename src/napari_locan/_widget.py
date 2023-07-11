@@ -13,9 +13,9 @@ from qtpy.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
+    QPlainTextEdit,
     QPushButton,
     QSpinBox,
-    QPlainTextEdit,
     QVBoxLayout,
     QWidget,
 )
@@ -103,18 +103,10 @@ class LoadDataQWidget(QWidget):
         self._bin_range_check_box_on_changed()
 
     def _bin_range_check_box_on_changed(self):
-        self._bin_range_min_label.setVisible(
-            self._bin_range_check_box.isChecked()
-        )
-        self._bin_range_min_spin_box.setVisible(
-            self._bin_range_check_box.isChecked()
-        )
-        self._bin_range_max_label.setVisible(
-            self._bin_range_check_box.isChecked()
-        )
-        self._bin_range_max_spin_box.setVisible(
-            self._bin_range_check_box.isChecked()
-        )
+        self._bin_range_min_label.setVisible(self._bin_range_check_box.isChecked())
+        self._bin_range_min_spin_box.setVisible(self._bin_range_check_box.isChecked())
+        self._bin_range_max_label.setVisible(self._bin_range_check_box.isChecked())
+        self._bin_range_max_spin_box.setVisible(self._bin_range_check_box.isChecked())
 
     def _add_rescale(self):
         # rescale = {"label": "Rescale intensity"},
@@ -169,7 +161,7 @@ class LoadDataQWidget(QWidget):
         if self._bin_range_check_box.isChecked():
             bin_range_ = (
                 self._bin_range_min_spin_box.value(),
-                self._bin_range_max_spin_box.value()
+                self._bin_range_max_spin_box.value(),
             )
             bin_range = [bin_range_] * locdata.dimension
         else:
@@ -206,7 +198,9 @@ class RunScriptQWidget(QWidget):
         scripts = list(nl_scripts.LocanScripts.__members__.keys())
         self._script_combobox.addItems(scripts)
         self._script_combobox.setCurrentText("HELLO")
-        self._script_combobox.currentIndexChanged.connect(self._script_combobox_on_change)
+        self._script_combobox.currentIndexChanged.connect(
+            self._script_combobox_on_change
+        )
 
         self._script_load_button = QPushButton("Load")
         self._script_load_button.clicked.connect(self._script_load_button_on_click)
@@ -288,9 +282,7 @@ class RunScriptQWidget(QWidget):
 
     def _add_buttons(self):
         self._run_button = QPushButton("Run")
-        self._run_button.setStatusTip(
-            "Run the displayed python script."
-        )
+        self._run_button.setStatusTip("Run the displayed python script.")
         self._run_button.clicked.connect(self._run_button_on_click)
 
     def _set_layout(self):
@@ -304,9 +296,10 @@ class RunScriptQWidget(QWidget):
             self._script_file_name_edit.setText("")
             self._script_text_edit.setPlainText("")
         else:
-            script_name = self.path_for_scripts / nl_scripts.LocanScripts[
-                                 self._script_combobox.currentText()
-                             ].value
+            script_name = (
+                self.path_for_scripts
+                / nl_scripts.LocanScripts[self._script_combobox.currentText()].value
+            )
             script_name = str(script_name)
             with open(script_name) as file:
                 script = file.read()
@@ -315,4 +308,4 @@ class RunScriptQWidget(QWidget):
 
     def _run_button_on_click(self):
         script = self._script_text_edit.toPlainText()
-        exec(script)
+        exec(script)  # noqa: S102

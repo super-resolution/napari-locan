@@ -9,4 +9,3 @@ class LocanScripts(Enum):
     NONE = ""
     HELLO = "script_hello.py"
     LOAD = "script_load.py"
-
