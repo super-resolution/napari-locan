@@ -148,6 +148,3 @@ cython_debug/
 
 # written by setuptools_scm
 **/_version.py
-
-# docker
-docker/
