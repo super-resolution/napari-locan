@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.2.0
+  rev: v4.4.0
   hooks:
     - id: check-docstring-first
     - id: end-of-file-fixer
@@ -8,11 +8,11 @@ repos:
       exclude: ^\.napari-hub/.*
     - id: check-yaml
 - repo: https://github.com/psf/black
-  rev: 23.3.0
+  rev: 23.7.0
   hooks:
     - id: black
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: v0.0.276
+  rev: v0.0.277
   hooks:
     - id: ruff
 - repo: https://github.com/tlambert03/napari-plugin-checks
