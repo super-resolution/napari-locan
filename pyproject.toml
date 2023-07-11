@@ -6,6 +6,9 @@ requires = [
     ]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+packages = ["src"]
+
 [tool.setuptools_scm]
 write_to = "src/napari_locan/_version.py"
 
@@ -21,6 +24,7 @@ authors = [
 maintainers = [
   {name = "Sören Doose"}
 ]
+keywords = ["napari plugin", "locan"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Framework :: napari",
@@ -80,13 +84,11 @@ napari-locan = "napari_locan:napari.yaml"
 line-length = 79
 
 [tool.coverage.run]
-include = [
-    "napari_locan/*"
-]
+source = ["src"]
 omit = [
-    "napari_locan/src/napari_locan/_tests/*",
-    "napari_locan/src/napari_locan/scripts/*",
-    "napari_locan/src/napari_locan/napari.yaml",
+    "src/napari_locan/_tests/*",
+    "src/napari_locan/scripts/*",
+    "src/napari_locan/napari.yaml",
 ]
 
 [tool.ruff]
@@ -110,3 +112,6 @@ select = [
 
 [tool.ruff.pydocstyle]
 convention = "numpy"
+
+[tool.napari.manifest]
+display_name = "napari-locan"
