@@ -2,21 +2,52 @@ name: napari-locan
 display_name: napari-locan
 contributions:
   commands:
-    - id: napari-locan.make_sample_data
-      python_name: napari_locan._sample_data:make_sample_data
-      title: Load sample data from napari-locan
+    # sample data
+    - id: napari-locan.make_image_npc
+      python_name: napari_locan._sample_data:make_image_npc
+      title: Load sample data from napari-locan (npc img)
+
+    - id: napari-locan.make_image_tubulin
+      python_name: napari_locan._sample_data:make_image_tubulin
+      title: Load sample data from napari-locan (tubulin img)
+
+    - id: napari-locan.make_points_npc
+      python_name: napari_locan._sample_data:make_points_npc
+      title: Load sample data from napari-locan (npc localizations)
+
+    - id: napari-locan.make_points_tubulin
+      python_name: napari_locan._sample_data:make_points_tubulin
+      title: Load sample data from napari-locan (tubulin localizations)
+
+    # widgets
     - id: napari-locan.load_data_qwidget
       python_name: napari_locan._widget:LoadDataQWidget
       title: Make example QWidget
+
     - id: napari-locan.run_script_qwidget
       python_name: napari_locan._widget:RunScriptQWidget
       title: Run script QWidget
+
   sample_data:
-    - command: napari-locan.make_sample_data
-      display_name: napari-locan
-      key: unique_id.1
+    - command: napari-locan.make_image_npc
+      key: npc_image
+      display_name: Nuclear Pore Complex (gp210)
+
+    - command: napari-locan.make_image_tubulin
+      key: tubulin_image
+      display_name: Tubulin
+
+    - command: napari-locan.make_points_npc
+      key: npc_points
+      display_name: Nuclear Pore Complex (gp210 - localizations)
+
+    - command: napari-locan.make_points_tubulin
+      key: tubulin_points
+      display_name: Tubulin (localizations)
+
   widgets:
     - command: napari-locan.load_data_qwidget
       display_name: Load SMLM Data
+
     - command: napari-locan.run_script_qwidget
       display_name: Run script
