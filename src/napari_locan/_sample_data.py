@@ -10,19 +10,22 @@ see: https://napari.org/stable/plugins/guides.html?#sample-data
 from __future__ import annotations
 
 import locan as lc
+import napari
+from napari.types import LayerData
 
 
-def make_image_tubulin() -> list[tuple]:
+def make_image_tubulin() -> list[LayerData]:
     """
     Generate a sample image from `locan.datasets.load_tubulin`.
     """
     locdata = lc.datasets.load_tubulin()
     data, bins, labels = lc.histogram(locdata, bin_size=10)
     data = lc.adjust_contrast(data, rescale=lc.Trafo.EQUALIZE_0P3)
+    napari.utils.notifications.show_info("message")
     return [(data, {"name": "tubulin", "colormap": "gray"}, "image")]
 
 
-def make_image_npc() -> list[tuple]:
+def make_image_npc() -> list[LayerData]:
     """
     Generate a sample image from `locan.datasets.load_npc`.
     """
@@ -32,7 +35,7 @@ def make_image_npc() -> list[tuple]:
     return [(data, {"name": "npc", "colormap": "gray"}, "image")]
 
 
-def make_points_npc() -> list[tuple]:
+def make_points_npc() -> list[LayerData]:
     """
     Generate localizations from `locan.datasets.load_npc`.
     """
@@ -43,7 +46,7 @@ def make_points_npc() -> list[tuple]:
     return [(data, {"name": "tubulin"}, "points")]
 
 
-def make_points_tubulin() -> list[tuple]:
+def make_points_tubulin() -> list[LayerData]:
     """
     Generate localizations from `locan.datasets.load_tubulin`.
     """

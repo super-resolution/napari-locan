@@ -143,3 +143,20 @@ convention = "numpy"
 
 [tool.napari.manifest]
 display_name = "napari-locan"
+
+[tool.mypy]
+files = ["src"]
+strict = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    'napari_locan.scripts.*',
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+    'napari_locan._tests.*',
+]
+disallow_untyped_defs = false

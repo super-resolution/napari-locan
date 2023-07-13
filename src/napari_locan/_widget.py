@@ -24,7 +24,7 @@ import napari_locan._scripts as nl_scripts
 import napari_locan.scripts
 
 
-class LoadDataQWidget(QWidget):
+class LoadDataQWidget(QWidget):  # type: ignore
     def __init__(self, napari_viewer: Viewer):
         super().__init__()
         self.viewer = napari_viewer
@@ -37,7 +37,7 @@ class LoadDataQWidget(QWidget):
         self._add_buttons()
         self._set_layout()
 
-    def _add_file_type(self):
+    def _add_file_type(self) -> None:
         self._file_type_label = QLabel("File type:")
         self._file_type_combobox = QComboBox()
         file_types = list(lc.FileType.__members__.keys())
@@ -48,7 +48,7 @@ class LoadDataQWidget(QWidget):
         self._file_type_layout.addWidget(self._file_type_label)
         self._file_type_layout.addWidget(self._file_type_combobox)
 
-    def _add_file_path(self):
+    def _add_file_path(self) -> None:
         self._file_path_label = QLabel("File path:")
         self._file_path_edit = QLineEdit()
         self._file_path_select_button = QPushButton("Select")
@@ -62,7 +62,7 @@ class LoadDataQWidget(QWidget):
         self._file_path_layout.addWidget(self._file_path_edit)
         self._file_path_layout.addWidget(self._file_path_select_button)
 
-    def _add_bin_size(self):
+    def _add_bin_size(self) -> None:
         self._bin_size_label = QLabel("Bin size:")
         self._bin_size_spin_box = QSpinBox()
         self._bin_size_spin_box.setRange(1, 2147483647)
@@ -72,7 +72,7 @@ class LoadDataQWidget(QWidget):
         self._bin_size_layout.addWidget(self._bin_size_label)
         self._bin_size_layout.addWidget(self._bin_size_spin_box)
 
-    def _add_bin_range(self):
+    def _add_bin_range(self) -> None:
         self._bin_range_check_box = QCheckBox()
         self._bin_range_check_box.setChecked(False)
         self._bin_range_check_box.stateChanged.connect(
@@ -102,13 +102,13 @@ class LoadDataQWidget(QWidget):
 
         self._bin_range_check_box_on_changed()
 
-    def _bin_range_check_box_on_changed(self):
+    def _bin_range_check_box_on_changed(self) -> None:
         self._bin_range_min_label.setVisible(self._bin_range_check_box.isChecked())
         self._bin_range_min_spin_box.setVisible(self._bin_range_check_box.isChecked())
         self._bin_range_max_label.setVisible(self._bin_range_check_box.isChecked())
         self._bin_range_max_spin_box.setVisible(self._bin_range_check_box.isChecked())
 
-    def _add_rescale(self):
+    def _add_rescale(self) -> None:
         # rescale = {"label": "Rescale intensity"},
         self._rescale_label = QLabel("Rescale intensity:")
         self._rescale_combobox = QComboBox()
@@ -120,14 +120,14 @@ class LoadDataQWidget(QWidget):
         self._rescale_layout.addWidget(self._rescale_label)
         self._rescale_layout.addWidget(self._rescale_combobox)
 
-    def _add_buttons(self):
+    def _add_buttons(self) -> None:
         self._load_button = QPushButton("Load File")
         self._load_button.setStatusTip(
             "Load and display the selected file in new layer."
         )
         self._load_button.clicked.connect(self._load_button_on_click)
 
-    def _set_layout(self):
+    def _set_layout(self) -> None:
         layout = QVBoxLayout()
         layout.addLayout(self._file_type_layout)
         layout.addLayout(self._file_path_layout)
@@ -137,8 +137,8 @@ class LoadDataQWidget(QWidget):
         layout.addWidget(self._load_button)
         self.setLayout(layout)
 
-    def _file_path_select_button_on_click(self):
-        fname = QFileDialog.getOpenFileName(
+    def _file_path_select_button_on_click(self) -> None:
+        fname_ = QFileDialog.getOpenFileName(
             None,
             "message",
             "",
@@ -146,10 +146,10 @@ class LoadDataQWidget(QWidget):
             # kwargs: parent, message, directory, filter
             # but kw_names are different for different qt_bindings
         )
-        fname = fname[0] if isinstance(fname, tuple) else str(fname)
+        fname = fname_[0] if isinstance(fname_, tuple) else str(fname_)
         self._file_path_edit.setText(fname)
 
-    def _load_button_on_click(self):
+    def _load_button_on_click(self) -> None:
         if not self._file_path_edit.text():
             self._file_path_select_button_on_click()
 
@@ -182,7 +182,7 @@ class LoadDataQWidget(QWidget):
         )
 
 
-class RunScriptQWidget(QWidget):
+class RunScriptQWidget(QWidget):  # type: ignore
     def __init__(self, napari_viewer: Viewer):
         super().__init__()
         self.viewer = napari_viewer
@@ -192,7 +192,7 @@ class RunScriptQWidget(QWidget):
         self._add_buttons()
         self._set_layout()
 
-    def _add_script(self):
+    def _add_script(self) -> None:
         self._script_label = QLabel("Locan scripts:")
         self._script_combobox = QComboBox()
         scripts = list(nl_scripts.LocanScripts.__members__.keys())
@@ -224,14 +224,14 @@ class RunScriptQWidget(QWidget):
         self._script_layout.addWidget(self._script_file_name_edit)
         self._script_layout.addWidget(self._script_text_edit)
 
-    def _script_load_button_on_click(self):
+    def _script_load_button_on_click(self) -> None:
         file_path = self._script_file_name_edit.text()
         if not file_path:
             file_path = "./scripts"
 
         file_dialog = QFileDialog()
 
-        file_name = file_dialog.getOpenFileName(
+        file_name_ = file_dialog.getOpenFileName(
             None,
             "Load python script",
             file_path,
@@ -243,7 +243,9 @@ class RunScriptQWidget(QWidget):
         if file_dialog.fileSelected:
             self._script_combobox.setCurrentText("NONE")
 
-            file_name = file_name[0] if isinstance(file_name, tuple) else str(file_name)
+            file_name = (
+                file_name_[0] if isinstance(file_name_, tuple) else str(file_name_)
+            )
             self._script_file_name_edit.setText(file_name)
 
             if file_name:
@@ -251,7 +253,7 @@ class RunScriptQWidget(QWidget):
                     script = file.read()
                 self._script_text_edit.setPlainText(script)
 
-    def _script_save_button_on_click(self):
+    def _script_save_button_on_click(self) -> None:
         file_path = self._script_file_name_edit.text()
         if not file_path:
             file_path = "."
@@ -259,7 +261,7 @@ class RunScriptQWidget(QWidget):
         file_dialog = QFileDialog()
         file_dialog.setFileMode(QFileDialog.AnyFile)
 
-        file_name = file_dialog.getSaveFileName(
+        file_name_ = file_dialog.getSaveFileName(
             None,
             "Save python script",
             file_path,
@@ -267,7 +269,7 @@ class RunScriptQWidget(QWidget):
             # kwargs: parent, message, directory, filter
             # but kw_names are different for different qt_bindings
         )
-        file_name = file_name[0] if isinstance(file_name, tuple) else str(file_name)
+        file_name = file_name_[0] if isinstance(file_name_, tuple) else str(file_name_)
 
         if file_name:
             self._script_combobox.blockSignals(True)
@@ -280,18 +282,18 @@ class RunScriptQWidget(QWidget):
                 text = self._script_text_edit.toPlainText()
                 file.write(text)
 
-    def _add_buttons(self):
+    def _add_buttons(self) -> None:
         self._run_button = QPushButton("Run")
         self._run_button.setStatusTip("Run the displayed python script.")
         self._run_button.clicked.connect(self._run_button_on_click)
 
-    def _set_layout(self):
+    def _set_layout(self) -> None:
         layout = QVBoxLayout()
         layout.addLayout(self._script_layout)
         layout.addWidget(self._run_button)
         self.setLayout(layout)
 
-    def _script_combobox_on_change(self):
+    def _script_combobox_on_change(self) -> None:
         if self._script_combobox.currentText() == "NONE":
             self._script_file_name_edit.setText("")
             self._script_text_edit.setPlainText("")
@@ -300,12 +302,11 @@ class RunScriptQWidget(QWidget):
                 self.path_for_scripts
                 / nl_scripts.LocanScripts[self._script_combobox.currentText()].value
             )
-            script_name = str(script_name)
-            with open(script_name) as file:
+            with open(str(script_name)) as file:
                 script = file.read()
-            self._script_file_name_edit.setText(script_name)
+            self._script_file_name_edit.setText(str(script_name))
             self._script_text_edit.setPlainText(script)
 
-    def _run_button_on_click(self):
+    def _run_button_on_click(self) -> None:
         script = self._script_text_edit.toPlainText()
         exec(script)  # noqa: S102
