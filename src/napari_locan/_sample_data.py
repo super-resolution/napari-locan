@@ -13,6 +13,8 @@ import locan as lc
 import napari
 from napari.types import LayerData
 
+# todo: fix scales
+
 
 def make_image_tubulin() -> list[LayerData]:
     """
