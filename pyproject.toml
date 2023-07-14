@@ -1,13 +1,16 @@
 [build-system]
 requires = [
-    "setuptools>=45",
+    "setuptools>=61",
     "wheel",
     "setuptools_scm[toml]>=6.2"
     ]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-packages = ["src"]
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+napari_locan = ["napari.yaml"]
 
 [tool.setuptools_scm]
 write_to = "src/napari_locan/_version.py"
@@ -46,6 +49,7 @@ dynamic = ["version"]
 dependencies = [
     "locan",
     "magicgui",
+    "napari",
     "numpy",
     "qtpy",
     "tomli>=1.1.0; python_version<'3.11'",
@@ -53,7 +57,6 @@ dependencies = [
 
 [project.optional-dependencies]
 test =[
-    "napari",
     "pyqt5",
     "pytest",
     "pytest-cov",
@@ -61,13 +64,13 @@ test =[
     "tox",
 ]
 dev = [
-    "coverage",
-    "build",
-    "twine",
     "black",
+    "build",
+    "coverage",
+    "mypy",
     "pre-commit",
     "ruff",
-    "mypy",
+    "twine",
 ]
 
 [project.urls]
