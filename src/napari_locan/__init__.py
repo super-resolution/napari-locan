@@ -1,6 +1,8 @@
 """
 napari-locan should be used as napari plugin.
 """
+from __future__ import annotations
+
 from ._sample_data import (
     make_image_npc,
     make_image_tubulin,

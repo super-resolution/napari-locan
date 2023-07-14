@@ -39,7 +39,8 @@ jobs:
 
       # these libraries enable testing on Qt on linux
       - uses: tlambert03/setup-qt-libs@v1
-      - uses: GabrielBB/xvfb-action@v1
+      - uses: coactions/setup-xvfb@v1
+
       - name: "Install napari-locan and dependencies"
         run: |
           python -m pip install .[test]
