@@ -21,7 +21,7 @@ def make_image_tubulin() -> list[LayerData]:
     Generate a sample image from `locan.datasets.load_tubulin`.
     """
     locdata = lc.datasets.load_tubulin()
-    data, bins, labels = lc.histogram(locdata, bin_size=10)
+    data, bins, labels = lc.histogram(locdata, bin_size=10, bin_range="zero")
     data = lc.adjust_contrast(data, rescale=lc.Trafo.EQUALIZE_0P3)
     napari.utils.notifications.show_info("message")
     return [(data, {"name": "tubulin", "colormap": "gray"}, "image")]
@@ -32,7 +32,7 @@ def make_image_npc() -> list[LayerData]:
     Generate a sample image from `locan.datasets.load_npc`.
     """
     locdata = lc.datasets.load_npc()
-    data, bins, labels = lc.histogram(locdata, bin_size=10)
+    data, bins, labels = lc.histogram(locdata, bin_size=10, bin_range="zero")
     data = lc.adjust_contrast(data, rescale=lc.Trafo.EQUALIZE_0P3)
     return [(data, {"name": "npc", "colormap": "gray"}, "image")]
 

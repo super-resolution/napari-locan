@@ -36,15 +36,9 @@ jobs:
           git clone --depth 1 https://github.com/pyvista/gl-ci-helpers.git
           powershell gl-ci-helpers/appveyor/install_opengl.ps1
 
-      - name: Install dependencies
+      - name: "Install napari-locan and dependencies"
         run: |
           python -m pip install --upgrade pip
-          python -m pip install setuptools tox tox-gh-actions
-
-      # this runs the platform-specific tests declared in tox.ini
-      - name: Test with tox
-        uses: aganders3/headless-gui@v1
-        with:
-          run: python -m tox
-        env:
-          PLATFORM: ${{ matrix.platform }}
+          python -m pip install .[test]
+      - name: "Run tests"
+        run:  pytest

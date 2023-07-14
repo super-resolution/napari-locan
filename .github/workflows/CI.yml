@@ -4,6 +4,8 @@ name:  CI
 
 on:
   push:
+    branches:
+      - all
     tags:
       - "v*"
   workflow_dispatch:
@@ -71,7 +73,7 @@ jobs:
     # this will run when you have tagged a commit, starting with "v*"
     # and requires that you have put your twine API key in your
     # github secrets
-    needs: [test]
+    needs: [check]
     runs-on: ubuntu-latest
     if: contains(github.ref, 'tags')
     steps:
