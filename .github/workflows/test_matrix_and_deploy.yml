@@ -29,7 +29,6 @@ jobs:
 
       # these libraries enable testing on Qt on linux
       - uses: tlambert03/setup-qt-libs@v1
-      - uses: coactions/setup-xvfb@v1
 
       # strategy borrowed from vispy for installing opengl libs on windows
       - name: Install Windows OpenGL
@@ -43,4 +42,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install .[test]
       - name: "Run tests"
-        run:  pytest
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: pytest
