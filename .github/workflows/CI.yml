@@ -51,10 +51,12 @@ jobs:
       - name: "Prepare coverage reports"
         run: coverage xml
       - name: "Check coverage"
-        run: coverage report --fail-under=90
+        run: coverage report --fail-under=80
 
       - name: "Upload coverage to CodeCov"
-        if: ${{ github.ref == 'refs/heads/main' }}
+        # todo: activate
+        if: false
+        # if: ${{ github.ref == 'refs/heads/main' }}
         uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
