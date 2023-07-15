@@ -4,29 +4,33 @@ contributions:
   commands:
     # sample data
     - id: napari-locan.make_image_npc
-      python_name: napari_locan._sample_data:make_image_npc
+      python_name: napari_locan.sample_data._sample_data:make_image_npc
       title: Load sample data from napari-locan (npc img)
 
     - id: napari-locan.make_image_tubulin
-      python_name: napari_locan._sample_data:make_image_tubulin
+      python_name: napari_locan.sample_data._sample_data:make_image_tubulin
       title: Load sample data from napari-locan (tubulin img)
 
     - id: napari-locan.make_points_npc
-      python_name: napari_locan._sample_data:make_points_npc
+      python_name: napari_locan.sample_data._sample_data:make_points_npc
       title: Load sample data from napari-locan (npc localizations)
 
     - id: napari-locan.make_points_tubulin
-      python_name: napari_locan._sample_data:make_points_tubulin
+      python_name: napari_locan.sample_data._sample_data:make_points_tubulin
       title: Load sample data from napari-locan (tubulin localizations)
 
     # widgets
-    - id: napari-locan.load_data_qwidget
-      python_name: napari_locan._widget:LoadDataQWidget
-      title: Make example QWidget
+    - id: napari-locan.load_qwidget
+      python_name: napari_locan.widgets._widget_load:LoadQWidget
+      title: Load SMLM data
+
+    - id: napari-locan.render_qwidget
+      python_name: napari_locan.widgets._widget_render:RenderQWidget
+      title: Render SMLM data
 
     - id: napari-locan.run_script_qwidget
-      python_name: napari_locan._widget:RunScriptQWidget
-      title: Run script QWidget
+      python_name: napari_locan.widgets._widget_run_script:RunScriptQWidget
+      title: Run script
 
   sample_data:
     - command: napari-locan.make_image_npc
@@ -46,8 +50,11 @@ contributions:
       display_name: Tubulin (localizations)
 
   widgets:
-    - command: napari-locan.load_data_qwidget
-      display_name: Load SMLM Data
+    - command: napari-locan.load_qwidget
+      display_name: Load SMLM data
+
+    - command: napari-locan.render_qwidget
+      display_name: Render SMLM data
 
     - command: napari-locan.run_script_qwidget
       display_name: Run script

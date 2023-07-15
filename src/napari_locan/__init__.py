@@ -3,14 +3,19 @@ napari-locan should be used as napari plugin.
 """
 from __future__ import annotations
 
-from ._sample_data import (
+from napari_locan.sample_data._sample_data import (
     make_image_npc,
     make_image_tubulin,
     make_points_npc,
     make_points_tubulin,
 )
-from ._widget import (
-    LoadDataQWidget,
+from napari_locan.widgets._widget_load import (
+    LoadQWidget,
+)
+from napari_locan.widgets._widget_render import (
+    RenderQWidget,
+)
+from napari_locan.widgets._widget_run_script import (
     RunScriptQWidget,
 )
 
@@ -24,6 +29,7 @@ __all__: list[str] = [
     "make_image_tubulin",
     "make_points_npc",
     "make_points_tubulin",
-    "LoadDataQWidget",
+    "LoadQWidget",
+    "RenderQWidget",
     "RunScriptQWidget",
 ]
