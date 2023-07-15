@@ -13,18 +13,28 @@ import locan as lc
 import napari
 from napari.types import LayerData
 
-# todo: fix scales
-
 
 def make_image_tubulin() -> list[LayerData]:
     """
     Generate a sample image from `locan.datasets.load_tubulin`.
     """
     locdata = lc.datasets.load_tubulin()
-    data, bins, labels = lc.histogram(locdata, bin_size=10, bin_range="zero")
-    data = lc.adjust_contrast(data, rescale=lc.Trafo.EQUALIZE_0P3)
-    napari.utils.notifications.show_info("message")
-    return [(data, {"name": "tubulin", "colormap": "gray"}, "image")]
+    data, image_kwargs, layer_type = lc.render_2d_napari_image(
+        locdata,
+        bin_size=10,
+        bin_range="zero",
+        rescale=lc.Trafo.EQUALIZE_0P3,
+    )
+    napari.utils.notifications.show_info(
+        "tubulin: bin_size=10, rescale=lc.Trafo.EQUALIZE_0P3"
+    )
+    return [
+        (
+            data,
+            dict(image_kwargs, name="tubulin", colormap="gray"),
+            layer_type,
+        )
+    ]
 
 
 def make_image_npc() -> list[LayerData]:
@@ -32,9 +42,16 @@ def make_image_npc() -> list[LayerData]:
     Generate a sample image from `locan.datasets.load_npc`.
     """
     locdata = lc.datasets.load_npc()
-    data, bins, labels = lc.histogram(locdata, bin_size=10, bin_range="zero")
-    data = lc.adjust_contrast(data, rescale=lc.Trafo.EQUALIZE_0P3)
-    return [(data, {"name": "npc", "colormap": "gray"}, "image")]
+    data, image_kwargs, layer_type = lc.render_2d_napari_image(
+        locdata,
+        bin_size=10,
+        bin_range="zero",
+        rescale=lc.Trafo.EQUALIZE_0P3,
+    )
+    napari.utils.notifications.show_info(
+        "npc: bin_size=10, rescale=lc.Trafo.EQUALIZE_0P3"
+    )
+    return [(data, dict(image_kwargs, name="npc", colormap="gray"), layer_type)]
 
 
 def make_points_npc() -> list[LayerData]:
@@ -45,7 +62,7 @@ def make_points_npc() -> list[LayerData]:
     condition = "4350 < position_x < 6350 and 6200 < position_y < 8200"
     locdata = lc.select_by_condition(locdata, condition)
     data = locdata.coordinates
-    return [(data, {"name": "tubulin"}, "points")]
+    return [(data, {"name": "npc"}, "points")]
 
 
 def make_points_tubulin() -> list[LayerData]:

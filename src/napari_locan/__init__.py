@@ -9,7 +9,10 @@ from ._sample_data import (
     make_points_npc,
     make_points_tubulin,
 )
-from ._widget import LoadDataQWidget, RunScriptQWidget
+from ._widget import (
+    LoadDataQWidget,
+    RunScriptQWidget,
+)
 
 try:
     from ._version import version as __version__

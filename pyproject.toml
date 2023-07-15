@@ -59,7 +59,6 @@ dependencies = [
 test =[
     "pyqt5",
     "pytest",
-    "pytest-cov",
     "pytest-qt",
     "tox",
 ]
