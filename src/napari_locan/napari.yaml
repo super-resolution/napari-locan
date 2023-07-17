@@ -20,6 +20,10 @@ contributions:
       title: Load sample data from napari-locan (tubulin localizations)
 
     # widgets
+    - id: napari-locan.locdatas_qwidget
+      python_name: napari_locan.widgets._widget_locdatas:LocdatasQWidget
+      title: SMLM data
+
     - id: napari-locan.load_qwidget
       python_name: napari_locan.widgets._widget_load:LoadQWidget
       title: Load SMLM data
@@ -50,6 +54,9 @@ contributions:
       display_name: Tubulin (localizations)
 
   widgets:
+    - command: napari-locan.locdatas_qwidget
+      display_name: SMLM data
+
     - command: napari-locan.load_qwidget
       display_name: Load SMLM data
 
