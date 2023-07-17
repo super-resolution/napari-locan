@@ -26,11 +26,15 @@ contributions:
 
     - id: napari-locan.load_qwidget
       python_name: napari_locan.widgets._widget_load:LoadQWidget
-      title: Load SMLM data
+      title: Load
 
     - id: napari-locan.render_qwidget
       python_name: napari_locan.widgets._widget_render:RenderQWidget
-      title: Render SMLM data
+      title: Render
+
+    - id: napari-locan.show_features_qwidget
+      python_name: napari_locan.widgets._widget_locdata_features:ShowFeaturesQWidget
+      title: Show features
 
     - id: napari-locan.run_script_qwidget
       python_name: napari_locan.widgets._widget_run_script:RunScriptQWidget
@@ -58,10 +62,13 @@ contributions:
       display_name: SMLM data
 
     - command: napari-locan.load_qwidget
-      display_name: Load SMLM data
+      display_name: Load
 
     - command: napari-locan.render_qwidget
-      display_name: Render SMLM data
+      display_name: Render
+
+    - command: napari-locan.show_features_qwidget
+      display_name: Show features
 
     - command: napari-locan.run_script_qwidget
       display_name: Run script
