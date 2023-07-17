@@ -10,3 +10,6 @@ class TestRenderQWidget:
 
         render_widget._render_button_on_click()
         assert len(viewer.layers) == 1
+
+        render_widget._points_button_on_click()
+        assert len(viewer.layers) == 2

@@ -29,11 +29,19 @@ class RenderQWidget(QWidget):  # type: ignore
         self.viewer = napari_viewer
         self.smlm_data = smlm_data
 
+        self._add_points_buttons()
         self._add_bin_size()
         self._add_bin_range()
         self._add_rescale()
-        self._add_buttons()
+        self._add_render_buttons()
         self._set_layout()
+
+    def _add_points_buttons(self) -> None:
+        self._points_button = QPushButton("Show points")
+        self._points_button.setStatusTip(
+            "Show point representation of SMLM data in new layer."
+        )
+        self._points_button.clicked.connect(self._points_button_on_click)
 
     def _add_bin_size(self) -> None:
         self._bin_size_label = QLabel("Bin size:")
@@ -93,18 +101,29 @@ class RenderQWidget(QWidget):  # type: ignore
         self._rescale_layout.addWidget(self._rescale_label)
         self._rescale_layout.addWidget(self._rescale_combobox)
 
-    def _add_buttons(self) -> None:
+    def _add_render_buttons(self) -> None:
         self._render_button = QPushButton("Render")
         self._render_button.setStatusTip("Render selected SMLM data in new layer.")
         self._render_button.clicked.connect(self._render_button_on_click)
 
     def _set_layout(self) -> None:
         layout = QVBoxLayout()
+        layout.addWidget(self._points_button)
         layout.addLayout(self._bin_size_layout)
         layout.addLayout(self._bin_range_layout)
         layout.addLayout(self._rescale_layout)
         layout.addWidget(self._render_button)
         self.setLayout(layout)
+
+    def _points_button_on_click(self) -> None:
+        locdata = self.smlm_data.locdata
+        if locdata is None:
+            raise ValueError("There is no SMLM data available.")
+
+        # optional kwargs for the corresponding viewer.add_* method
+        add_kwargs = {"name": self.smlm_data.locdata_name}
+
+        self.viewer.add_points(data=locdata.coordinates, **add_kwargs)
 
     def _render_button_on_click(self) -> None:
         locdata = self.smlm_data.locdata
