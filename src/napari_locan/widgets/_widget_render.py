@@ -90,7 +90,6 @@ class RenderQWidget(QWidget):  # type: ignore
         self._bin_range_max_spin_box.setVisible(self._bin_range_check_box.isChecked())
 
     def _add_rescale(self) -> None:
-        # rescale = {"label": "Rescale intensity"},
         self._rescale_label = QLabel("Rescale intensity:")
         self._rescale_combobox = QComboBox()
         trafos = list(lc.Trafo.__members__.keys())

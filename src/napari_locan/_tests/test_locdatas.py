@@ -29,6 +29,16 @@ class TestLocdatas:
         assert isinstance(smlm_data.locdata, lc.LocData)
         assert isinstance(smlm_data.locdata_name, str)
 
+    def test_append_locdata(self):
+        smlm_data = SmlmData()
+        smlm_data.append_locdata(locdata=lc.LocData())
+        smlm_data.append_locdata(locdata=lc.LocData())
+        assert len(smlm_data.locdatas) == 2
+        assert len(smlm_data.locdata_names) == 2
+        assert smlm_data.index == 1
+        assert isinstance(smlm_data.locdata, lc.LocData)
+        assert isinstance(smlm_data.locdata_name, str)
+
     def test_connect(self):
         def locdatas_slot(locdatas):
             if locdatas != []:

@@ -103,3 +103,13 @@ class SmlmData(QObject):  # type: ignore
         self.locdatas_signal.emit(self._locdatas)
         self.locdata_names_signal.emit(self._locdata_names)
         self.index_signal.emit(self._index)
+
+    def append_locdata(self, locdata: lc.LocData | None) -> None:
+        if locdata is not None:
+            self.locdatas.append(locdata)
+            self._locdata_names = [
+                item.meta.identifier + "-" + str(Path(item.meta.file.path).name)
+                for item in self._locdatas
+            ]
+            self._index = len(self.locdatas) - 1
+            self.change_event()

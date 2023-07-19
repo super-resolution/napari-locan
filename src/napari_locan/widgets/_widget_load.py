@@ -89,5 +89,4 @@ class LoadQWidget(QWidget):  # type: ignore
         file_path = self._file_path_edit.text()
         file_type = self._file_type_combobox.currentText()
         locdata = lc.load_locdata(path=file_path, file_type=file_type)
-        self.smlm_data.locdatas.append(locdata)
-        self.smlm_data.locdatas = self.smlm_data.locdatas  # needed to activate setter
+        self.smlm_data.append_locdata(locdata=locdata)
