@@ -3,7 +3,7 @@ import warnings
 import locan as lc
 import pytest
 
-from napari_locan._locdata import SmlmData
+from napari_locan.data_model._locdata import SmlmData
 
 
 class TestLocdatas:
@@ -28,6 +28,23 @@ class TestLocdatas:
         assert smlm_data.index == 0
         assert isinstance(smlm_data.locdata, lc.LocData)
         assert isinstance(smlm_data.locdata_name, str)
+
+    def test_index(self):
+        smlm_data = SmlmData()
+        smlm_data.locdatas = [lc.LocData(), lc.LocData()]
+        assert smlm_data.index == 0
+        assert smlm_data.locdata is smlm_data.locdatas[smlm_data.index]
+
+        smlm_data.index = 1
+        assert smlm_data.index == 1
+        assert smlm_data.locdata is smlm_data.locdatas[smlm_data.index]
+
+        with pytest.raises(IndexError):
+            smlm_data.index = 3
+
+        smlm_data.index = -1
+        assert smlm_data.index == -1
+        assert smlm_data.locdata is None
 
     def test_append_locdata(self):
         smlm_data = SmlmData()

@@ -2,7 +2,7 @@ import locan as lc
 import pytest
 
 from napari_locan import LocdatasQWidget
-from napari_locan._locdata import SmlmData
+from napari_locan.data_model._locdata import SmlmData
 
 
 class TestLocdatasQWidget:

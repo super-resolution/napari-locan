@@ -13,7 +13,7 @@ from qtpy.QtWidgets import (
 )
 
 from napari_locan import smlm_data
-from napari_locan._locdata import SmlmData
+from napari_locan.data_model._locdata import SmlmData
 
 logger = logging.getLogger(__name__)
 

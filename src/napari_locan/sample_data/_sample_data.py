@@ -14,7 +14,7 @@ import napari
 from napari.types import LayerData
 
 from napari_locan import smlm_data
-from napari_locan._locdata import SmlmData
+from napari_locan.data_model._locdata import SmlmData
 
 
 def make_image_tubulin(smlm_data: SmlmData = smlm_data) -> list[LayerData]:

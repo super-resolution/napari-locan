@@ -28,7 +28,7 @@ __all__: list[str] = [
     "ShowFeaturesQWidget",
 ]
 
-from napari_locan._locdata import SmlmData
+from napari_locan.data_model._locdata import SmlmData
 
 smlm_data: SmlmData = SmlmData()
 

@@ -27,7 +27,7 @@ class SmlmData(QObject):  # type: ignore
     locdata_names
         Localization string identifier
     index
-        Current selection of of locdata
+        Current selection of locdata
     locdata
         The selected LocData object
     locdata_name
@@ -77,6 +77,10 @@ class SmlmData(QObject):  # type: ignore
 
     @index.setter
     def index(self, value: int) -> None:
+        if value > len(self.locdatas) - 1:
+            raise IndexError(
+                f"Index is larger than n_locdatas - 1: {len(self.locdatas) - 1}"
+            )
         self._index = value
         self.index_signal.emit(value)
 
@@ -106,10 +110,6 @@ class SmlmData(QObject):  # type: ignore
 
     def append_locdata(self, locdata: lc.LocData | None) -> None:
         if locdata is not None:
-            self.locdatas.append(locdata)
-            self._locdata_names = [
-                item.meta.identifier + "-" + str(Path(item.meta.file.path).name)
-                for item in self._locdatas
-            ]
-            self._index = len(self.locdatas) - 1
-            self.change_event()
+            self._locdatas.append(locdata)
+            self.locdatas = self._locdatas
+            self.index = len(self.locdatas) - 1
