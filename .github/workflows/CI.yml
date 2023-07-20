@@ -42,7 +42,7 @@ jobs:
 
       - name: "Install napari-locan and dependencies"
         run: |
-          python -m pip install .[test]
+          python -m pip install .[test,dev]
           python -m pip install pip-tools
       - name: "Run tests"
         uses: coactions/setup-xvfb@v1
