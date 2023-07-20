@@ -1,3 +1,9 @@
+.. _license:
+
+===========================
+License
+===========================
+
 BSD 3-Clause License
 
 Copyright (c) 2022-23, Biotechnologie und Biophysik - Universität Würzburg

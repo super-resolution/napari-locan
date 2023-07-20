@@ -1,6 +1,7 @@
-# napari-locan
+![logo](./docs/_static/logo.png) napari-locan
+==================================================
 
-[![License](https://img.shields.io/pypi/l/napari-locan.svg?color=green)](https://github.com/super-resolution/napari-locan/raw/main/LICENSE)
+[![License](https://img.shields.io/pypi/l/napari-locan.svg?color=green)](https://github.com/super-resolution/napari-locan/blob/main/LICENSE.md)
 [![PyPI](https://img.shields.io/pypi/v/napari-locan.svg?color=green)](https://pypi.org/project/napari-locan)
 [![Python Version](https://img.shields.io/pypi/pyversions/napari-locan.svg?color=green)](https://python.org)
 [![tests](https://github.com/super-resolution/napari-locan/workflows/tests/badge.svg)](https://github.com/super-resolution/napari-locan/actions)
@@ -8,17 +9,20 @@
 [![codecov](https://codecov.io/gh/super-resolution/napari-locan/branch/main/graph/badge.svg)](https://codecov.io/gh/super-resolution/napari-locan)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-locan)](https://napari-hub.org/plugins/napari-locan)
 
-Use locan methods in napari
+Use locan methods in napari.
+
+This plugin allows loading, visualizing and analyzing
+single-molecule localization (SMLM) data.
+napari-locan is well suited for exploratory data analysis.
+
+It implements a subset of methods from [locan], a python-based library with
+code for analyzing SMLM data.
+Locan provides extended functionality that is better suited for script- or
+notebook-based analysis procedures.
+
+For details on usage and development of napari-locan please read the [documentation].
 
 ----------------------------------
-
-<!--
-Don't miss the full getting started guide to set up your new package:
-https://github.com/napari/cookiecutter-napari-plugin#getting-started
-
-and review the napari docs for plugin developers:
-https://napari.org/plugins/index.html
--->
 
 ## Installation
 
@@ -30,7 +34,7 @@ You can install `napari-locan` via [pip]:
 
 To install latest development version :
 
-    pip install git+https://github.com/super-resolution/napari-locan.git
+    pip install git+https://github.com/super-resolution/napari-locan.git@main
 
 
 ## Contributing
@@ -63,8 +67,10 @@ This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookie
 [cookiecutter-napari-plugin]: https://github.com/napari/cookiecutter-napari-plugin
 
 [file an issue]: https://github.com/super-resolution/napari-locan/issues
+[documentation]: https://napari-locan.readthedocs.io
 
 [napari]: https://github.com/napari/napari
 [tox]: https://tox.readthedocs.io/en/latest/
 [pip]: https://pypi.org/project/pip/
 [PyPI]: https://pypi.org/
+[locan]: https://locan.readthedocs.io/en/latest/

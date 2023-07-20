@@ -65,19 +65,27 @@ test =[
 dev = [
     "black",
     "build",
-    "coverage",
+    "coverage[toml]",
     "mypy",
     "pre-commit",
     "ruff",
     "twine",
 ]
+docs = [
+    "sphinx",
+    "ipython",
+    "myst-nb",
+    "sphinx-copybutton",
+    "sphinx_autodoc_typehints",
+    "furo",
+]
 
 [project.urls]
 homepage = "https://github.com/super-resolution/napari-locan"
-documentation = "https://locan.readthedocs.io/"
+documentation = "https://napari-locan.readthedocs.io/"
 repository = "https://github.com/super-resolution/napari-locan"
 issues = "https://github.com/super-resolution/napari-locan/issues"
-changelog = "https://github.com/super-resolution/napari-locan"
+changelog = "https://github.com/super-resolution/napari-locan/CHANGES.rst"
 
 [project.entry-points."napari.manifest"]
 napari-locan = "napari_locan:napari.yaml"
@@ -142,6 +150,17 @@ exclude = [
 
 [tool.ruff.pydocstyle]
 convention = "numpy"
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.flake8-import-conventions]
+[tool.ruff.flake8-import-conventions.aliases]
+numpy = "np"
+pandas = "pd"
+matplotlib = "mpl"
+"matplotlib.pyplot" = "plt"
+scipy = "sp"
 
 [tool.napari.manifest]
 display_name = "napari-locan"
