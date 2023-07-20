@@ -23,7 +23,7 @@ __all__: list[str] = [
     "make_points_tubulin",
     "LocdatasQWidget",
     "LoadQWidget",
-    "RenderQWidget",
+    "Render2dQWidget",
     "RunScriptQWidget",
     "ShowFeaturesQWidget",
 ]
@@ -44,8 +44,8 @@ from napari_locan.widgets._widget_locdatas import (
 from napari_locan.widgets._widget_load import (
     LoadQWidget,
 )
-from napari_locan.widgets._widget_render import (
-    RenderQWidget,
+from napari_locan.widgets._widget_render2d import (
+    Render2dQWidget,
 )
 from napari_locan.widgets._widget_run_script import (
     RunScriptQWidget,

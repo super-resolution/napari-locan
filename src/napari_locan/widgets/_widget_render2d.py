@@ -26,7 +26,7 @@ from napari_locan.data_model._locdata import SmlmData
 logger = logging.getLogger(__name__)
 
 
-class RenderQWidget(QWidget):  # type: ignore
+class Render2dQWidget(QWidget):  # type: ignore
     def __init__(self, napari_viewer: Viewer, smlm_data: SmlmData = smlm_data):
         super().__init__()
         self.viewer = napari_viewer
