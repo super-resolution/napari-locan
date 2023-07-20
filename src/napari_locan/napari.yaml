@@ -28,9 +28,17 @@ contributions:
       python_name: napari_locan.widgets._widget_load:LoadQWidget
       title: Load
 
-    - id: napari-locan.render_qwidget
-      python_name: napari_locan.widgets._widget_render:RenderQWidget
-      title: Render
+    - id: napari-locan.show_points_2d_qwidget
+      python_name: napari_locan.widgets._widget_show_points_2d:ShowPoints2dQWidget
+      title: Show points 2d
+
+    - id: napari-locan.show_points_3d_qwidget
+      python_name: napari_locan.widgets._widget_show_points_3d:ShowPoints3dQWidget
+      title: Show points 3d
+
+    - id: napari-locan.render2d_qwidget
+      python_name: napari_locan.widgets._widget_render2d:Render2dQWidget
+      title: Render 2d
 
     - id: napari-locan.show_features_qwidget
       python_name: napari_locan.widgets._widget_locdata_features:ShowFeaturesQWidget
@@ -64,8 +72,14 @@ contributions:
     - command: napari-locan.load_qwidget
       display_name: Load
 
-    - command: napari-locan.render_qwidget
-      display_name: Render
+    - command: napari-locan.show_points_2d_qwidget
+      display_name: Points 2d
+
+    - command: napari-locan.show_points_3d_qwidget
+      display_name: Points 3d
+
+    - command: napari-locan.render2d_qwidget
+      display_name: Render 2d
 
     - command: napari-locan.show_features_qwidget
       display_name: Show features

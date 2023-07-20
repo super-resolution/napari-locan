@@ -26,6 +26,8 @@ __all__: list[str] = [
     "Render2dQWidget",
     "RunScriptQWidget",
     "ShowFeaturesQWidget",
+    "ShowPoints2dQWidget",
+    "ShowPoints3dQWidget",
 ]
 
 from napari_locan.data_model._locdata import SmlmData
@@ -52,4 +54,10 @@ from napari_locan.widgets._widget_run_script import (
 )
 from napari_locan.widgets._widget_locdata_features import (
     ShowFeaturesQWidget,
+)
+from napari_locan.widgets._widget_show_points_2d import (
+    ShowPoints2dQWidget,
+)
+from napari_locan.widgets._widget_show_points_3d import (
+    ShowPoints3dQWidget,
 )
