@@ -44,6 +44,14 @@ contributions:
       python_name: napari_locan.widgets._widget_locdata_features:ShowFeaturesQWidget
       title: Show features
 
+    - id: napari-locan.roi_qwidget
+      python_name: napari_locan.widgets._widget_roi:RoiQWidget
+      title: Region of interest
+
+    - id: napari-locan.clustering_qwidget
+      python_name: napari_locan.widgets._widget_clustering:ClusteringQWidget
+      title: Cluster SMLM data
+
     - id: napari-locan.run_script_qwidget
       python_name: napari_locan.widgets._widget_run_script:RunScriptQWidget
       title: Run script
@@ -83,6 +91,12 @@ contributions:
 
     - command: napari-locan.show_features_qwidget
       display_name: Show features
+
+    - command: napari-locan.roi_qwidget
+      display_name: Region of interest
+
+    - command: napari-locan.clustering_qwidget
+      display_name: Cluster
 
     - command: napari-locan.run_script_qwidget
       display_name: Run script

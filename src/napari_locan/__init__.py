@@ -28,6 +28,8 @@ __all__: list[str] = [
     "ShowFeaturesQWidget",
     "ShowPoints2dQWidget",
     "ShowPoints3dQWidget",
+    "RoiQWidget",
+    "ClusteringQWidget",
 ]
 
 from napari_locan.data_model._locdata import SmlmData
@@ -60,4 +62,10 @@ from napari_locan.widgets._widget_show_points_2d import (
 )
 from napari_locan.widgets._widget_show_points_3d import (
     ShowPoints3dQWidget,
+)
+from napari_locan.widgets._widget_roi import (
+    RoiQWidget,
+)
+from napari_locan.widgets._widget_clustering import (
+    ClusteringQWidget,
 )
