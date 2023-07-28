@@ -17,6 +17,7 @@ except ImportError:
 
 __all__: list[str] = [
     "smlm_data",
+    "filter_specifications",
     "make_image_npc",
     "make_image_tubulin",
     "make_points_npc",
@@ -31,11 +32,16 @@ __all__: list[str] = [
     "RoiQWidget",
     "ClusteringQWidget",
     "MetadataQWidget",
+    "SelectQWidget",
 ]
 
 from napari_locan.data_model._locdata import SmlmData
 
 smlm_data: SmlmData = SmlmData()
+
+from napari_locan.data_model._filter import FilterSpecifications
+
+filter_specifications: FilterSpecifications = FilterSpecifications()
 
 from napari_locan.sample_data._sample_data import (
     make_image_npc,
@@ -72,4 +78,7 @@ from napari_locan.widgets._widget_clustering import (
 )
 from napari_locan.widgets._widget_metadata import (
     MetadataQWidget,
+)
+from napari_locan.widgets._widget_select import (
+    SelectQWidget,
 )
