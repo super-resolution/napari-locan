@@ -32,6 +32,14 @@ contributions:
       python_name: napari_locan.widgets._widget_load:LoadQWidget
       title: Load
 
+    - id: napari-locan.filter_specifications_qwidget
+      python_name: napari_locan.widgets._widget_filter_specifications:FilterSpecificationsQWidget
+      title: Filter specifications
+
+    - id: napari-locan.select_qwidget
+      python_name: napari_locan.widgets._widget_select:SelectQWidget
+      title: Select
+
     - id: napari-locan.show_points_2d_qwidget
       python_name: napari_locan.widgets._widget_show_points_2d:ShowPoints2dQWidget
       title: Show points 2d
@@ -86,6 +94,12 @@ contributions:
 
     - command: napari-locan.load_qwidget
       display_name: Load
+
+    - command: napari-locan.filter_specifications_qwidget
+      display_name: Filter Specifications
+
+    - command: napari-locan.select_qwidget
+      display_name: Select
 
     - command: napari-locan.show_points_2d_qwidget
       display_name: Points 2d

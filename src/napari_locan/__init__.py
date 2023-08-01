@@ -23,6 +23,7 @@ __all__: list[str] = [
     "make_points_npc",
     "make_points_tubulin",
     "LocdatasQWidget",
+    "FilterSpecificationsQWidget",
     "LoadQWidget",
     "Render2dQWidget",
     "RunScriptQWidget",
@@ -51,6 +52,9 @@ from napari_locan.sample_data._sample_data import (
 )
 from napari_locan.widgets._widget_locdatas import (
     LocdatasQWidget,
+)
+from napari_locan.widgets._widget_filter_specifications import (
+    FilterSpecificationsQWidget,
 )
 from napari_locan.widgets._widget_load import (
     LoadQWidget,

@@ -21,7 +21,7 @@ class FilterSpecifications(QObject):  # type: ignore
     Attributes
     ----------
     filters
-        Collection of selectors for certain loc_properties
+        Collection of mapping between certain loc_properties and selectors
     filter_names
         Filter string identifier
     index
@@ -36,20 +36,20 @@ class FilterSpecifications(QObject):  # type: ignore
     filter_names_signal = Signal(list)
     index_signal = Signal(int)
 
-    def __init__(self, filters: list[list[lc.Selector]] | None = None):
+    def __init__(self, filters: list[dict[str, lc.Selector]] | None = None):
         super().__init__()
-        self._filters: list[list[lc.Selector]] = []
+        self._filters: list[dict[str, lc.Selector]] = []
         self._filter_names: list[str] = []
         self._index: int = -1
 
         self.filters = filters  # type: ignore
 
     @property
-    def filters(self) -> list[list[lc.Selector]]:
+    def filters(self) -> list[dict[str, lc.Selector]]:
         return self._filters
 
     @filters.setter
-    def filters(self, value: list[list[lc.Selector]] | None) -> None:
+    def filters(self, value: list[dict[str, lc.Selector]] | None) -> None:
         if value is None:
             self._filters = []
         else:
@@ -84,7 +84,7 @@ class FilterSpecifications(QObject):  # type: ignore
         self.index = value
 
     @property
-    def filter(self) -> list[lc.Selector] | None:  # noqa: A003
+    def filter(self) -> dict[str, lc.Selector] | None:  # noqa: A003
         if self._index == -1:
             return None
         else:
@@ -97,13 +97,25 @@ class FilterSpecifications(QObject):  # type: ignore
         else:
             return self._filter_names[self._index]
 
+    @property
+    def filter_condition(self) -> str:
+        if self._index == -1:
+            return ""
+        else:
+            return_value: str = lc.filter_condition(
+                selectors=self.filter.values()  # type: ignore[union-attr]
+            )
+            return return_value
+
     def change_event(self) -> None:
         """QT signal for any change"""
         self.filters_signal.emit(self._filters)
         self.filter_names_signal.emit(self._filter_names)
         self.index_signal.emit(self._index)
 
-    def append_filter(self, filter: list[lc.Selector] | None) -> None:  # noqa: A002
+    def append_filter(
+        self, filter: dict[str, lc.Selector] | None  # noqa: A002
+    ) -> None:
         if filter is not None:
             self._filters.append(filter)
             self.filters = self._filters

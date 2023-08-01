@@ -134,7 +134,7 @@ fixable = ["I"]
 # S307 suspicious-eval-usage
 # S605 start-process-with-a-shell
 # S607 start-process-with-partial-path
-ignore = []
+ignore = ["E501"]
 # automatically exclude files that are ignored by .gitignore
 exclude = [
     ".*",
