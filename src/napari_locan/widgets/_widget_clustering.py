@@ -170,6 +170,16 @@ class ClusteringQWidget(QWidget):  # type: ignore
     def _compute_button_on_click(self) -> None:
         if self.smlm_data.index == -1:
             raise ValueError("There is no smlm data available.")
+        if self._get_message_feedback() is False:
+            return
+
+        noise, clust = lc.cluster_dbscan(
+            locdata=self.smlm_data.locdata, eps=20, min_samples=3
+        )
+        self.smlm_data.append_locdata(noise)
+        self.smlm_data.append_locdata(clust)
+
+    def _get_message_feedback(self) -> bool:
         n_localizations = len(self.smlm_data.locdata)  # type: ignore
         if n_localizations < 10_000:
             run_computation = True
@@ -184,10 +194,4 @@ class ClusteringQWidget(QWidget):  # type: ignore
             msgBox.setDefaultButton(QMessageBox.Cancel)
             return_value = msgBox.exec()
             run_computation = bool(return_value == QMessageBox.Ok)
-
-        if run_computation is True:
-            noise, clust = lc.cluster_dbscan(
-                locdata=self.smlm_data.locdata, eps=20, min_samples=3
-            )
-            self.smlm_data.append_locdata(noise)
-            self.smlm_data.append_locdata(clust)
+        return run_computation

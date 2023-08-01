@@ -8,6 +8,7 @@ from qtpy.QtWidgets import (
     QCheckBox,
     QHBoxLayout,
     QLabel,
+    QMessageBox,
     QPushButton,
     QSpinBox,
     QVBoxLayout,
@@ -192,7 +193,10 @@ class ShowFeaturesQWidget(QWidget):  # type: ignore
                 face_color="",
             )
 
-        if self._alpha_shape_check_box.isChecked():
+        if (
+            self._alpha_shape_check_box.isChecked()
+            and self._get_message_feedback() is True
+        ):
             alpha = self._alpha_shape_spin_box.value()
             locdata.update_alpha_shape(alpha)
             shapes = locdata.alpha_shape.region.points
@@ -204,3 +208,20 @@ class ShowFeaturesQWidget(QWidget):  # type: ignore
                 edge_color="blue",
                 face_color="",
             )
+
+    def _get_message_feedback(self) -> bool:
+        n_localizations = len(self.smlm_data.locdata)  # type: ignore
+        if n_localizations < 10_000:
+            run_computation = True
+        else:
+            msgBox = QMessageBox()
+            msgBox.setText(
+                f"There are {n_localizations} localizations. "
+                f"The alpha shape computation will take some time."
+            )
+            msgBox.setInformativeText("Do you want to run the computation?")
+            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            msgBox.setDefaultButton(QMessageBox.Cancel)
+            return_value = msgBox.exec()
+            run_computation = bool(return_value == QMessageBox.Ok)
+        return run_computation

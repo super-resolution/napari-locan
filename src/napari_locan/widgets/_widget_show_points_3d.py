@@ -12,6 +12,7 @@ from qtpy.QtWidgets import (
     QComboBox,
     QHBoxLayout,
     QLabel,
+    QMessageBox,
     QPushButton,
     QVBoxLayout,
     QWidget,
@@ -225,8 +226,10 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
         locdata = self.smlm_data.locdata
         if locdata is None:
             raise ValueError("There is no SMLM data available.")
-        elif bool(locdata) is False:
+        if bool(locdata) is False:
             raise ValueError("Locdata is empty.")
+        if self._get_message_feedback() is False:
+            return
 
         loc_properties = [
             self._loc_properties_x_combobox.currentText(),
@@ -254,3 +257,20 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
             }
 
         self.viewer.add_points(data=data, properties=point_properties, **add_kwargs)
+
+    def _get_message_feedback(self) -> bool:
+        n_localizations = len(self.smlm_data.locdata)  # type: ignore
+        if n_localizations < 10_000:
+            run_computation = True
+        else:
+            msgBox = QMessageBox()
+            msgBox.setText(
+                f"There are {n_localizations} localizations. "
+                f"Rendering will take some time."
+            )
+            msgBox.setInformativeText("Do you want to continue?")
+            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            msgBox.setDefaultButton(QMessageBox.Cancel)
+            return_value = msgBox.exec()
+            run_computation = bool(return_value == QMessageBox.Ok)
+        return run_computation
