@@ -8,7 +8,6 @@ from qtpy.QtWidgets import (
     QComboBox,
     QFileDialog,
     QHBoxLayout,
-    QLabel,
     QLineEdit,
     QPlainTextEdit,
     QPushButton,
@@ -31,8 +30,8 @@ class RunScriptQWidget(QWidget):  # type: ignore
         self._set_layout()
 
     def _add_script(self) -> None:
-        self._script_label = QLabel("Locan scripts:")
         self._script_combobox = QComboBox()
+        self._script_combobox.setStatusTip("Choose a predefined python script.")
         scripts = list(nl_scripts.LocanScripts.__members__.keys())
         self._script_combobox.addItems(scripts)
         self._script_combobox.setCurrentText("HELLO")
@@ -41,9 +40,11 @@ class RunScriptQWidget(QWidget):  # type: ignore
         )
 
         self._script_load_button = QPushButton("Load")
+        self._script_load_button.setStatusTip("Load a python script.")
         self._script_load_button.clicked.connect(self._script_load_button_on_click)
 
         self._script_save_button = QPushButton("Save")
+        self._script_save_button.setStatusTip("Save a python script.")
         self._script_save_button.clicked.connect(self._script_save_button_on_click)
 
         self._script_file_name_edit = QLineEdit()

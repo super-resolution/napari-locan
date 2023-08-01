@@ -37,6 +37,9 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
     def _add_loc_properties_selection(self) -> None:
         self._loc_properties_x_label = QLabel("x:")
         self._loc_properties_x_combobox = QComboBox()
+        self._loc_properties_x_combobox.setStatusTip(
+            "Choose localization property for selected SMLM dataset as x coordinate."
+        )
         self.smlm_data.index_signal.connect(
             self._loc_properties_x_combobox_slot_for_smlm_data_index
         )
@@ -57,6 +60,9 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
 
         self._loc_properties_y_label = QLabel("y:")
         self._loc_properties_y_combobox = QComboBox()
+        self._loc_properties_y_combobox.setStatusTip(
+            "Choose localization property for selected SMLM dataset as y coordinate."
+        )
         self.smlm_data.index_signal.connect(
             self._loc_properties_y_combobox_slot_for_smlm_data_index
         )
@@ -76,6 +82,9 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
 
         self._loc_properties_z_label = QLabel("z:")
         self._loc_properties_z_combobox = QComboBox()
+        self._loc_properties_z_combobox.setStatusTip(
+            "Choose localization property for selected SMLM dataset as z coordinate."
+        )
         self.smlm_data.index_signal.connect(
             self._loc_properties_z_combobox_slot_for_smlm_data_index
         )
@@ -105,6 +114,9 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
     def _add_other_properties_selection(self) -> None:
         self._loc_properties_other_label = QLabel("other:")
         self._loc_properties_other_combobox = QComboBox()
+        self._loc_properties_other_combobox.setStatusTip(
+            "Choose localization property for selected SMLM dataset as pixel value."
+        )
         self.smlm_data.index_signal.connect(
             self._loc_properties_other_combobox_slot_for_smlm_data_index
         )

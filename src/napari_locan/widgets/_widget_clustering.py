@@ -36,6 +36,7 @@ class ClusteringQWidget(QWidget):  # type: ignore
 
     def _add_cluster_method_combobox(self) -> None:
         self._cluster_method_combobox = QComboBox()
+        self._cluster_method_combobox.setStatusTip("Choose clustering procedure.")
         self._cluster_method_combobox.addItem("DBSCAN")
 
         self._cluster_method_layout = QHBoxLayout()
@@ -44,6 +45,9 @@ class ClusteringQWidget(QWidget):  # type: ignore
     def _add_loc_properties_selection(self) -> None:
         self._loc_properties_x_label = QLabel("x:")
         self._loc_properties_x_combobox = QComboBox()
+        self._loc_properties_x_combobox.setStatusTip(
+            "Choose localization property for selected SMLM dataset as x coordinate."
+        )
         self.smlm_data.index_signal.connect(
             self._loc_properties_x_combobox_slot_for_smlm_data_index
         )
@@ -64,6 +68,9 @@ class ClusteringQWidget(QWidget):  # type: ignore
 
         self._loc_properties_y_label = QLabel("y:")
         self._loc_properties_y_combobox = QComboBox()
+        self._loc_properties_y_combobox.setStatusTip(
+            "Choose localization property for selected SMLM dataset as y coordinate."
+        )
         self.smlm_data.index_signal.connect(
             self._loc_properties_y_combobox_slot_for_smlm_data_index
         )
@@ -130,10 +137,12 @@ class ClusteringQWidget(QWidget):  # type: ignore
     def _add_parameter_definitions(self) -> None:
         self._eps_label = QLabel("epsilon:")
         self._eps_spin_box = QSpinBox()
+        self._eps_spin_box.setStatusTip("Parameter for clustering procedure.")
         self._eps_spin_box.setValue(20)
 
         self._min_points_label = QLabel("min_points:")
         self._min_points_spin_box = QSpinBox()
+        self._min_points_spin_box.setStatusTip("Parameter for clustering procedure.")
         self._min_points_spin_box.setValue(3)
 
         self._parameter_definitions_layout = QHBoxLayout()

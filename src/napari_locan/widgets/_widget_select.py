@@ -57,6 +57,9 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
     def _add_loc_property_selector(self) -> None:
         self._loc_property_label = QLabel("Localization property:")
         self._loc_property_combobox = QComboBox()
+        self._loc_property_combobox.setStatusTip(
+            "Choose localization property for selected SMLM dataset and selected filter specifications."
+        )
         # condition excludes smlm_data.locdata to be None in what comes:
         if self.smlm_data.index != -1 and bool(self.smlm_data.locdata):
             self._loc_property_combobox.addItems(
