@@ -174,11 +174,14 @@ class ClusteringQWidget(QWidget):  # type: ignore
         if self._get_message_feedback() is False:
             return
 
+        eps_ = self._eps_spin_box.value()
+        min_samples_ = self._min_points_spin_box.value()
+
         with progress(total=100) as progress_bar:
             progress_bar.set_description("Computing clusters...")
             progress_bar.update(50)
             noise, clust = lc.cluster_dbscan(
-                locdata=self.smlm_data.locdata, eps=20, min_samples=3
+                locdata=self.smlm_data.locdata, eps=eps_, min_samples=min_samples_
             )
             progress_bar.update(99)
             self.smlm_data.append_locdata(noise)
