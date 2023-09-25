@@ -156,10 +156,11 @@ docstring-quotes = "double"
 
 [tool.ruff.flake8-import-conventions]
 [tool.ruff.flake8-import-conventions.aliases]
-numpy = "np"
-pandas = "pd"
+locan = "lc"
 matplotlib = "mpl"
 "matplotlib.pyplot" = "plt"
+numpy = "np"
+pandas = "pd"
 scipy = "sp"
 
 [tool.napari.manifest]

@@ -34,6 +34,7 @@ __all__: list[str] = [
     "ClusteringQWidget",
     "MetadataQWidget",
     "SelectQWidget",
+    "CollectionSeriesQWidget",
 ]
 
 from napari_locan.data_model._locdata import SmlmData
@@ -85,4 +86,7 @@ from napari_locan.widgets._widget_metadata import (
 )
 from napari_locan.widgets._widget_select import (
     SelectQWidget,
+)
+from napari_locan.widgets._widget_collection_series_2d import (
+    CollectionSeriesQWidget,
 )

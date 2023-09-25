@@ -64,6 +64,10 @@ contributions:
       python_name: napari_locan.widgets._widget_clustering:ClusteringQWidget
       title: Cluster SMLM data
 
+    - id: napari-locan.collection_series_2d_qwidget
+      python_name: napari_locan.widgets._widget_collection_series_2d:CollectionSeriesQWidget
+      title: Collection series
+
     - id: napari-locan.run_script_qwidget
       python_name: napari_locan.widgets._widget_run_script:RunScriptQWidget
       title: Run script
@@ -118,6 +122,9 @@ contributions:
 
     - command: napari-locan.clustering_qwidget
       display_name: Cluster
+
+    - command: napari-locan.collection_series_2d_qwidget
+      display_name: Collection series
 
     - command: napari-locan.run_script_qwidget
       display_name: Run script

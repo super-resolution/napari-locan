@@ -168,3 +168,25 @@ def locdata_blobs_3d():
     dat = lc.load_txt_file(path)
     dat.meta.creation_time.FromSeconds(1)
     return dat
+
+
+@pytest.fixture(scope="session")
+def locdata_two_cluster_with_noise_2d():
+    """
+    Fixture for returning `LocData` carrying 2D localizations grouped in two
+    clusters as indicated by `cluster_label` and noise.
+    """
+    points = np.array(
+        [[0.5, 0.5], [1, 0.6], [1.1, 1], [5, 5.6], [5.1, 6], [5.5, 5], [100, 100]]
+    )
+    locdata_dict = {
+        "position_x": points.T[0],
+        "position_y": points.T[1],
+        "cluster_label": np.array([1, 1, 1, 2, 2, 2, -1]),
+    }
+    df = pd.DataFrame(locdata_dict)
+    meta_ = lc.data.metadata_pb2.Metadata()
+    meta_.creation_time.seconds = 1
+    locdata = lc.LocData.from_dataframe(dataframe=df, meta=meta_)
+    locdata.region = locdata.bounding_box.region
+    return locdata
