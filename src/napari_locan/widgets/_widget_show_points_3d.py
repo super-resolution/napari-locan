@@ -38,7 +38,7 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
     def _add_loc_properties_selection(self) -> None:
         self._loc_properties_x_label = QLabel("x:")
         self._loc_properties_x_combobox = QComboBox()
-        self._loc_properties_x_combobox.setStatusTip(
+        self._loc_properties_x_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as x coordinate."
         )
         self.smlm_data.index_signal.connect(
@@ -61,7 +61,7 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
 
         self._loc_properties_y_label = QLabel("y:")
         self._loc_properties_y_combobox = QComboBox()
-        self._loc_properties_y_combobox.setStatusTip(
+        self._loc_properties_y_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as y coordinate."
         )
         self.smlm_data.index_signal.connect(
@@ -83,7 +83,7 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
 
         self._loc_properties_z_label = QLabel("z:")
         self._loc_properties_z_combobox = QComboBox()
-        self._loc_properties_z_combobox.setStatusTip(
+        self._loc_properties_z_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as z coordinate."
         )
         self.smlm_data.index_signal.connect(
@@ -115,7 +115,7 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
     def _add_other_properties_selection(self) -> None:
         self._loc_properties_other_label = QLabel("other:")
         self._loc_properties_other_combobox = QComboBox()
-        self._loc_properties_other_combobox.setStatusTip(
+        self._loc_properties_other_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as pixel value."
         )
         self.smlm_data.index_signal.connect(
@@ -210,7 +210,7 @@ class ShowPoints3dQWidget(QWidget):  # type: ignore
 
     def _add_points_buttons(self) -> None:
         self._points_button = QPushButton("Show points")
-        self._points_button.setStatusTip(
+        self._points_button.setToolTip(
             "Show point representation of SMLM data in new layer."
         )
         self._points_button.clicked.connect(self._points_button_on_click)

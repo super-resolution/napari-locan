@@ -57,7 +57,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
     def _add_loc_property_selector(self) -> None:
         self._loc_property_label = QLabel("Localization property:")
         self._loc_property_combobox = QComboBox()
-        self._loc_property_combobox.setStatusTip(
+        self._loc_property_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset and selected filter specifications."
         )
         # condition excludes smlm_data.locdata to be None in what comes:
@@ -87,7 +87,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         self._upper_bound_label = QLabel("Max:")
         self._upper_bound_spinbox = QDoubleSpinBox()
         self._apply_checkbox = QCheckBox("Apply")
-        self._apply_checkbox.setStatusTip("Set selection to current settings.")
+        self._apply_checkbox.setToolTip("Set selection to current settings.")
 
         self._selection_tools_layout = QHBoxLayout()
         self._selection_tools_layout.addWidget(self._lower_bound_label)
@@ -121,7 +121,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
 
     def _add_buttons(self) -> None:
         self._select_button = QPushButton("Select")
-        self._select_button.setStatusTip(
+        self._select_button.setToolTip(
             "Filter the selected SMLM data according to the condition and keep "
             "selection as new SMLM dataset."
         )

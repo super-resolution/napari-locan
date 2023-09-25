@@ -64,11 +64,11 @@ class FilterSpecificationsQWidget(QWidget):  # type: ignore
 
     def _add_buttons(self) -> None:
         self._delete_button = QPushButton("Delete")
-        self._delete_button.setStatusTip("Delete filter specifications dataset.")
+        self._delete_button.setToolTip("Delete filter specifications dataset.")
         self._delete_button.clicked.connect(self._delete_button_on_click)
 
         self._new_button = QPushButton("New")
-        self._new_button.setStatusTip("Create new filter specifications dataset.")
+        self._new_button.setToolTip("Create new filter specifications dataset.")
         self._new_button.clicked.connect(self._new_button_on_click)
 
         self._buttons_layout = QHBoxLayout()

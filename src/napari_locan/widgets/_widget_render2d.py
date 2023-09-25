@@ -42,7 +42,7 @@ class Render2dQWidget(QWidget):  # type: ignore
     def _add_loc_properties_selection(self) -> None:
         self._loc_properties_x_label = QLabel("x:")
         self._loc_properties_x_combobox = QComboBox()
-        self._loc_properties_x_combobox.setStatusTip(
+        self._loc_properties_x_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as x coordinate."
         )
         self.smlm_data.index_signal.connect(
@@ -60,7 +60,7 @@ class Render2dQWidget(QWidget):  # type: ignore
 
         self._loc_properties_y_label = QLabel("y:")
         self._loc_properties_y_combobox = QComboBox()
-        self._loc_properties_y_combobox.setStatusTip(
+        self._loc_properties_y_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as y coordinate."
         )
         self.smlm_data.index_signal.connect(
@@ -84,7 +84,7 @@ class Render2dQWidget(QWidget):  # type: ignore
     def _add_other_properties_selection(self) -> None:
         self._loc_properties_other_label = QLabel("other:")
         self._loc_properties_other_combobox = QComboBox()
-        self._loc_properties_other_combobox.setStatusTip(
+        self._loc_properties_other_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as pixel value."
         )
         self.smlm_data.index_signal.connect(
@@ -212,7 +212,7 @@ class Render2dQWidget(QWidget):  # type: ignore
 
     def _add_render_buttons(self) -> None:
         self._render_button = QPushButton("Render")
-        self._render_button.setStatusTip("Render selected SMLM data in new layer.")
+        self._render_button.setToolTip("Render selected SMLM data in new layer.")
         self._render_button.clicked.connect(self._render_button_on_click)
 
     def _set_layout(self) -> None:

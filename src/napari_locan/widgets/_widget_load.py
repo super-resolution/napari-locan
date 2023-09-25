@@ -48,7 +48,7 @@ class LoadQWidget(QWidget):  # type: ignore
         self._file_path_label = QLabel("File path:")
         self._file_path_edit = QLineEdit()
         self._file_path_select_button = QPushButton("Select")
-        self._file_path_select_button.setStatusTip("Select a file path.")
+        self._file_path_select_button.setToolTip("Select a file path.")
         self._file_path_select_button.clicked.connect(
             self._file_path_select_button_on_click
         )
@@ -60,7 +60,7 @@ class LoadQWidget(QWidget):  # type: ignore
 
     def _add_buttons(self) -> None:
         self._load_button = QPushButton("Load File")
-        self._load_button.setStatusTip("Load the selected file as new SMLM dataset.")
+        self._load_button.setToolTip("Load the selected file as new SMLM dataset.")
         self._load_button.clicked.connect(self._load_button_on_click)
 
     def _set_layout(self) -> None:

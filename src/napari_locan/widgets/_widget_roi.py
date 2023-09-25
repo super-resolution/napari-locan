@@ -36,6 +36,7 @@ class RoiQWidget(QWidget):  # type: ignore
 
     def _add_locdatas_combobox(self) -> None:
         self._locdatas_combobox = QComboBox()
+        self._locdatas_combobox.setToolTip("Choose SMLM dataset as roi reference.")
         self._connect_locdatas_combobox_and_smlm_data()
 
         self._locdatas_layout = QHBoxLayout()
@@ -58,6 +59,9 @@ class RoiQWidget(QWidget):  # type: ignore
     def _add_loc_properties_selection(self) -> None:
         self._loc_properties_x_label = QLabel("x:")
         self._loc_properties_x_combobox = QComboBox()
+        self._loc_properties_x_combobox.setToolTip(
+            "Choose localization property for selected SMLM dataset as x coordinate."
+        )
         self.smlm_data.index_signal.connect(
             self._loc_properties_x_combobox_slot_for_smlm_data_index
         )
@@ -78,6 +82,9 @@ class RoiQWidget(QWidget):  # type: ignore
 
         self._loc_properties_y_label = QLabel("y:")
         self._loc_properties_y_combobox = QComboBox()
+        self._loc_properties_y_combobox.setToolTip(
+            "Choose localization property for selected SMLM dataset as y coordinate."
+        )
         self.smlm_data.index_signal.connect(
             self._loc_properties_y_combobox_slot_for_smlm_data_index
         )
@@ -149,7 +156,7 @@ class RoiQWidget(QWidget):  # type: ignore
 
     def _add_buttons(self) -> None:
         self._save_button = QPushButton("Save")
-        self._save_button.setStatusTip("Save region of interest in yaml file.")
+        self._save_button.setToolTip("Save region of interest in yaml file.")
         self._save_button.clicked.connect(self._save_button_on_click)
 
         self._buttons_layout = QHBoxLayout()

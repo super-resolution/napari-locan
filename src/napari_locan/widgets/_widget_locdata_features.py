@@ -60,7 +60,7 @@ class ShowFeaturesQWidget(QWidget):  # type: ignore
         self._centroid_label = QLabel("Centroid:")
 
         self._centroid_check_box = QCheckBox()
-        self._centroid_check_box.setStatusTip("Show centroid of all localizations.")
+        self._centroid_check_box.setToolTip("Show centroid of all localizations.")
         self._centroid_check_box.setChecked(False)
 
         self._centroid_layout = QHBoxLayout()
@@ -71,7 +71,7 @@ class ShowFeaturesQWidget(QWidget):  # type: ignore
         self._bounding_box_label = QLabel("Bounding box:")
 
         self._bounding_box_check_box = QCheckBox()
-        self._bounding_box_check_box.setStatusTip(
+        self._bounding_box_check_box.setToolTip(
             "Show bounding box of all localizations."
         )
         self._bounding_box_check_box.setChecked(False)
@@ -84,7 +84,7 @@ class ShowFeaturesQWidget(QWidget):  # type: ignore
         self._oriented_bounding_box_label = QLabel("Oriented bounding box:")
 
         self._oriented_bounding_box_check_box = QCheckBox()
-        self._oriented_bounding_box_check_box.setStatusTip(
+        self._oriented_bounding_box_check_box.setToolTip(
             "Show oriented bounding box of all localizations."
         )
         self._oriented_bounding_box_check_box.setChecked(False)
@@ -99,9 +99,7 @@ class ShowFeaturesQWidget(QWidget):  # type: ignore
         self._convex_hull_label = QLabel("Convex hull:")
 
         self._convex_hull_check_box = QCheckBox()
-        self._convex_hull_check_box.setStatusTip(
-            "Show convex hull of all localizations."
-        )
+        self._convex_hull_check_box.setToolTip("Show convex hull of all localizations.")
         self._convex_hull_check_box.setChecked(False)
 
         self._convex_hull_layout = QHBoxLayout()
@@ -112,9 +110,7 @@ class ShowFeaturesQWidget(QWidget):  # type: ignore
         self._alpha_shape_label = QLabel("Alpha shape:")
 
         self._alpha_shape_check_box = QCheckBox()
-        self._alpha_shape_check_box.setStatusTip(
-            "Show alpha shape of all localizations."
-        )
+        self._alpha_shape_check_box.setToolTip("Show alpha shape of all localizations.")
         self._alpha_shape_check_box.setChecked(False)
 
         self._alpha_shape_spin_box_label = QLabel("alpha:")
@@ -131,7 +127,7 @@ class ShowFeaturesQWidget(QWidget):  # type: ignore
 
     def _add_render_button(self) -> None:
         self._render_button = QPushButton("Show")
-        self._render_button.setStatusTip(
+        self._render_button.setToolTip(
             "Show the selected SMLM data features in new layer."
         )
         self._render_button.clicked.connect(self._render_button_on_click)

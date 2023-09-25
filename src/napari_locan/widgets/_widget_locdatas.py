@@ -51,7 +51,7 @@ class LocdatasQWidget(QWidget):  # type: ignore
 
     def _add_buttons(self) -> None:
         self._delete_button = QPushButton("Delete")
-        self._delete_button.setStatusTip("Delete SMLM dataset.")
+        self._delete_button.setToolTip("Delete SMLM dataset.")
         self._delete_button.clicked.connect(self._delete_button_on_click)
 
         self._buttons_layout = QHBoxLayout()

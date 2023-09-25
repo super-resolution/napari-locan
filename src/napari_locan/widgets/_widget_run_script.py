@@ -31,7 +31,7 @@ class RunScriptQWidget(QWidget):  # type: ignore
 
     def _add_script(self) -> None:
         self._script_combobox = QComboBox()
-        self._script_combobox.setStatusTip("Choose a predefined python script.")
+        self._script_combobox.setToolTip("Choose a predefined python script.")
         scripts = list(nl_scripts.LocanScripts.__members__.keys())
         self._script_combobox.addItems(scripts)
         self._script_combobox.setCurrentText("HELLO")
@@ -40,11 +40,11 @@ class RunScriptQWidget(QWidget):  # type: ignore
         )
 
         self._script_load_button = QPushButton("Load")
-        self._script_load_button.setStatusTip("Load a python script.")
+        self._script_load_button.setToolTip("Load a python script.")
         self._script_load_button.clicked.connect(self._script_load_button_on_click)
 
         self._script_save_button = QPushButton("Save")
-        self._script_save_button.setStatusTip("Save a python script.")
+        self._script_save_button.setToolTip("Save a python script.")
         self._script_save_button.clicked.connect(self._script_save_button_on_click)
 
         self._script_file_name_edit = QLineEdit()
@@ -123,7 +123,7 @@ class RunScriptQWidget(QWidget):  # type: ignore
 
     def _add_buttons(self) -> None:
         self._run_button = QPushButton("Run")
-        self._run_button.setStatusTip("Run the displayed python script.")
+        self._run_button.setToolTip("Run the displayed python script.")
         self._run_button.clicked.connect(self._run_button_on_click)
 
     def _set_layout(self) -> None:
