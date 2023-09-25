@@ -2,10 +2,13 @@
 QWidget plugin to list locdatas
 """
 import logging
+from pathlib import Path
 
+import locan as lc
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QComboBox,
+    QFileDialog,
     QHBoxLayout,
     QPushButton,
     QVBoxLayout,
@@ -50,11 +53,16 @@ class LocdatasQWidget(QWidget):  # type: ignore
         self._locdatas_combobox.addItems(locdata_names)
 
     def _add_buttons(self) -> None:
+        self._save_button = QPushButton("Save")
+        self._save_button.setToolTip("Save SMLM dataset as ASDF file.")
+        self._save_button.clicked.connect(self._save_button_on_click)
+
         self._delete_button = QPushButton("Delete")
         self._delete_button.setToolTip("Delete SMLM dataset.")
         self._delete_button.clicked.connect(self._delete_button_on_click)
 
         self._buttons_layout = QHBoxLayout()
+        self._buttons_layout.addWidget(self._save_button)
         self._buttons_layout.addWidget(self._delete_button)
 
     def _set_layout(self) -> None:
@@ -74,3 +82,19 @@ class LocdatasQWidget(QWidget):  # type: ignore
             )  # needed to activate setter
 
             self.smlm_data.change_event()
+
+    def _save_button_on_click(self) -> None:
+        current_index = self._locdatas_combobox.currentIndex()
+        if current_index == -1:
+            raise KeyError("No item available to be saved.")
+        else:
+            file_dialog = QFileDialog()
+            file_dialog.setFileMode(QFileDialog.AnyFile)
+            file_path_return = file_dialog.getSaveFileName(
+                caption="Provide file name and path to save data",
+                filter="ASDF file (*.asdf)",
+            )
+            file_path = Path(file_path_return[0])
+            print(file_path)
+            if file_path:
+                lc.save_asdf(locdata=self.smlm_data.locdata, path=file_path)
