@@ -4,6 +4,7 @@ QWidget plugin for clustering SMLM data
 import logging
 
 import locan as lc
+from napari.utils.progress import progress
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QComboBox,
@@ -173,11 +174,15 @@ class ClusteringQWidget(QWidget):  # type: ignore
         if self._get_message_feedback() is False:
             return
 
-        noise, clust = lc.cluster_dbscan(
-            locdata=self.smlm_data.locdata, eps=20, min_samples=3
-        )
-        self.smlm_data.append_locdata(noise)
-        self.smlm_data.append_locdata(clust)
+        with progress(total=100) as progress_bar:
+            progress_bar.set_description("Computing clusters...")
+            progress_bar.update(50)
+            noise, clust = lc.cluster_dbscan(
+                locdata=self.smlm_data.locdata, eps=20, min_samples=3
+            )
+            progress_bar.update(99)
+            self.smlm_data.append_locdata(noise)
+            self.smlm_data.append_locdata(clust)
 
     def _get_message_feedback(self) -> bool:
         n_localizations = len(self.smlm_data.locdata)  # type: ignore
