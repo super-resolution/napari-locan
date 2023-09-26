@@ -169,9 +169,16 @@ display_name = "napari-locan"
 [tool.mypy]
 files = ["src"]
 strict = true
-ignore_missing_imports = true
 # warn-unused-ignores is not quite reproducible
 warn_unused_ignores = false
+
+[[tool.mypy.overrides]]
+module = [
+    'locan',
+    'matplotlib.*',
+    'napari.*',
+]
+ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = [
