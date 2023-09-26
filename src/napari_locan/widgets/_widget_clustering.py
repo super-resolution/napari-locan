@@ -2,9 +2,11 @@
 QWidget plugin for clustering SMLM data
 """
 import logging
+from typing import Any
 
 import locan as lc
-from napari.utils.progress import progress
+from napari.qt.threading import thread_worker
+from napari.utils import progress
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QComboBox,
@@ -168,7 +170,7 @@ class ClusteringQWidget(QWidget):  # type: ignore
         layout.addLayout(self._buttons_layout)
         self.setLayout(layout)
 
-    def _compute_button_on_click(self) -> None:
+    def _compute_button_on_click_main_thread(self) -> None:
         if self.smlm_data.index == -1:
             raise ValueError("There is no smlm data available.")
         if self._get_message_feedback() is False:
@@ -177,15 +179,39 @@ class ClusteringQWidget(QWidget):  # type: ignore
         eps_ = self._eps_spin_box.value()
         min_samples_ = self._min_points_spin_box.value()
 
-        with progress(total=100) as progress_bar:
-            progress_bar.set_description("Computing clusters...")
-            progress_bar.update(50)
+        with progress() as progress_bar:
+            progress_bar.set_description("Running cluster_dbscan")
             noise, clust = lc.cluster_dbscan(
                 locdata=self.smlm_data.locdata, eps=eps_, min_samples=min_samples_
             )
-            progress_bar.update(99)
             self.smlm_data.append_locdata(noise)
             self.smlm_data.append_locdata(clust)
+
+    def _compute_button_on_click_thread_worker(self) -> None:
+        if self.smlm_data.index == -1:
+            raise ValueError("There is no smlm data available.")
+        if self._get_message_feedback() is False:
+            return
+
+        eps_ = self._eps_spin_box.value()
+        min_samples_ = self._min_points_spin_box.value()
+
+        def worker_return(return_value: tuple[lc.LocData, lc.LocData]) -> None:
+            noise, clust = return_value
+            self.smlm_data.append_locdata(noise)
+            self.smlm_data.append_locdata(clust)
+
+        worker = cluster_dbscan_worker(
+            locdata=self.smlm_data.locdata, eps=eps_, min_samples=min_samples_
+        )
+        worker.returned.connect(worker_return)
+        worker.start()
+
+    def _compute_button_on_click(self) -> None:
+        self._compute_button_on_click_main_thread()
+        # the thread worker seems to take much longer >3x
+
+    #        self._compute_button_on_click_thread_worker()
 
     def _get_message_feedback(self) -> bool:
         n_localizations = len(self.smlm_data.locdata)  # type: ignore
@@ -203,3 +229,9 @@ class ClusteringQWidget(QWidget):  # type: ignore
             return_value = msgBox.exec()
             run_computation = bool(return_value == QMessageBox.Ok)
         return run_computation
+
+
+@thread_worker(progress={"desc": "Running cluster_dbscan"})  # type: ignore[misc]
+def cluster_dbscan_worker(**kwargs: Any) -> tuple[lc.LocData, lc.LocData]:
+    return_value = lc.cluster_dbscan(**kwargs)
+    return return_value  # type: ignore[no-any-return]

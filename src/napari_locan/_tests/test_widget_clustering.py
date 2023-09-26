@@ -13,5 +13,23 @@ class TestClusteringQWidgetQWidget:
         assert my_widget._eps_spin_box.value() == 20
         assert my_widget._min_points_spin_box.value() == 3
 
-        my_widget._compute_button_on_click()
-        assert isinstance(smlm_data.locdata.references, list)  # type: ignore
+    def test_ClusteringQWidget_compute_button_worker(
+        self, make_napari_viewer, locdata_2d
+    ):
+        smlm_data = SmlmData(locdatas=[locdata_2d])
+        viewer = make_napari_viewer()
+        my_widget = ClusteringQWidget(viewer, smlm_data=smlm_data)
+
+        my_widget._compute_button_on_click_main_thread()
+        assert len(smlm_data.locdatas) == 3
+        assert (
+            "'eps': 20, 'min_samples': 3" in smlm_data.locdata.meta.history[0].parameter
+        )
+        assert my_widget._eps_spin_box.value() == 20
+        assert my_widget._min_points_spin_box.value() == 3
+        assert isinstance(smlm_data.locdata.references, list)
+
+        smlm_data.index = 0
+        my_widget._compute_button_on_click_thread_worker()
+        # todo: wait for completion
+        # assert len(smlm_data.locdatas) == 5
