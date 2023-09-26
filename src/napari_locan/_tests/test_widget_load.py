@@ -25,4 +25,4 @@ class TestLoadQWidget:
         # my_widget._file_path_select_button_on_click()
 
         my_widget._load_button_on_click()
-        assert Path(smlm_data.locdata.meta.file.path) == locan_test_data  # type: ignore
+        assert Path(smlm_data.locdata.meta.file.path) == locan_test_data

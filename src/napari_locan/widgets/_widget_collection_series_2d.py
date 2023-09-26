@@ -4,6 +4,7 @@ QWidget plugin to render a collection of SMLM data as series
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 import locan as lc
 import numpy as np
@@ -249,7 +250,7 @@ class CollectionSeriesQWidget(QWidget):  # type: ignore
         data = np.concatenate(img_stack, axis=0)
 
         if other_property is None:
-            point_properties: dict[str, npt.NDArray] = {}
+            point_properties: dict[str, npt.NDArray[Any]] = {}
             add_kwargs = {"name": self.smlm_data.locdata_name}
         else:
             other_property_stack = [

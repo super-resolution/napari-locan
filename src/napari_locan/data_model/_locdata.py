@@ -11,7 +11,7 @@ import logging
 from pathlib import Path
 
 import locan as lc
-from qtpy.QtCore import QObject, Signal
+from qtpy.QtCore import QObject, Signal  # type: ignore[attr-defined]
 
 logger = logging.getLogger(__name__)
 

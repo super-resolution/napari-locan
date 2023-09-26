@@ -4,6 +4,7 @@ QWidget plugin to render SMLM data
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 import locan as lc
 import numpy.typing as npt
@@ -195,7 +196,7 @@ class ShowPoints2dQWidget(QWidget):  # type: ignore
         data = locdata.data[loc_properties].to_numpy()
 
         if other_property is None:
-            point_properties: dict[str, npt.NDArray] = {}
+            point_properties: dict[str, npt.NDArray[Any]] = {}
             add_kwargs = {"name": self.smlm_data.locdata_name}
         else:
             other_property_data = locdata.data[other_property].to_numpy()

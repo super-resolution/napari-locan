@@ -9,7 +9,7 @@ from __future__ import annotations
 import logging
 
 import locan as lc
-from qtpy.QtCore import QObject, Signal
+from qtpy.QtCore import QObject, Signal  # type: ignore[attr-defined]
 
 logger = logging.getLogger(__name__)
 
