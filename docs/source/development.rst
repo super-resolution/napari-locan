@@ -17,19 +17,18 @@ A few extra libraries are needed for development::
 
         pip install .[test,dev,docs]
 
-
-
 Import Conventions
 ====================
 
 The following import conventions are used throughout Locan source code and
-documentation:
+documentation::
 
-* import numpy as np
-* import pandas as pd
-* import matplotlib as mpl
-* import matplotlib.pyplot as plt
-* import scipy as sp
+    import locan as lc
+    import matplotlib as mpl
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import scipy as sp
+    import pandas as pd
 
 This is enforced through ruff following specifications in pyproject.toml.
 
@@ -41,6 +40,10 @@ For testing we use py.test_.
 .. _py.test: https://docs.pytest.org/en/latest/index.html
 
 A test suite is provided in /src/napari_locan/_tests.
+
+Tests can also be run with tox_.
+
+.. _tox: https://tox.readthedocs.io/en/latest/
 
 Coverage
 ===========
@@ -98,7 +101,7 @@ We try to make use of type checking using mypy_ as much as possible.
 
 Configurations are kept in pyproject.toml.
 
-To remember:
+To remember
 ============
 
 * The plugin is strongly linked to locan_ and its development procedures.

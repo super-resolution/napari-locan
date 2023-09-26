@@ -17,11 +17,14 @@ Welcome to napari-locan!
    :name: mastertoc_start
 
    ./source/installation
+   ./source/first_steps
 
 .. toctree::
    :maxdepth: 1
    :caption: User Guide
    :name: mastertoc_use
+
+   ./source/widgets
 
 
 .. toctree::
