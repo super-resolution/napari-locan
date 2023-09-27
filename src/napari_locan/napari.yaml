@@ -28,6 +28,10 @@ contributions:
       python_name: napari_locan.widgets._widget_metadata:MetadataQWidget
       title: Metadata
 
+    - id: napari-locan.show_properties_qwidget
+      python_name: napari_locan.widgets._widget_show_properties:ShowPropertiesQWidget
+      title: Show properties
+
     - id: napari-locan.load_qwidget
       python_name: napari_locan.widgets._widget_load:LoadQWidget
       title: Load
@@ -94,37 +98,40 @@ contributions:
       display_name: SMLM data
 
     - command: napari-locan.metadata_qwidget
-      display_name: Metadata
+      display_name: Show metadata
+
+    - command: napari-locan.show_properties_qwidget
+      display_name: Show properties
 
     - command: napari-locan.load_qwidget
       display_name: Load
 
     - command: napari-locan.filter_specifications_qwidget
-      display_name: Filter Specifications
+      display_name: Filter specifications
 
     - command: napari-locan.select_qwidget
       display_name: Select
 
     - command: napari-locan.show_points_2d_qwidget
-      display_name: Points 2d
+      display_name: Render points 2d
 
     - command: napari-locan.show_points_3d_qwidget
-      display_name: Points 3d
+      display_name: Render points 3d
 
     - command: napari-locan.render2d_qwidget
-      display_name: Render 2d
+      display_name: Render image 2d
 
     - command: napari-locan.show_features_qwidget
-      display_name: Show features
+      display_name: Render features
 
     - command: napari-locan.roi_qwidget
       display_name: Region of interest
 
     - command: napari-locan.clustering_qwidget
-      display_name: Cluster
+      display_name: Compute cluster
 
     - command: napari-locan.collection_series_2d_qwidget
-      display_name: Collection series
+      display_name: Render collection series
 
     - command: napari-locan.run_script_qwidget
       display_name: Run script

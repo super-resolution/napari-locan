@@ -1,9 +1,12 @@
+from copy import copy
+
 from napari_locan import ShowFeaturesQWidget
 from napari_locan.data_model._locdata import SmlmData
 
 
 class TestShowFeaturesQWidget:
     def test_ShowFeaturesQWidget(self, make_napari_viewer, locdata_2d):
+        locdata_2d = copy(locdata_2d)
         viewer = make_napari_viewer()
         smlm_data = SmlmData(locdatas=[locdata_2d])
         features_widget = ShowFeaturesQWidget(viewer, smlm_data=smlm_data)

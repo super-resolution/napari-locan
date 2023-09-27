@@ -170,6 +170,9 @@ display_name = "napari-locan"
 files = ["src"]
 strict = true
 
+# warn-unused-ignores is not quite reproducible
+warn_unused_ignores = false
+
 [[tool.mypy.overrides]]
 module = [
     'locan',
