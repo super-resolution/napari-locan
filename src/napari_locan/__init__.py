@@ -34,6 +34,7 @@ __all__: list[str] = [
     "ClusteringQWidget",
     "ShowMetadataQWidget",
     "ShowPropertiesQWidget",
+    "ShowDataQWidget",
     "SelectQWidget",
     "RenderCollectionSeries2dQWidget",
 ]
@@ -93,4 +94,7 @@ from napari_locan.widgets._widget_render_collection_series_2d import (
 )
 from napari_locan.widgets._widget_show_properties import (
     ShowPropertiesQWidget,
+)
+from napari_locan.widgets._widget_show_data import (
+    ShowDataQWidget,
 )

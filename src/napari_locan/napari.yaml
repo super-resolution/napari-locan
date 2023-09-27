@@ -26,11 +26,15 @@ contributions:
 
     - id: napari-locan.show_metadata_qwidget
       python_name: napari_locan.widgets._widget_show_metadata:ShowMetadataQWidget
-      title: Metadata
+      title: Show metadata
 
     - id: napari-locan.show_properties_qwidget
       python_name: napari_locan.widgets._widget_show_properties:ShowPropertiesQWidget
-      title: Properties
+      title: Show properties
+
+    - id: napari-locan.show_data_qwidget
+      python_name: napari_locan.widgets._widget_show_data:ShowDataQWidget
+      title: Show data
 
     - id: napari-locan.load_qwidget
       python_name: napari_locan.widgets._widget_load:LoadQWidget
@@ -102,6 +106,9 @@ contributions:
 
     - command: napari-locan.show_properties_qwidget
       display_name: Show properties
+
+    - command: napari-locan.show_data_qwidget
+      display_name: Show data
 
     - command: napari-locan.load_qwidget
       display_name: Load
