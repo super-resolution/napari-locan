@@ -10,6 +10,7 @@ from qtpy.QtWidgets import (
     QComboBox,
     QFileDialog,
     QHBoxLayout,
+    QMessageBox,
     QPushButton,
     QVBoxLayout,
     QWidget,
@@ -57,12 +58,17 @@ class LocdatasQWidget(QWidget):  # type: ignore
         self._save_button.setToolTip("Save SMLM dataset as ASDF file.")
         self._save_button.clicked.connect(self._save_button_on_click)
 
+        self._delete_all_button = QPushButton("Delete all")
+        self._delete_all_button.setToolTip("Delete all SMLM data.")
+        self._delete_all_button.clicked.connect(self._delete_all_button_on_click)
+
         self._delete_button = QPushButton("Delete")
         self._delete_button.setToolTip("Delete SMLM dataset.")
         self._delete_button.clicked.connect(self._delete_button_on_click)
 
         self._buttons_layout = QHBoxLayout()
         self._buttons_layout.addWidget(self._save_button)
+        self._buttons_layout.addWidget(self._delete_all_button)
         self._buttons_layout.addWidget(self._delete_button)
 
     def _set_layout(self) -> None:
@@ -82,6 +88,18 @@ class LocdatasQWidget(QWidget):  # type: ignore
             )  # needed to activate setter
 
             self.smlm_data.change_event()
+
+    def _delete_all_button_on_click(self) -> None:
+        msgBox = QMessageBox()
+        msgBox.setText("Do you really want to delete ALL datasets?")
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        msgBox.setDefaultButton(QMessageBox.Cancel)
+        return_value = msgBox.exec()
+        if return_value == QMessageBox.Ok:
+            self.smlm_data.locdatas = None  # type: ignore
+            self.smlm_data.change_event()
+        else:
+            return
 
     def _save_button_on_click(self) -> None:
         current_index = self._locdatas_combobox.currentIndex()

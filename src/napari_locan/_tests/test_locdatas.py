@@ -105,3 +105,10 @@ class TestLocdatas:
         assert smlm_data.index == 0
         assert isinstance(smlm_data.locdata, lc.LocData)
         assert isinstance(smlm_data.locdata_name, str)
+
+        smlm_data.locdatas = None
+        assert len(smlm_data.locdatas) == 0
+        assert len(smlm_data.locdata_names) == 0
+        assert smlm_data.index == -1
+        assert smlm_data.locdata is None
+        assert smlm_data.locdata_name == ""

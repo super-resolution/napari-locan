@@ -57,6 +57,23 @@ class TestLocdatasQWidget:
         assert smlm_data.locdatas == []
 
     @pytest.mark.skip("Needs user interaction")
+    def test_LocdatasQWidget_delete_all_button(self, make_napari_viewer):
+        smlm_data = SmlmData()
+        viewer = make_napari_viewer()
+        my_widget = LocdatasQWidget(viewer, smlm_data=smlm_data)
+
+        locdata_0, locdata_1 = lc.LocData(), lc.LocData()
+        smlm_data.locdatas = [locdata_0, locdata_1]
+        assert my_widget._locdatas_combobox.currentIndex() == 0
+        assert my_widget._locdatas_combobox.currentText() != ""
+        assert smlm_data.locdatas == [locdata_0, locdata_1]
+
+        my_widget._delete_all_button_on_click()
+        assert my_widget._locdatas_combobox.currentIndex() == -1
+        assert my_widget._locdatas_combobox.currentText() == ""
+        assert smlm_data.locdatas == []
+
+    @pytest.mark.skip("Needs user interaction")
     def test_LocdatasQWidget_save_button(self, make_napari_viewer, locdata_2d):
         smlm_data = SmlmData()
         viewer = make_napari_viewer()
