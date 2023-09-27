@@ -1,13 +1,16 @@
 """
 QWidget plugin for showing locdata properties
 """
+from __future__ import annotations
+
 import logging
-import pprint
+from typing import Any
 
 from napari.viewer import Viewer
+from qtpy.QtCore import QAbstractTableModel, Qt
 from qtpy.QtWidgets import (
     QHBoxLayout,
-    QPlainTextEdit,
+    QTableView,
     QVBoxLayout,
     QWidget,
 )
@@ -18,32 +21,60 @@ from napari_locan.data_model._locdata import SmlmData
 logger = logging.getLogger(__name__)
 
 
+class TableModel(QAbstractTableModel):  # type: ignore
+    def __init__(self, data: Any) -> None:
+        super().__init__()
+        self._data = data
+
+    def data(self, index, role) -> str:  # type: ignore
+        if role == Qt.DisplayRole:
+            value = self._data.iloc[index.row(), index.column()]
+            return str(value)
+
+    def rowCount(self, parent=None) -> int:  # type: ignore
+        return self._data.shape[0]  # type: ignore
+
+    def columnCount(self, parent=None) -> int:  # type: ignore
+        return self._data.shape[1]  # type: ignore
+
+    def headerData(self, section, orientation: Qt.Horizontal | Qt.Vertical, role) -> str:  # type: ignore
+        # section is the index of the column/row.
+        if role == Qt.DisplayRole:
+            if orientation == Qt.Horizontal:
+                return str(self._data.columns[section])
+
+            if orientation == Qt.Vertical:
+                return str(self._data.index[section])
+
+
 class ShowDataQWidget(QWidget):  # type: ignore
     def __init__(self, napari_viewer: Viewer, smlm_data: SmlmData = smlm_data):
         super().__init__()
         self.viewer = napari_viewer
         self.smlm_data = smlm_data
 
-        self._add_data_text()
+        self._add_table_view()
         self._set_layout()
 
-    def _add_data_text(self) -> None:
-        # QTableView
-        self._data_text_edit = QPlainTextEdit()
-        self.smlm_data.index_signal.connect(self._update_data_text)
+    def _add_table_view(self) -> None:
+        self._table_view = QTableView()
+        self.smlm_data.index_signal.connect(self._update_table_view)
 
-        self._data_layout = QHBoxLayout()
-        self._data_layout.addWidget(self._data_text_edit)
+        self._table_view_layout = QHBoxLayout()
+        self._table_view_layout.addWidget(self._table_view)
+
         self.smlm_data.index_signal.emit(self.smlm_data.index)
 
-    def _update_data_text(self) -> None:
+    def _update_table_view(self) -> None:
         if self.smlm_data.index != -1:
-            text = pprint.pformat(self.smlm_data.locdata.data)  # type: ignore
-            self._data_text_edit.setPlainText(text)
+            self.model: TableModel | None = TableModel(
+                data=self.smlm_data.locdata.data.describe()  # type: ignore
+            )
         else:
-            self._data_text_edit.setPlainText("")
+            self.model = None
+        self._table_view.setModel(self.model)
 
     def _set_layout(self) -> None:
         layout = QVBoxLayout()
-        layout.addLayout(self._data_layout)
+        layout.addLayout(self._table_view_layout)
         self.setLayout(layout)

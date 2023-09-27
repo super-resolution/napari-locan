@@ -34,7 +34,7 @@ contributions:
 
     - id: napari-locan.show_data_qwidget
       python_name: napari_locan.widgets._widget_show_data:ShowDataQWidget
-      title: Show data
+      title: Show data statistics
 
     - id: napari-locan.load_qwidget
       python_name: napari_locan.widgets._widget_load:LoadQWidget
@@ -108,7 +108,7 @@ contributions:
       display_name: Show properties
 
     - command: napari-locan.show_data_qwidget
-      display_name: Show data
+      display_name: Show data statistics
 
     - command: napari-locan.load_qwidget
       display_name: Load
