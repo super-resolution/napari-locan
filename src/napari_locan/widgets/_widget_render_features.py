@@ -21,7 +21,7 @@ from napari_locan.data_model._locdata import SmlmData
 logger = logging.getLogger(__name__)
 
 
-class ShowFeaturesQWidget(QWidget):  # type: ignore
+class RenderFeaturesQWidget(QWidget):  # type: ignore
     def __init__(self, napari_viewer: Viewer, smlm_data: SmlmData = smlm_data):
         super().__init__()
         self.viewer = napari_viewer
@@ -126,9 +126,9 @@ class ShowFeaturesQWidget(QWidget):  # type: ignore
         self._alpha_shape_layout.addWidget(self._alpha_shape_spin_box)
 
     def _add_render_button(self) -> None:
-        self._render_button = QPushButton("Show")
+        self._render_button = QPushButton("Render all")
         self._render_button.setToolTip(
-            "Show the selected SMLM data features in new layer."
+            "Show the selected SMLM data features in new layers."
         )
         self._render_button.clicked.connect(self._render_button_on_click)
 

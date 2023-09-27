@@ -1,6 +1,6 @@
 import locan as lc
 
-from napari_locan import CollectionSeriesQWidget
+from napari_locan import RenderCollectionSeries2dQWidget
 from napari_locan.data_model._locdata import SmlmData
 
 
@@ -9,11 +9,13 @@ class TestCollectionSeriesQWidget:
         self, make_napari_viewer, locdata_two_cluster_with_noise_2d
     ):
         viewer = make_napari_viewer()
-        collection_series_widget = CollectionSeriesQWidget(viewer)
+        collection_series_widget = RenderCollectionSeries2dQWidget(viewer)
         assert collection_series_widget
 
         smlm_data = SmlmData(locdatas=[locdata_two_cluster_with_noise_2d])
-        collection_series_widget = CollectionSeriesQWidget(viewer, smlm_data=smlm_data)
+        collection_series_widget = RenderCollectionSeries2dQWidget(
+            viewer, smlm_data=smlm_data
+        )
         assert collection_series_widget
 
         smlm_data = SmlmData(locdatas=[locdata_two_cluster_with_noise_2d])
@@ -26,7 +28,9 @@ class TestCollectionSeriesQWidget:
         collection = lc.LocData.concat([sel_1, sel_2])
         smlm_data.append_locdata(locdata=collection)
 
-        collection_series_widget = CollectionSeriesQWidget(viewer, smlm_data=smlm_data)
+        collection_series_widget = RenderCollectionSeries2dQWidget(
+            viewer, smlm_data=smlm_data
+        )
         assert collection_series_widget._loc_properties_x_combobox.currentIndex() == 0
         assert collection_series_widget._loc_properties_y_combobox.currentIndex() == 1
         assert (
@@ -50,7 +54,9 @@ class TestCollectionSeriesQWidget:
         collection = lc.LocData.concat([sel_1, sel_2])
         smlm_data.append_locdata(locdata=collection)
 
-        collection_series_widget = CollectionSeriesQWidget(viewer, smlm_data=smlm_data)
+        collection_series_widget = RenderCollectionSeries2dQWidget(
+            viewer, smlm_data=smlm_data
+        )
         collection_series_widget._points_button_on_click()
         assert len(viewer.layers) == 1
 

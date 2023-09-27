@@ -1,6 +1,6 @@
 from copy import copy
 
-from napari_locan import ShowFeaturesQWidget
+from napari_locan import RenderFeaturesQWidget
 from napari_locan.data_model._locdata import SmlmData
 
 
@@ -9,7 +9,7 @@ class TestShowFeaturesQWidget:
         locdata_2d = copy(locdata_2d)
         viewer = make_napari_viewer()
         smlm_data = SmlmData(locdatas=[locdata_2d])
-        features_widget = ShowFeaturesQWidget(viewer, smlm_data=smlm_data)
+        features_widget = RenderFeaturesQWidget(viewer, smlm_data=smlm_data)
         features_widget._centroid_check_box.setChecked(True)
         features_widget._bounding_box_check_box.setChecked(True)
         features_widget._oriented_bounding_box_check_box.setChecked(True)

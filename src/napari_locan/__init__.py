@@ -25,17 +25,17 @@ __all__: list[str] = [
     "LocdatasQWidget",
     "FilterSpecificationsQWidget",
     "LoadQWidget",
-    "Render2dQWidget",
+    "RenderImage2dQWidget",
     "RunScriptQWidget",
-    "ShowFeaturesQWidget",
-    "ShowPoints2dQWidget",
-    "ShowPoints3dQWidget",
+    "RenderFeaturesQWidget",
+    "RenderPoints2dQWidget",
+    "RenderPoints3dQWidget",
     "RoiQWidget",
     "ClusteringQWidget",
-    "MetadataQWidget",
+    "ShowMetadataQWidget",
     "ShowPropertiesQWidget",
     "SelectQWidget",
-    "CollectionSeriesQWidget",
+    "RenderCollectionSeries2dQWidget",
 ]
 
 from napari_locan.data_model._locdata import SmlmData
@@ -61,20 +61,20 @@ from napari_locan.widgets._widget_filter_specifications import (
 from napari_locan.widgets._widget_load import (
     LoadQWidget,
 )
-from napari_locan.widgets._widget_render2d import (
-    Render2dQWidget,
+from napari_locan.widgets._widget_render_image_2d import (
+    RenderImage2dQWidget,
 )
 from napari_locan.widgets._widget_run_script import (
     RunScriptQWidget,
 )
-from napari_locan.widgets._widget_locdata_features import (
-    ShowFeaturesQWidget,
+from napari_locan.widgets._widget_render_features import (
+    RenderFeaturesQWidget,
 )
-from napari_locan.widgets._widget_show_points_2d import (
-    ShowPoints2dQWidget,
+from napari_locan.widgets._widget_render_points_2d import (
+    RenderPoints2dQWidget,
 )
-from napari_locan.widgets._widget_show_points_3d import (
-    ShowPoints3dQWidget,
+from napari_locan.widgets._widget_render_points_3d import (
+    RenderPoints3dQWidget,
 )
 from napari_locan.widgets._widget_roi import (
     RoiQWidget,
@@ -82,14 +82,14 @@ from napari_locan.widgets._widget_roi import (
 from napari_locan.widgets._widget_clustering import (
     ClusteringQWidget,
 )
-from napari_locan.widgets._widget_metadata import (
-    MetadataQWidget,
+from napari_locan.widgets._widget_show_metadata import (
+    ShowMetadataQWidget,
 )
 from napari_locan.widgets._widget_select import (
     SelectQWidget,
 )
-from napari_locan.widgets._widget_collection_series_2d import (
-    CollectionSeriesQWidget,
+from napari_locan.widgets._widget_render_collection_series_2d import (
+    RenderCollectionSeries2dQWidget,
 )
 from napari_locan.widgets._widget_show_properties import (
     ShowPropertiesQWidget,

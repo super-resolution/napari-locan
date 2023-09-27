@@ -24,13 +24,13 @@ contributions:
       python_name: napari_locan.widgets._widget_locdatas:LocdatasQWidget
       title: SMLM data
 
-    - id: napari-locan.metadata_qwidget
-      python_name: napari_locan.widgets._widget_metadata:MetadataQWidget
+    - id: napari-locan.show_metadata_qwidget
+      python_name: napari_locan.widgets._widget_show_metadata:ShowMetadataQWidget
       title: Metadata
 
     - id: napari-locan.show_properties_qwidget
       python_name: napari_locan.widgets._widget_show_properties:ShowPropertiesQWidget
-      title: Show properties
+      title: Properties
 
     - id: napari-locan.load_qwidget
       python_name: napari_locan.widgets._widget_load:LoadQWidget
@@ -44,21 +44,21 @@ contributions:
       python_name: napari_locan.widgets._widget_select:SelectQWidget
       title: Select
 
-    - id: napari-locan.show_points_2d_qwidget
-      python_name: napari_locan.widgets._widget_show_points_2d:ShowPoints2dQWidget
-      title: Show points 2d
+    - id: napari-locan.render_points_2d_qwidget
+      python_name: napari_locan.widgets._widget_render_points_2d:RenderPoints2dQWidget
+      title: Render points 2d
 
-    - id: napari-locan.show_points_3d_qwidget
-      python_name: napari_locan.widgets._widget_show_points_3d:ShowPoints3dQWidget
-      title: Show points 3d
+    - id: napari-locan.render_points_3d_qwidget
+      python_name: napari_locan.widgets._widget_render_points_3d:RenderPoints3dQWidget
+      title: Render points 3d
 
-    - id: napari-locan.render2d_qwidget
-      python_name: napari_locan.widgets._widget_render2d:Render2dQWidget
-      title: Render 2d
+    - id: napari-locan.render_image_2d_qwidget
+      python_name: napari_locan.widgets._widget_render_image_2d:RenderImage2dQWidget
+      title: Render image 2d
 
-    - id: napari-locan.show_features_qwidget
-      python_name: napari_locan.widgets._widget_locdata_features:ShowFeaturesQWidget
-      title: Show features
+    - id: napari-locan.render_features_qwidget
+      python_name: napari_locan.widgets._widget_render_features:RenderFeaturesQWidget
+      title: Render features
 
     - id: napari-locan.roi_qwidget
       python_name: napari_locan.widgets._widget_roi:RoiQWidget
@@ -66,11 +66,11 @@ contributions:
 
     - id: napari-locan.clustering_qwidget
       python_name: napari_locan.widgets._widget_clustering:ClusteringQWidget
-      title: Cluster SMLM data
+      title: Compute cluster
 
-    - id: napari-locan.collection_series_2d_qwidget
-      python_name: napari_locan.widgets._widget_collection_series_2d:CollectionSeriesQWidget
-      title: Collection series
+    - id: napari-locan.render_collection_series_2d_qwidget
+      python_name: napari_locan.widgets._widget_render_collection_series_2d:RenderCollectionSeriesQWidget
+      title: Render collection series 2d
 
     - id: napari-locan.run_script_qwidget
       python_name: napari_locan.widgets._widget_run_script:RunScriptQWidget
@@ -97,7 +97,7 @@ contributions:
     - command: napari-locan.locdatas_qwidget
       display_name: SMLM data
 
-    - command: napari-locan.metadata_qwidget
+    - command: napari-locan.show_metadata_qwidget
       display_name: Show metadata
 
     - command: napari-locan.show_properties_qwidget
@@ -112,16 +112,16 @@ contributions:
     - command: napari-locan.select_qwidget
       display_name: Select
 
-    - command: napari-locan.show_points_2d_qwidget
+    - command: napari-locan.render_points_2d_qwidget
       display_name: Render points 2d
 
-    - command: napari-locan.show_points_3d_qwidget
+    - command: napari-locan.render_points_3d_qwidget
       display_name: Render points 3d
 
-    - command: napari-locan.render2d_qwidget
+    - command: napari-locan.render_image_2d_qwidget
       display_name: Render image 2d
 
-    - command: napari-locan.show_features_qwidget
+    - command: napari-locan.render_features_qwidget
       display_name: Render features
 
     - command: napari-locan.roi_qwidget
@@ -130,8 +130,8 @@ contributions:
     - command: napari-locan.clustering_qwidget
       display_name: Compute cluster
 
-    - command: napari-locan.collection_series_2d_qwidget
-      display_name: Render collection series
+    - command: napari-locan.render_collection_series_2d_qwidget
+      display_name: Render collection series 2d
 
     - command: napari-locan.run_script_qwidget
       display_name: Run script
