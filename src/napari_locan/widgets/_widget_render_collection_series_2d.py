@@ -192,9 +192,9 @@ class RenderCollectionSeries2dQWidget(QWidget):  # type: ignore
                 self._loc_properties_other_combobox.setCurrentIndex(key_index)
 
     def _add_points_buttons(self) -> None:
-        self._points_button = QPushButton("Show points")
+        self._points_button = QPushButton("Render points")
         self._points_button.setToolTip(
-            "Show point representation of SMLM data in new layer."
+            "Show point representation of SMLM data in new points layer."
         )
         self._points_button.clicked.connect(self._points_button_on_click)
 

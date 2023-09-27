@@ -41,12 +41,14 @@ class RenderFeaturesQWidget(QWidget):  # type: ignore
         self._size_spin_box_label = QLabel("size:")
 
         self._size_spin_box = QSpinBox()
+        self._size_spin_box.setToolTip("Size of rendered shapes.")
         self._size_spin_box.setRange(1, 2147483647)
         self._size_spin_box.setValue(100)
 
         self._edge_width_spin_box_label = QLabel("width:")
 
         self._edge_width_spin_box = QSpinBox()
+        self._edge_width_spin_box.setToolTip("Edge width of rendered shapes.")
         self._edge_width_spin_box.setRange(1, 2147483647)
         self._edge_width_spin_box.setValue(100)
 
@@ -116,6 +118,9 @@ class RenderFeaturesQWidget(QWidget):  # type: ignore
         self._alpha_shape_spin_box_label = QLabel("alpha:")
 
         self._alpha_shape_spin_box = QSpinBox()
+        self._alpha_shape_spin_box.setToolTip(
+            "Alpha value to compute specific alpha shape."
+        )
         self._alpha_shape_spin_box.setRange(1, 2147483647)
         self._alpha_shape_spin_box.setValue(100)
 
