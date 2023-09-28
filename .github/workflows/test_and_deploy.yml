@@ -1,21 +1,23 @@
 # Test with all python versions and on all platforms
 # Deploy napari-locan, i.e. upload to PyPi when a release is created
 
-name: test-OS-matrix
+name: test-py-matrix
 
 on:
   schedule:
-    - cron: "37 4 8 * *"
+    - cron: "37 4 * * 2"
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   test:
-    name: ${{ matrix.platform }} py${{ matrix.python-version }}
-    runs-on: ${{ matrix.platform }}
+    name: ubuntu-py${{ matrix.python-version }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        platform: [windows-latest, macos-latest]
         python-version: ["3.9", "3.10", "3.11"]
 
     steps:
