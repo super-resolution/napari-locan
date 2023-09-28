@@ -49,6 +49,7 @@ dependencies = [
     "locan>=0.15",
     "magicgui",
     "napari",
+    "napari_matplotlib",
     "numpy",
     "qtpy",
     "tomli>=1.1.0; python_version<'3.11'",
@@ -71,12 +72,12 @@ dev = [
     "twine",
 ]
 docs = [
-    "sphinx",
+    "furo",
     "ipython",
     "myst-nb",
-    "sphinx-copybutton",
+    "sphinx",
     "sphinx_autodoc_typehints",
-    "furo",
+    "sphinx-copybutton",
 ]
 
 [project.urls]
