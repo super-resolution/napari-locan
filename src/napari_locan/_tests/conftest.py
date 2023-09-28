@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 # fixtures for LocData objects
+# todo: delete unused fixtures
 
 
 @pytest.fixture(scope="session")

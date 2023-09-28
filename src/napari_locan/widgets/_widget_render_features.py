@@ -3,6 +3,7 @@ QWidget plugin to represent locdata features.
 """
 import logging
 
+from napari.utils import progress
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QCheckBox,
@@ -198,9 +199,11 @@ class RenderFeaturesQWidget(QWidget):  # type: ignore
             self._alpha_shape_check_box.isChecked()
             and self._get_message_feedback() is True
         ):
-            alpha = self._alpha_shape_spin_box.value()
-            locdata.update_alpha_shape(alpha)
-            shapes = locdata.alpha_shape.region.points
+            with progress() as progress_bar:
+                progress_bar.set_description("Processing alpha shape")
+                alpha = self._alpha_shape_spin_box.value()
+                locdata.update_alpha_shape(alpha)
+                shapes = locdata.alpha_shape.region.points
             self.viewer.add_shapes(
                 shapes,
                 shape_type="polygon",

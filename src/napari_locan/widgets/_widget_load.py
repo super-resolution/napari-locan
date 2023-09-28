@@ -4,6 +4,7 @@ QWidget plugin to load SMLM data
 import logging
 
 import locan as lc
+from napari.utils import progress
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QComboBox,
@@ -88,5 +89,7 @@ class LoadQWidget(QWidget):  # type: ignore
 
         file_path = self._file_path_edit.text()
         file_type = self._file_type_combobox.currentText()
-        locdata = lc.load_locdata(path=file_path, file_type=file_type)
-        self.smlm_data.append_locdata(locdata=locdata)
+        with progress() as progress_bar:
+            progress_bar.set_description("Loading data")
+            locdata = lc.load_locdata(path=file_path, file_type=file_type)
+            self.smlm_data.append_locdata(locdata=locdata)

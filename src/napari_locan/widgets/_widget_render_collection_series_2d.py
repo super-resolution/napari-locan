@@ -229,7 +229,7 @@ class RenderCollectionSeries2dQWidget(QWidget):  # type: ignore
                 for loc_property_ in loc_properties
             ):
                 raise ValueError(
-                    "Overlay is only implemented for loc_properties beeing coordinate labels."
+                    "Overlay is only implemented for loc_properties being coordinate labels."
                 )
             else:
                 locdata = lc.overlay(
