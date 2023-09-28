@@ -36,6 +36,10 @@ contributions:
       python_name: napari_locan.widgets._widget_show_data:ShowDataQWidget
       title: Show data statistics
 
+    - id: napari-locan.property_distribution_qwidget
+      python_name: napari_locan.widgets._widget_property_distribution:PropertyDistributionQWidget
+      title: Show property distribution
+
     - id: napari-locan.load_qwidget
       python_name: napari_locan.widgets._widget_load:LoadQWidget
       title: Load
@@ -109,6 +113,9 @@ contributions:
 
     - command: napari-locan.show_data_qwidget
       display_name: Show data statistics
+
+    - command: napari-locan.property_distribution_qwidget
+      display_name: Show property distribution
 
     - command: napari-locan.load_qwidget
       display_name: Load

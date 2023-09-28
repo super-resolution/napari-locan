@@ -22,21 +22,22 @@ __all__: list[str] = [
     "make_image_tubulin",
     "make_points_npc",
     "make_points_tubulin",
-    "LocdatasQWidget",
+    "ClusteringQWidget",
     "FilterSpecificationsQWidget",
     "LoadQWidget",
-    "RenderImage2dQWidget",
-    "RunScriptQWidget",
+    "LocdatasQWidget",
+    "PropertyDistributionQWidget",
+    "RenderCollectionSeries2dQWidget",
     "RenderFeaturesQWidget",
+    "RenderImage2dQWidget",
     "RenderPoints2dQWidget",
     "RenderPoints3dQWidget",
     "RoiQWidget",
-    "ClusteringQWidget",
+    "RunScriptQWidget",
+    "SelectQWidget",
+    "ShowDataQWidget",
     "ShowMetadataQWidget",
     "ShowPropertiesQWidget",
-    "ShowDataQWidget",
-    "SelectQWidget",
-    "RenderCollectionSeries2dQWidget",
 ]
 
 from napari_locan.data_model._locdata import SmlmData
@@ -53,8 +54,8 @@ from napari_locan.sample_data._sample_data import (
     make_points_npc,
     make_points_tubulin,
 )
-from napari_locan.widgets._widget_locdatas import (
-    LocdatasQWidget,
+from napari_locan.widgets._widget_clustering import (
+    ClusteringQWidget,
 )
 from napari_locan.widgets._widget_filter_specifications import (
     FilterSpecificationsQWidget,
@@ -62,14 +63,20 @@ from napari_locan.widgets._widget_filter_specifications import (
 from napari_locan.widgets._widget_load import (
     LoadQWidget,
 )
-from napari_locan.widgets._widget_render_image_2d import (
-    RenderImage2dQWidget,
+from napari_locan.widgets._widget_locdatas import (
+    LocdatasQWidget,
 )
-from napari_locan.widgets._widget_run_script import (
-    RunScriptQWidget,
+from napari_locan.widgets._widget_property_distribution import (
+    PropertyDistributionQWidget,
+)
+from napari_locan.widgets._widget_render_collection_series_2d import (
+    RenderCollectionSeries2dQWidget,
 )
 from napari_locan.widgets._widget_render_features import (
     RenderFeaturesQWidget,
+)
+from napari_locan.widgets._widget_render_image_2d import (
+    RenderImage2dQWidget,
 )
 from napari_locan.widgets._widget_render_points_2d import (
     RenderPoints2dQWidget,
@@ -80,21 +87,18 @@ from napari_locan.widgets._widget_render_points_3d import (
 from napari_locan.widgets._widget_roi import (
     RoiQWidget,
 )
-from napari_locan.widgets._widget_clustering import (
-    ClusteringQWidget,
-)
-from napari_locan.widgets._widget_show_metadata import (
-    ShowMetadataQWidget,
+from napari_locan.widgets._widget_run_script import (
+    RunScriptQWidget,
 )
 from napari_locan.widgets._widget_select import (
     SelectQWidget,
 )
-from napari_locan.widgets._widget_render_collection_series_2d import (
-    RenderCollectionSeries2dQWidget,
+from napari_locan.widgets._widget_show_data import (
+    ShowDataQWidget,
+)
+from napari_locan.widgets._widget_show_metadata import (
+    ShowMetadataQWidget,
 )
 from napari_locan.widgets._widget_show_properties import (
     ShowPropertiesQWidget,
-)
-from napari_locan.widgets._widget_show_data import (
-    ShowDataQWidget,
 )
