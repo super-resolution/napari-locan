@@ -5,9 +5,7 @@ from __future__ import annotations
 
 import logging
 
-
 logging.getLogger(__name__).addHandler(logging.NullHandler())
-
 
 try:
     from ._version import version as __version__
