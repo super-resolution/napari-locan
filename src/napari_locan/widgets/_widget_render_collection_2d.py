@@ -27,7 +27,7 @@ from napari_locan.data_model._locdata import SmlmData
 logger = logging.getLogger(__name__)
 
 
-class RenderCollectionSeries2dQWidget(QWidget):  # type: ignore
+class RenderCollection2dQWidget(QWidget):  # type: ignore
     def __init__(self, napari_viewer: Viewer, smlm_data: SmlmData = smlm_data):
         super().__init__()
         self.viewer = napari_viewer
@@ -139,7 +139,7 @@ class RenderCollectionSeries2dQWidget(QWidget):  # type: ignore
         self._loc_properties_x_combobox.clear()
         if self.smlm_data.locdata.references is None:  # type: ignore
             raise TypeError("SMLM data must be a LocData collection.")
-        if index != -1:
+        if index != -1 and self.smlm_data.locdata.references is not None:  # type: ignore
             self._loc_properties_x_combobox.addItems(
                 self.smlm_data.locdata.references[0].data.columns  # type: ignore
             )
@@ -159,7 +159,7 @@ class RenderCollectionSeries2dQWidget(QWidget):  # type: ignore
     def _loc_properties_y_combobox_slot_for_smlm_data_index(self, index: int) -> None:
         key_index = self._loc_properties_y_combobox.currentIndex()
         self._loc_properties_y_combobox.clear()
-        if index != -1:
+        if index != -1 and self.smlm_data.locdata.references is not None:  # type: ignore
             self._loc_properties_y_combobox.addItems(
                 self.smlm_data.locdata.references[0].data.columns  # type: ignore
             )
@@ -182,7 +182,7 @@ class RenderCollectionSeries2dQWidget(QWidget):  # type: ignore
         key_index = self._loc_properties_other_combobox.currentIndex()
         self._loc_properties_other_combobox.clear()
         self._loc_properties_other_combobox.addItem("")
-        if index != -1:
+        if index != -1 and self.smlm_data.locdata.references is not None:  # type: ignore
             self._loc_properties_other_combobox.addItems(
                 self.smlm_data.locdata.references[0].data.columns  # type: ignore
             )
@@ -192,28 +192,49 @@ class RenderCollectionSeries2dQWidget(QWidget):  # type: ignore
                 self._loc_properties_other_combobox.setCurrentIndex(key_index)
 
     def _add_points_buttons(self) -> None:
-        self._points_button = QPushButton("Render points")
-        self._points_button.setToolTip(
-            "Show point representation of SMLM data in new points layer."
+        self._concatenate_button = QPushButton("Concatenate")
+        self._concatenate_button.setToolTip(
+            "Concatenate all collection elements in new  SMLM dataset."
         )
-        self._points_button.clicked.connect(self._points_button_on_click)
+        self._concatenate_button.clicked.connect(self._concatenate_button_on_click)
+
+        self._render_points_button = QPushButton("Render points")
+        self._render_points_button.setToolTip(
+            "Show point representation of all SMLM data collection elements in new points layer."
+        )
+        self._render_points_button.clicked.connect(self._render_points_button_on_click)
+
+        self._render_points_as_series_button = QPushButton("Render points as series")
+        self._render_points_as_series_button.setToolTip(
+            "Show series of point representations for SMLM data collection elements in new points layer."
+        )
+        self._render_points_as_series_button.clicked.connect(
+            self._render_points_as_series_button_on_click
+        )
+
+        self._points_buttons_layout = QVBoxLayout()
+        self._points_buttons_layout.addWidget(self._concatenate_button)
+        self._points_buttons_layout.addWidget(self._render_points_button)
+        self._points_buttons_layout.addWidget(self._render_points_as_series_button)
 
     def _set_layout(self) -> None:
         layout = QVBoxLayout()
         layout.addLayout(self._loc_properties_layout)
         layout.addLayout(self._other_properties_layout)
         layout.addLayout(self._translation_selection_layout)
-        layout.addWidget(self._points_button)
+        layout.addLayout(self._points_buttons_layout)
         self.setLayout(layout)
 
-    def _points_button_on_click(self) -> None:
+    def _prepare_collection_for_rendering(
+        self,
+    ) -> tuple[list[str], str | None, lc.LocData] | None:
         locdata: lc.LocData = self.smlm_data.locdata
         if locdata is None:
             raise ValueError("There is no SMLM data available.")
         if bool(locdata) is False:
             raise ValueError("Locdata is empty.")
         if self._get_message_feedback() is False:
-            return
+            return None
 
         loc_properties = [
             self._loc_properties_x_combobox.currentText(),
@@ -237,6 +258,51 @@ class RenderCollectionSeries2dQWidget(QWidget):  # type: ignore
                     centers="centroid",
                     orientations=None,
                 )
+        return loc_properties, other_property, locdata
+
+    def _concatenate_button_on_click(self) -> None:
+        returned = self._prepare_collection_for_rendering()
+        if returned is None:
+            return None
+        else:
+            loc_properties, other_property, locdata = returned
+        locdata = lc.LocData.concat(locdatas=locdata.references)
+        self.smlm_data.append_locdata(locdata=locdata, set_index=False)
+
+    def _render_points_button_on_click(self) -> None:
+        returned = self._prepare_collection_for_rendering()
+        if returned is None:
+            return None
+        else:
+            loc_properties, other_property, locdata = returned
+
+        locdata = lc.LocData.concat(locdatas=locdata.references)
+        data = locdata.data[loc_properties].to_numpy()
+
+        if other_property is None:
+            point_properties: dict[str, npt.NDArray[Any]] = {}
+            add_kwargs = {"name": self.smlm_data.locdata_name}
+        else:
+            other_property_data = locdata.data[other_property].to_numpy()
+            other_property_data = lc.adjust_contrast(
+                other_property_data, rescale=lc.Trafo.STANDARDIZE
+            )
+            point_properties = {"other_property": other_property_data}
+            add_kwargs = {
+                "name": self.smlm_data.locdata_name,
+                "edge_color": "",
+                "face_color": "other_property",
+                "face_colormap": "viridis",
+            }
+
+        self.viewer.add_points(data=data, properties=point_properties, **add_kwargs)
+
+    def _render_points_as_series_button_on_click(self) -> None:
+        returned = self._prepare_collection_for_rendering()
+        if returned is None:
+            return
+        else:
+            loc_properties, other_property, locdata = returned
 
         reference_data = [
             reference.data[loc_properties].to_numpy()

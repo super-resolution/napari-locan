@@ -29,8 +29,19 @@ class TestLocdatasQWidget:
         assert smlm_data.index == 1
 
         smlm_data.locdatas = []
+        assert len(smlm_data.locdatas) == 0
         assert my_widget._locdatas_combobox.currentIndex() == -1
         assert my_widget._locdatas_combobox.currentText() == ""
+
+        smlm_data.append_locdata(locdata=locdata_0)
+        assert len(smlm_data.locdatas) == 1
+        assert my_widget._locdatas_combobox.currentIndex() == 0
+        assert my_widget._locdatas_combobox.currentText() != ""
+
+        smlm_data.append_locdata(locdata=locdata_1, set_index=False)
+        assert len(smlm_data.locdatas) == 2
+        assert my_widget._locdatas_combobox.currentIndex() == 0
+        assert my_widget._locdatas_combobox.currentText() != ""
 
     def test_LocdatasQWidget_delete_button(self, make_napari_viewer):
         smlm_data = SmlmData()

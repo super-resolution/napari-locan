@@ -25,7 +25,7 @@ __all__: list[str] = [
     "LoadQWidget",
     "LocdatasQWidget",
     "PropertyDistributionQWidget",
-    "RenderCollectionSeries2dQWidget",
+    "RenderCollection2dQWidget",
     "RenderFeaturesQWidget",
     "RenderImage2dQWidget",
     "RenderPoints2dQWidget",
@@ -67,8 +67,8 @@ from napari_locan.widgets._widget_locdatas import (
 from napari_locan.widgets._widget_property_distribution import (
     PropertyDistributionQWidget,
 )
-from napari_locan.widgets._widget_render_collection_series_2d import (
-    RenderCollectionSeries2dQWidget,
+from napari_locan.widgets._widget_render_collection_2d import (
+    RenderCollection2dQWidget,
 )
 from napari_locan.widgets._widget_render_features import (
     RenderFeaturesQWidget,

@@ -76,8 +76,8 @@ contributions:
       python_name: napari_locan.widgets._widget_clustering:ClusteringQWidget
       title: Compute cluster
 
-    - id: napari-locan.render_collection_series_2d_qwidget
-      python_name: napari_locan.widgets._widget_render_collection_series_2d:RenderCollectionSeries2dQWidget
+    - id: napari-locan.render_collection_2d_qwidget
+      python_name: napari_locan.widgets._widget_render_collection_2d:RenderCollection2dQWidget
       title: Render collection series 2d
 
     - id: napari-locan.run_script_qwidget
@@ -144,8 +144,8 @@ contributions:
     - command: napari-locan.clustering_qwidget
       display_name: Compute cluster
 
-    - command: napari-locan.render_collection_series_2d_qwidget
-      display_name: Render collection series 2d
+    - command: napari-locan.render_collection_2d_qwidget
+      display_name: Render collection 2d
 
     - command: napari-locan.run_script_qwidget
       display_name: Run script

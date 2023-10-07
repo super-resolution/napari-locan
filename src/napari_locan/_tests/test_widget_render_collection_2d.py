@@ -1,6 +1,8 @@
 import locan as lc
+import napari
+import pytest
 
-from napari_locan import RenderCollectionSeries2dQWidget
+from napari_locan import RenderCollection2dQWidget
 from napari_locan.data_model._locdata import SmlmData
 
 
@@ -9,11 +11,11 @@ class TestCollectionSeriesQWidget:
         self, make_napari_viewer, locdata_two_cluster_with_noise_2d
     ):
         viewer = make_napari_viewer()
-        collection_series_widget = RenderCollectionSeries2dQWidget(viewer)
+        collection_series_widget = RenderCollection2dQWidget(viewer)
         assert collection_series_widget
 
         smlm_data = SmlmData(locdatas=[locdata_two_cluster_with_noise_2d])
-        collection_series_widget = RenderCollectionSeries2dQWidget(
+        collection_series_widget = RenderCollection2dQWidget(
             viewer, smlm_data=smlm_data
         )
         assert collection_series_widget
@@ -28,7 +30,7 @@ class TestCollectionSeriesQWidget:
         collection = lc.LocData.concat([sel_1, sel_2])
         smlm_data.append_locdata(locdata=collection)
 
-        collection_series_widget = RenderCollectionSeries2dQWidget(
+        collection_series_widget = RenderCollection2dQWidget(
             viewer, smlm_data=smlm_data
         )
         assert collection_series_widget._loc_properties_x_combobox.currentIndex() == 0
@@ -54,17 +56,42 @@ class TestCollectionSeriesQWidget:
         collection = lc.LocData.concat([sel_1, sel_2])
         smlm_data.append_locdata(locdata=collection)
 
-        collection_series_widget = RenderCollectionSeries2dQWidget(
+        collection_series_widget = RenderCollection2dQWidget(
             viewer, smlm_data=smlm_data
         )
-        collection_series_widget._points_button_on_click()
+
+        collection_series_widget._render_points_as_series_button_on_click()
         assert len(viewer.layers) == 1
 
         collection_series_widget._loc_properties_other_combobox.setCurrentIndex(1)
-        collection_series_widget._points_button_on_click()
+        collection_series_widget._render_points_as_series_button_on_click()
         assert len(viewer.layers) == 2
 
         collection_series_widget._loc_properties_other_combobox.setCurrentIndex(0)
         collection_series_widget._translation_check_box.setChecked(True)
-        collection_series_widget._points_button_on_click()
+        collection_series_widget._render_points_as_series_button_on_click()
         assert len(viewer.layers) == 3
+
+        collection_series_widget._loc_properties_other_combobox.setCurrentIndex(0)
+        collection_series_widget._render_points_button_on_click()
+        assert len(viewer.layers) == 4
+
+        assert len(collection_series_widget.smlm_data.locdatas) == 2
+        collection_series_widget._concatenate_button_on_click()
+        assert len(collection_series_widget.smlm_data.locdatas) == 3
+
+
+@pytest.mark.napari
+def test_run_napari():
+    viewer = napari.Viewer()
+    viewer.open_sample("napari-locan", "tubulin_points")
+    viewer.window.add_plugin_dock_widget(
+        plugin_name="napari-locan", widget_name="SMLM data"
+    )
+    viewer.window.add_plugin_dock_widget(
+        plugin_name="napari-locan", widget_name="Compute cluster"
+    )
+    viewer.window.add_plugin_dock_widget(
+        plugin_name="napari-locan", widget_name="Render collection 2d"
+    )
+    napari.run()
