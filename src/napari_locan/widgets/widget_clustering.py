@@ -188,7 +188,9 @@ class ClusteringQWidget(QWidget):  # type: ignore
                 locdata=self.smlm_data.locdata, eps=eps_, min_samples=min_samples_
             )
             self.smlm_data.append_locdata(noise)
+            self.smlm_data.locdata_name += "-noise"
             self.smlm_data.append_locdata(clust)
+            self.smlm_data.locdata_name += "-cluster"
 
     def _compute_button_on_click_thread_worker(self) -> None:
         if self.smlm_data.index == -1:
@@ -202,7 +204,9 @@ class ClusteringQWidget(QWidget):  # type: ignore
         def worker_return(return_value: tuple[lc.LocData, lc.LocData]) -> None:
             noise, clust = return_value
             self.smlm_data.append_locdata(noise)
+            self.smlm_data.locdata_name += "-noise"
             self.smlm_data.append_locdata(clust)
+            self.smlm_data.locdata_name += "-cluster"
 
         worker = _cluster_dbscan_worker(
             locdata=self.smlm_data.locdata, eps=eps_, min_samples=min_samples_
