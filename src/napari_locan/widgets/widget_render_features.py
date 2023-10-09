@@ -1,5 +1,8 @@
 """
-QWidget plugin to represent locdata features.
+Render selected features of a SMLM dataset.
+
+A QWidget plugin to represent locdata features including centroid,
+bounding box, oriented bounding box, convex hull and alpha shape.
 """
 import logging
 
@@ -17,7 +20,7 @@ from qtpy.QtWidgets import (
 )
 
 from napari_locan import smlm_data
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
 

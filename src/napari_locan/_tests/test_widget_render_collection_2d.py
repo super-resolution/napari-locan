@@ -2,7 +2,7 @@ import napari
 import pytest
 
 from napari_locan import RenderCollection2dQWidget
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.smlm_data import SmlmData
 
 
 class TestCollectionSeriesQWidget:

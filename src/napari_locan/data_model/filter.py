@@ -1,8 +1,12 @@
 """
 The data model for filter settings
 
-Serving as container for filter specifications
-to select localization property values.
+This module contains a data model to serve as container for filter
+specifications to select localization property values.
+
+The data model is used by other napari-locan widgets to process
+localization data and yield new SMLM datasets.
+It is entirely independent of napari layers.
 """
 from __future__ import annotations
 
@@ -36,7 +40,7 @@ class FilterSpecifications(QObject):  # type: ignore
     filter_names_signal = Signal(list)
     index_signal = Signal(int)
 
-    def __init__(self, filters: list[dict[str, lc.Selector]] | None = None):
+    def __init__(self, filters: list[dict[str, lc.Selector]] | None = None) -> None:
         super().__init__()
         self._filters: list[dict[str, lc.Selector]] = []
         self._filter_names: list[str] = []

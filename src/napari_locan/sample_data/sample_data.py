@@ -5,7 +5,7 @@ This module provides SMLM sample data
 as could be generated with napari-locan.
 
 It implements the "sample data" specification.
-see: https://napari.org/stable/plugins/guides.html?#sample-data
+see: "https://napari.org/stable/plugins/guides.html?#sample-data"
 """
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ import napari
 from napari.types import LayerData
 
 from napari_locan import smlm_data
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.smlm_data import SmlmData
 
 
 def make_image_tubulin(smlm_data: SmlmData = smlm_data) -> list[LayerData]:

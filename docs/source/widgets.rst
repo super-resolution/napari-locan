@@ -6,69 +6,39 @@ Widgets
 
 The plugin napari-locan contains the following widgets:
 
-* SMLM data
+1) Inspecting SMLM data
 
-    The data model for localization-based SMLM data.
-    From this data images are rendered and localization-based analysis
-    procedures are computed.
-    Each dataset is kept as locdata, i.e. a locan.LocData object with metadata,
-    aggregated properties, and localization properties for all localizations.
+    * SMLM data
+    * Show metadata
+    * Show properties
+    * Show localization data
+    * Show localization property distributions
 
-* Show metadata
+2) Providing SMLM data
 
-    The metadata for a single SMLM dataset (locdata.meta) is shown.
+    * Load
+    * Filter specifications
+    * Select
+    * Region of interest
 
-* Show properties
+3) Render SMLM data
 
-    The aggregated properties (locdata.properties) for a single SMLM dataset
-    are shown.
+    * Render points 2D / 3D
+    * Render image 2D / 3D
+    * Render features of a SMLM dataset
 
-* Show localization data
+4) Processing SMLM data
 
-    The dataframe with all localization properties (locdata.data) is shown.
+    * Cluster
 
-* Load
+5) Collections of SMLM datasets
 
-    A widget to load SMLM data files into the SMLM data model.
+    * Render collection as 2D / 3D point cloud
+    * Render collection features
 
-* Filter specifications
+6) Miscellaneous
 
-    A data model for filter specifications that can be applied to select
-    localizations.
+    * Run script
 
-* Select
 
-    Select localizations in current SMLM dataset based on a filter
-    specification.
-    A new SMLM dataset will be created.
-
-* Render points 2D / 3D
-
-    Render SMLM data as point cloud.
-
-* Render image 2D / 3D
-
-    Render SMLM data as image by binning localization properties into
-    pixels / voxels.
-
-* Render features
-
-    Render selected features of a SMLM dataset.
-
-* Region of interest
-
-    Create and regions of interest
-
-* Cluster
-
-    Compute localization cluster.
-    More advanced clustering routines are available through locan-based scripts.
-
-* Collection series
-
-    Render a collection of SMLM data (e.g. a cluster collection)
-    as series of point clouds.
-
-* Run script
-
-    A simple interface to handle scripts for localization analysis.
+Look up the API documentation for further details.

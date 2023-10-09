@@ -1,5 +1,8 @@
 """
-QWidget plugin to load SMLM data
+Load SMLM data files.
+
+A QWidget plugin to load SMLM data files into the SMLM data model.
+A new SMLM dataset will be created.
 """
 import logging
 
@@ -18,7 +21,7 @@ from qtpy.QtWidgets import (
 )
 
 from napari_locan import smlm_data
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,8 @@
 """
-QWidget plugin to run a script
+Run python script.
+
+A QWidget plugin with a simple interface to handle python scripts for
+localization analysis.
 """
 from pathlib import Path
 

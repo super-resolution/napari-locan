@@ -1,5 +1,7 @@
 """
-QWidget plugin to render SMLM data
+Render 3d point cloud.
+
+A QWidget plugin to render SMLM data in 3d.
 """
 from __future__ import annotations
 
@@ -20,7 +22,7 @@ from qtpy.QtWidgets import (
 )
 
 from napari_locan import smlm_data
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
 

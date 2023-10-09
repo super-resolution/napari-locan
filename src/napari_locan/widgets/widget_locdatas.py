@@ -1,5 +1,10 @@
 """
-QWidget plugin to list locdatas
+The data model for localization-based SMLM data.
+
+QWidget plugin to access SMLM datasets from which images are rendered
+and localization-based analysis procedures are computed.
+Each dataset is kept as locdata, i.e. a locan.LocData object with metadata,
+aggregated properties, and localization properties for all localizations.
 """
 import logging
 from pathlib import Path
@@ -17,7 +22,7 @@ from qtpy.QtWidgets import (
 )
 
 from napari_locan import smlm_data
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
 

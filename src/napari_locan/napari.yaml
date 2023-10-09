@@ -4,88 +4,88 @@ contributions:
   commands:
     # sample data
     - id: napari-locan.make_image_npc
-      python_name: napari_locan.sample_data._sample_data:make_image_npc
+      python_name: napari_locan.sample_data.sample_data:make_image_npc
       title: Load sample data from napari-locan (npc img)
 
     - id: napari-locan.make_image_tubulin
-      python_name: napari_locan.sample_data._sample_data:make_image_tubulin
+      python_name: napari_locan.sample_data.sample_data:make_image_tubulin
       title: Load sample data from napari-locan (tubulin img)
 
     - id: napari-locan.make_points_npc
-      python_name: napari_locan.sample_data._sample_data:make_points_npc
+      python_name: napari_locan.sample_data.sample_data:make_points_npc
       title: Load sample data from napari-locan (npc localizations)
 
     - id: napari-locan.make_points_tubulin
-      python_name: napari_locan.sample_data._sample_data:make_points_tubulin
+      python_name: napari_locan.sample_data.sample_data:make_points_tubulin
       title: Load sample data from napari-locan (tubulin localizations)
 
     # widgets
     - id: napari-locan.locdatas_qwidget
-      python_name: napari_locan.widgets._widget_locdatas:LocdatasQWidget
+      python_name: napari_locan.widgets.widget_locdatas:LocdatasQWidget
       title: SMLM data
 
     - id: napari-locan.show_metadata_qwidget
-      python_name: napari_locan.widgets._widget_show_metadata:ShowMetadataQWidget
+      python_name: napari_locan.widgets.widget_show_metadata:ShowMetadataQWidget
       title: Show metadata
 
     - id: napari-locan.show_properties_qwidget
-      python_name: napari_locan.widgets._widget_show_properties:ShowPropertiesQWidget
+      python_name: napari_locan.widgets.widget_show_properties:ShowPropertiesQWidget
       title: Show properties
 
     - id: napari-locan.show_data_qwidget
-      python_name: napari_locan.widgets._widget_show_data:ShowDataQWidget
+      python_name: napari_locan.widgets.widget_show_data:ShowDataQWidget
       title: Show data statistics
 
     - id: napari-locan.property_distribution_qwidget
-      python_name: napari_locan.widgets._widget_property_distribution:PropertyDistributionQWidget
+      python_name: napari_locan.widgets.widget_property_distribution:PropertyDistributionQWidget
       title: Show property distribution
 
     - id: napari-locan.load_qwidget
-      python_name: napari_locan.widgets._widget_load:LoadQWidget
+      python_name: napari_locan.widgets.widget_load:LoadQWidget
       title: Load
 
     - id: napari-locan.filter_specifications_qwidget
-      python_name: napari_locan.widgets._widget_filter_specifications:FilterSpecificationsQWidget
+      python_name: napari_locan.widgets.widget_filter_specifications:FilterSpecificationsQWidget
       title: Filter specifications
 
     - id: napari-locan.select_qwidget
-      python_name: napari_locan.widgets._widget_select:SelectQWidget
+      python_name: napari_locan.widgets.widget_select:SelectQWidget
       title: Select
 
     - id: napari-locan.render_points_2d_qwidget
-      python_name: napari_locan.widgets._widget_render_points_2d:RenderPoints2dQWidget
+      python_name: napari_locan.widgets.widget_render_points_2d:RenderPoints2dQWidget
       title: Render points 2d
 
     - id: napari-locan.render_points_3d_qwidget
-      python_name: napari_locan.widgets._widget_render_points_3d:RenderPoints3dQWidget
+      python_name: napari_locan.widgets.widget_render_points_3d:RenderPoints3dQWidget
       title: Render points 3d
 
     - id: napari-locan.render_image_2d_qwidget
-      python_name: napari_locan.widgets._widget_render_image_2d:RenderImage2dQWidget
+      python_name: napari_locan.widgets.widget_render_image_2d:RenderImage2dQWidget
       title: Render image 2d
 
     - id: napari-locan.render_features_qwidget
-      python_name: napari_locan.widgets._widget_render_features:RenderFeaturesQWidget
+      python_name: napari_locan.widgets.widget_render_features:RenderFeaturesQWidget
       title: Render features
 
     - id: napari-locan.roi_qwidget
-      python_name: napari_locan.widgets._widget_roi:RoiQWidget
+      python_name: napari_locan.widgets.widget_roi:RoiQWidget
       title: Region of interest
 
     - id: napari-locan.clustering_qwidget
-      python_name: napari_locan.widgets._widget_clustering:ClusteringQWidget
+      python_name: napari_locan.widgets.widget_clustering:ClusteringQWidget
       title: Compute cluster
 
     - id: napari-locan.render_collection_2d_qwidget
-      python_name: napari_locan.widgets._widget_render_collection_2d:RenderCollection2dQWidget
+      python_name: napari_locan.widgets.widget_render_collection_2d:RenderCollection2dQWidget
       title: Render collection series 2d
 
     - id: napari-locan.render_collection_features_qwidget
-      python_name: napari_locan.widgets._widget_render_collection_features:RenderCollectionFeaturesQWidget
+      python_name: napari_locan.widgets.widget_render_collection_features:RenderCollectionFeaturesQWidget
       title: Render collection features
 
     - id: napari-locan.run_script_qwidget
-      python_name: napari_locan.widgets._widget_run_script:RunScriptQWidget
+      python_name: napari_locan.widgets.widget_run_script:RunScriptQWidget
       title: Run script
 
   sample_data:

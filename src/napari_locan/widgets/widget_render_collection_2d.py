@@ -1,5 +1,8 @@
 """
-QWidget plugin to render a collection of SMLM data as series
+Render collection of SMLM data as 2d point clouds.
+
+A QWidget plugin to render a collection of SMLM data (e.g. a cluster collection)
+as series of point clouds in 2d.
 """
 from __future__ import annotations
 
@@ -22,7 +25,7 @@ from qtpy.QtWidgets import (
 )
 
 from napari_locan import smlm_data
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
 

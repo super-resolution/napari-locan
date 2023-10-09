@@ -1,6 +1,6 @@
 from napari_locan import ShowDataQWidget
-from napari_locan.data_model._locdata import SmlmData
-from napari_locan.widgets._widget_show_data import TableModel
+from napari_locan.data_model.smlm_data import SmlmData
+from napari_locan.widgets.widget_show_data import TableModel
 
 
 class TestTableModel:

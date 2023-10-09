@@ -3,7 +3,7 @@ import warnings
 import locan as lc
 import pytest
 
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.smlm_data import SmlmData
 
 
 class TestLocdatas:
@@ -45,6 +45,17 @@ class TestLocdatas:
         smlm_data.index = -1
         assert smlm_data.index == -1
         assert smlm_data.locdata is None
+
+    def test_locdata_name(self):
+        smlm_data = SmlmData()
+        smlm_data.locdatas = [lc.LocData(), lc.LocData()]
+        assert smlm_data.index == 0
+        smlm_data.locdata_name += "some comment like loaded from ..."
+        assert smlm_data.locdata_name.endswith("some comment like loaded from ...")
+        smlm_data.index = 1
+        assert smlm_data.index == 1
+        smlm_data.locdata_name = "new comment"
+        assert smlm_data.locdata_names[1] == "new comment"
 
     def test_append_locdata(self):
         smlm_data = SmlmData()

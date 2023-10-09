@@ -1,49 +1,62 @@
 """
-QWidget plugin for clustering SMLM data
+Create regions of interest.
+
+A QWidget plugin for managing regions of interest.
 """
 import logging
-from typing import Any
 
 import locan as lc
-from napari.qt.threading import thread_worker
-from napari.utils import progress
+import napari
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QComboBox,
     QHBoxLayout,
     QLabel,
-    QMessageBox,
+    QPlainTextEdit,
     QPushButton,
-    QSpinBox,
     QVBoxLayout,
     QWidget,
 )
 
 from napari_locan import smlm_data
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
 
 
-class ClusteringQWidget(QWidget):  # type: ignore
+class RoiQWidget(QWidget):  # type: ignore
     def __init__(self, napari_viewer: Viewer, smlm_data: SmlmData = smlm_data):
         super().__init__()
         self.viewer = napari_viewer
         self.smlm_data = smlm_data
 
-        self._add_cluster_method_combobox()
+        self._add_locdatas_combobox()
         self._add_loc_properties_selection()
-        self._add_parameter_definitions()
+        self._add_roi_text()
         self._add_buttons()
         self._set_layout()
 
-    def _add_cluster_method_combobox(self) -> None:
-        self._cluster_method_combobox = QComboBox()
-        self._cluster_method_combobox.setToolTip("Choose clustering procedure.")
-        self._cluster_method_combobox.addItem("DBSCAN")
+    def _add_locdatas_combobox(self) -> None:
+        self._locdatas_combobox = QComboBox()
+        self._locdatas_combobox.setToolTip("Choose SMLM dataset as roi reference.")
+        self._connect_locdatas_combobox_and_smlm_data()
 
-        self._cluster_method_layout = QHBoxLayout()
-        self._cluster_method_layout.addWidget(self._cluster_method_combobox)
+        self._locdatas_layout = QHBoxLayout()
+        self._locdatas_layout.addWidget(self._locdatas_combobox)
+
+    def _connect_locdatas_combobox_and_smlm_data(self) -> None:
+        self.smlm_data.locdata_names_signal.connect(
+            self._synchronize_smlm_data_to_combobox
+        )
+        self.smlm_data.index_signal.connect(self._locdatas_combobox.setCurrentIndex)
+        self._locdatas_combobox.currentIndexChanged.connect(
+            self.smlm_data.set_index_slot
+        )
+        self.smlm_data.change_event()
+
+    def _synchronize_smlm_data_to_combobox(self, locdata_names: list[str]) -> None:
+        self._locdatas_combobox.clear()
+        self._locdatas_combobox.addItems(locdata_names)
 
     def _add_loc_properties_selection(self) -> None:
         self._loc_properties_x_label = QLabel("x:")
@@ -137,101 +150,52 @@ class ClusteringQWidget(QWidget):  # type: ignore
             else:
                 self._loc_properties_y_combobox.setCurrentIndex(key_index)
 
-    def _add_parameter_definitions(self) -> None:
-        self._eps_label = QLabel("epsilon:")
-        self._eps_spin_box = QSpinBox()
-        self._eps_spin_box.setToolTip("Parameter for clustering procedure.")
-        self._eps_spin_box.setValue(20)
+    def _add_roi_text(self) -> None:
+        self._roi_text_edit = QPlainTextEdit()
 
-        self._min_points_label = QLabel("min_points:")
-        self._min_points_spin_box = QSpinBox()
-        self._min_points_spin_box.setToolTip("Parameter for clustering procedure.")
-        self._min_points_spin_box.setValue(3)
-
-        self._parameter_definitions_layout = QHBoxLayout()
-        self._parameter_definitions_layout.addWidget(self._eps_label)
-        self._parameter_definitions_layout.addWidget(self._eps_spin_box)
-        self._parameter_definitions_layout.addWidget(self._min_points_label)
-        self._parameter_definitions_layout.addWidget(self._min_points_spin_box)
+        self._roi_text_layout = QHBoxLayout()
+        self._roi_text_layout.addWidget(self._roi_text_edit)
 
     def _add_buttons(self) -> None:
-        self._compute_button = QPushButton("Compute")
-        self._compute_button.setToolTip("Run the clustering procedure.")
-        self._compute_button.clicked.connect(self._compute_button_on_click)
+        self._save_button = QPushButton("Save")
+        self._save_button.setToolTip("Save region of interest in yaml file.")
+        self._save_button.clicked.connect(self._save_button_on_click)
 
         self._buttons_layout = QHBoxLayout()
-        self._buttons_layout.addWidget(self._compute_button)
+        self._buttons_layout.addWidget(self._save_button)
 
     def _set_layout(self) -> None:
         layout = QVBoxLayout()
-        layout.addLayout(self._cluster_method_layout)
+        layout.addLayout(self._locdatas_layout)
         layout.addLayout(self._loc_properties_layout)
-        layout.addLayout(self._parameter_definitions_layout)
+        layout.addLayout(self._roi_text_layout)
         layout.addLayout(self._buttons_layout)
         self.setLayout(layout)
 
-    def _compute_button_on_click_main_thread(self) -> None:
-        if self.smlm_data.index == -1:
-            raise ValueError("There is no smlm data available.")
-        if self._get_message_feedback() is False:
-            return
+    def _save_button_on_click(self) -> None:
+        # todo: currently updates the text field
+        layer = self._get_current_shapes_layer()
+        if smlm_data.index != -1 and layer is not None:
+            reference = smlm_data.locdata.meta  # type: ignore
+            loc_properties = [
+                self._loc_properties_x_combobox.currentText(),
+                self._loc_properties_y_combobox.currentText(),
+            ]
 
-        eps_ = self._eps_spin_box.value()
-        min_samples_ = self._min_points_spin_box.value()
-
-        with progress() as progress_bar:
-            progress_bar.set_description("Running cluster_dbscan")
-            noise, clust = lc.cluster_dbscan(
-                locdata=self.smlm_data.locdata, eps=eps_, min_samples=min_samples_
+            rois = lc.get_rois(
+                shapes_layer=layer, reference=reference, loc_properties=loc_properties
             )
-            self.smlm_data.append_locdata(noise)
-            self.smlm_data.append_locdata(clust)
 
-    def _compute_button_on_click_thread_worker(self) -> None:
-        if self.smlm_data.index == -1:
-            raise ValueError("There is no smlm data available.")
-        if self._get_message_feedback() is False:
-            return
+            text = str(rois)
 
-        eps_ = self._eps_spin_box.value()
-        min_samples_ = self._min_points_spin_box.value()
+            self._roi_text_edit.setPlainText(text)
 
-        def worker_return(return_value: tuple[lc.LocData, lc.LocData]) -> None:
-            noise, clust = return_value
-            self.smlm_data.append_locdata(noise)
-            self.smlm_data.append_locdata(clust)
+            # lc.save_rois(rois=rois, file_path=None, roi_file_indicator="_roi")
 
-        worker = cluster_dbscan_worker(
-            locdata=self.smlm_data.locdata, eps=eps_, min_samples=min_samples_
-        )
-        worker.returned.connect(worker_return)
-        worker.start()
-
-    def _compute_button_on_click(self) -> None:
-        self._compute_button_on_click_main_thread()
-        # the thread worker seems to take much longer >3x
-
-    #        self._compute_button_on_click_thread_worker()
-
-    def _get_message_feedback(self) -> bool:
-        n_localizations = len(self.smlm_data.locdata)  # type: ignore
-        if n_localizations < 10_000:
-            run_computation = True
+    def _get_current_shapes_layer(self) -> napari.layers.Layer:
+        layer_selection = self.viewer.layers.selection
+        if len(layer_selection) > 1:
+            raise ValueError("You need to select a single shapes layer.")
         else:
-            msgBox = QMessageBox()
-            msgBox.setText(
-                f"There are {n_localizations} localizations. "
-                f"The computation will take some time."
-            )
-            msgBox.setInformativeText("Do you want to run the computation?")
-            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msgBox.setDefaultButton(QMessageBox.Cancel)
-            return_value = msgBox.exec()
-            run_computation = bool(return_value == QMessageBox.Ok)
-        return run_computation
-
-
-@thread_worker(progress={"desc": "Running cluster_dbscan"})  # type: ignore[misc]
-def cluster_dbscan_worker(**kwargs: Any) -> tuple[lc.LocData, lc.LocData]:
-    return_value = lc.cluster_dbscan(**kwargs)
-    return return_value  # type: ignore[no-any-return]
+            layer = layer_selection.pop()
+        return layer

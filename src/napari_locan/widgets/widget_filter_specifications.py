@@ -1,5 +1,8 @@
 """
-QWidget plugin to list fitler specifications
+The data model for filter specifications.
+
+A QWidget plugin to list filter specifications that can be applied to select
+localizations from a SMLM dataset.
 """
 import logging
 
@@ -13,8 +16,8 @@ from qtpy.QtWidgets import (
 )
 
 from napari_locan import filter_specifications, smlm_data
-from napari_locan.data_model._filter import FilterSpecifications
-from napari_locan.data_model._locdata import SmlmData
+from napari_locan.data_model.filter import FilterSpecifications
+from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
 

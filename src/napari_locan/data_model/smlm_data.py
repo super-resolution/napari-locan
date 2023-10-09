@@ -1,9 +1,12 @@
 """
-The data model
+The data model for localization data
 
-Serving as container for SMLM data.
-Most parts of the model for a single SMLM dataset is already implemented
-in locan as LocData.
+This module contains a data model to serve as container for SMLM data.
+The individual SMLM datasets are provided as :class:`locan.LocData` instances.
+
+SMLM data serves as data model for other napari-locan widgets to process or
+render the localization data. It is entirely independent of napari layers.
+Upon rendering a SMLM dataset a new image is created in a new napari layer.
 """
 from __future__ import annotations
 
@@ -27,7 +30,7 @@ class SmlmData(QObject):  # type: ignore
     locdata_names
         Localization string identifier
     index
-        Current selection of locdata
+        Current selection of locdatas
     locdata
         The selected LocData object
     locdata_name
@@ -101,6 +104,10 @@ class SmlmData(QObject):  # type: ignore
             return ""
         else:
             return self._locdata_names[self._index]
+
+    @locdata_name.setter
+    def locdata_name(self, loccdata_name: str) -> None:
+        self._locdata_names[self._index] = loccdata_name
 
     def change_event(self) -> None:
         """QT signal for any change"""

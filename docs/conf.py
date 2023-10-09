@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 # General information about the project.
-project = "napari-ocan"
+project = "napari-locan"
 author = "napari-locan Developers"
 copyright = "2022-2023, napari-locan Developers"
 
@@ -56,7 +56,6 @@ extensions = [
     "IPython.sphinxext.ipython_console_highlighting",
     "IPython.sphinxext.ipython_directive",
     "myst_nb",
-    # 'sphinx_rtd_theme',
     "sphinx_copybutton",
 ]
 
