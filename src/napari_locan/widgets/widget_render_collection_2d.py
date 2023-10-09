@@ -12,6 +12,7 @@ from typing import Any
 import locan as lc
 import numpy as np
 import numpy.typing as npt
+from napari.utils import progress
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QCheckBox,
@@ -285,72 +286,76 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         self.smlm_data.append_locdata(locdata=locdata, set_index=False)
 
     def _render_points_button_on_click(self) -> None:
-        returned = self._prepare_collection_for_rendering()
-        if returned is None:
-            return None
-        else:
-            loc_properties, other_property, locdata = returned
+        with progress() as progress_bar:
+            progress_bar.set_description("Rendering:")
+            returned = self._prepare_collection_for_rendering()
+            if returned is None:
+                return None
+            else:
+                loc_properties, other_property, locdata = returned
 
-        locdata = lc.LocData.concat(locdatas=locdata.references)  # type: ignore
-        data = locdata.data[loc_properties].to_numpy()
+            locdata = lc.LocData.concat(locdatas=locdata.references)  # type: ignore
+            data = locdata.data[loc_properties].to_numpy()
 
-        if other_property is None:
-            point_properties: dict[str, npt.NDArray[Any]] = {}
-            add_kwargs = {"name": self.smlm_data.locdata_name}
-        else:
-            other_property_data = locdata.data[other_property].to_numpy()
-            other_property_data = lc.adjust_contrast(
-                other_property_data, rescale=lc.Trafo.STANDARDIZE
-            )
-            point_properties = {"other_property": other_property_data}
-            add_kwargs = {
-                "name": self.smlm_data.locdata_name,
-                "edge_color": "",
-                "face_color": "other_property",
-                "face_colormap": "viridis",
-            }
+            if other_property is None:
+                point_properties: dict[str, npt.NDArray[Any]] = {}
+                add_kwargs = {"name": self.smlm_data.locdata_name}
+            else:
+                other_property_data = locdata.data[other_property].to_numpy()
+                other_property_data = lc.adjust_contrast(
+                    other_property_data, rescale=lc.Trafo.STANDARDIZE
+                )
+                point_properties = {"other_property": other_property_data}
+                add_kwargs = {
+                    "name": self.smlm_data.locdata_name,
+                    "edge_color": "",
+                    "face_color": "other_property",
+                    "face_colormap": "viridis",
+                }
 
-        self.viewer.add_points(data=data, properties=point_properties, **add_kwargs)
+            self.viewer.add_points(data=data, properties=point_properties, **add_kwargs)
 
     def _render_points_as_series_button_on_click(self) -> None:
-        returned = self._prepare_collection_for_rendering()
-        if returned is None:
-            return
-        else:
-            loc_properties, other_property, locdata = returned
+        with progress() as progress_bar:
+            progress_bar.set_description("Rendering:")
+            returned = self._prepare_collection_for_rendering()
+            if returned is None:
+                return
+            else:
+                loc_properties, other_property, locdata = returned
 
-        reference_data = [
-            reference.data[loc_properties].to_numpy()
-            for reference in locdata.references  # type: ignore
-        ]
-
-        img_stack = [
-            np.insert(reference_, 0, i, axis=1)
-            for i, reference_ in enumerate(reference_data)
-        ]
-        data = np.concatenate(img_stack, axis=0)
-
-        if other_property is None:
-            point_properties: dict[str, npt.NDArray[Any]] = {}
-            add_kwargs = {"name": self.smlm_data.locdata_name}
-        else:
-            other_property_stack = [
-                reference.data[other_property].to_numpy()
+            reference_data = [
+                reference.data[loc_properties].to_numpy()
                 for reference in locdata.references  # type: ignore
             ]
-            other_data = np.concatenate(other_property_stack, axis=0)
-            other_property_data = lc.adjust_contrast(
-                other_data, rescale=lc.Trafo.STANDARDIZE
-            )
-            point_properties = {"other_property": other_property_data}
-            add_kwargs = {
-                "name": self.smlm_data.locdata_name,
-                "edge_color": "",
-                "face_color": "other_property",
-                "face_colormap": "viridis",
-            }
 
-        self.viewer.add_points(data=data, properties=point_properties, **add_kwargs)
+            img_stack = [
+                np.insert(reference_, 0, i, axis=1)
+                for i, reference_ in enumerate(reference_data)
+            ]
+            data = np.concatenate(img_stack, axis=0)
+
+            if other_property is None:
+                point_properties: dict[str, npt.NDArray[Any]] = {}
+                add_kwargs = {"name": self.smlm_data.locdata_name}
+            else:
+                other_property_stack = [
+                    reference.data[other_property].to_numpy()
+                    for reference in locdata.references  # type: ignore
+                ]
+                other_data = np.concatenate(other_property_stack, axis=0)
+                other_property_data = lc.adjust_contrast(
+                    other_data, rescale=lc.Trafo.STANDARDIZE
+                )
+                point_properties = {"other_property": other_property_data}
+                add_kwargs = {
+                    "name": self.smlm_data.locdata_name,
+                    "edge_color": "",
+                    "face_color": "other_property",
+                    "face_colormap": "viridis",
+                }
+
+            self.viewer.add_points(data=data, properties=point_properties, **add_kwargs)
 
     def _get_message_feedback(self) -> bool:
         n_localizations = len(self.smlm_data.locdata)  # type: ignore

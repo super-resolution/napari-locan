@@ -212,9 +212,8 @@ class ClusteringQWidget(QWidget):  # type: ignore
 
     def _compute_button_on_click(self) -> None:
         self._compute_button_on_click_main_thread()
-        # the thread worker seems to take much longer >3x
-
-    #        self._compute_button_on_click_thread_worker()
+        # the thread worker seems to take >3x longer:
+        # self._compute_button_on_click_thread_worker()
 
     def _get_message_feedback(self) -> bool:
         n_localizations = len(self.smlm_data.locdata)  # type: ignore

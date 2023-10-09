@@ -182,7 +182,9 @@ class RenderCollectionFeaturesQWidget(QWidget):  # type: ignore[misc]
         self.setLayout(layout)
 
     def _render_button_on_click(self) -> None:
-        self._prepare_rendering(as_series=False)
+        with progress() as progress_bar:
+            progress_bar.set_description("Rendering...")
+            self._prepare_rendering(as_series=False)
 
     def _render_as_series_button_on_click(self) -> None:
         self._prepare_rendering(as_series=True)
