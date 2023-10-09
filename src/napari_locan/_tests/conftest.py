@@ -191,3 +191,30 @@ def locdata_two_cluster_with_noise_2d():
     locdata = lc.LocData.from_dataframe(dataframe=df, meta=meta_)
     locdata.region = locdata.bounding_box.region
     return locdata
+
+
+@pytest.fixture(scope="session")
+def collection_two_cluster_2d():
+    """
+    Fixture for returning `LocData` collection carrying 2D localizations grouped in two
+    clusters.
+    """
+    points = np.array(
+        [[0.5, 0.5], [1, 0.6], [1.1, 1], [5, 5.6], [5.1, 6], [5.5, 5], [100, 100]]
+    )
+    locdata_dict = {
+        "position_x": points.T[0],
+        "position_y": points.T[1],
+        "cluster_label": np.array([1, 1, 1, 2, 2, 2, -1]),
+    }
+    df = pd.DataFrame(locdata_dict)
+    meta_ = lc.data.metadata_pb2.Metadata()
+    meta_.creation_time.seconds = 1
+    locdata = lc.LocData.from_dataframe(dataframe=df, meta=meta_)
+
+    sel_1 = lc.LocData.from_selection(locdata=locdata, indices=[0, 1, 2])
+    sel_2 = lc.LocData.from_selection(locdata=locdata, indices=[3, 4, 5])
+    meta_ = lc.data.metadata_pb2.Metadata()
+    meta_.creation_time.seconds = 1
+    collection = lc.LocData.concat([sel_1, sel_2], meta=meta_)
+    return collection

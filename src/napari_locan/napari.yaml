@@ -80,6 +80,10 @@ contributions:
       python_name: napari_locan.widgets._widget_render_collection_2d:RenderCollection2dQWidget
       title: Render collection series 2d
 
+    - id: napari-locan.render_collection_features_qwidget
+      python_name: napari_locan.widgets._widget_render_collection_features:RenderCollectionFeaturesQWidget
+      title: Render collection features
+
     - id: napari-locan.run_script_qwidget
       python_name: napari_locan.widgets._widget_run_script:RunScriptQWidget
       title: Run script
@@ -146,6 +150,9 @@ contributions:
 
     - command: napari-locan.render_collection_2d_qwidget
       display_name: Render collection 2d
+
+    - command: napari-locan.render_collection_features_qwidget
+      display_name: Render collection features
 
     - command: napari-locan.run_script_qwidget
       display_name: Run script

@@ -7,7 +7,7 @@ import logging
 from typing import Any
 
 from napari.viewer import Viewer
-from qtpy.QtCore import QAbstractTableModel, Qt
+from qtpy.QtCore import QAbstractTableModel, Qt  # type: ignore[attr-defined]
 from qtpy.QtWidgets import (
     QHBoxLayout,
     QTableView,

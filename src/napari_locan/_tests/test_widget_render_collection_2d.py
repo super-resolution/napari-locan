@@ -1,4 +1,3 @@
-import locan as lc
 import napari
 import pytest
 
@@ -8,7 +7,10 @@ from napari_locan.data_model._locdata import SmlmData
 
 class TestCollectionSeriesQWidget:
     def test_CollectionSeriesQWidget_init(
-        self, make_napari_viewer, locdata_two_cluster_with_noise_2d
+        self,
+        make_napari_viewer,
+        locdata_two_cluster_with_noise_2d,
+        collection_two_cluster_2d,
     ):
         viewer = make_napari_viewer()
         collection_series_widget = RenderCollection2dQWidget(viewer)
@@ -20,15 +22,10 @@ class TestCollectionSeriesQWidget:
         )
         assert collection_series_widget
 
-        smlm_data = SmlmData(locdatas=[locdata_two_cluster_with_noise_2d])
-        sel_1 = lc.LocData.from_selection(
-            locdata=locdata_two_cluster_with_noise_2d, indices=[0, 1, 2]
+        smlm_data = SmlmData(
+            locdatas=[locdata_two_cluster_with_noise_2d, collection_two_cluster_2d]
         )
-        sel_2 = lc.LocData.from_selection(
-            locdata=locdata_two_cluster_with_noise_2d, indices=[3, 4, 5]
-        )
-        collection = lc.LocData.concat([sel_1, sel_2])
-        smlm_data.append_locdata(locdata=collection)
+        smlm_data.index = 1
 
         collection_series_widget = RenderCollection2dQWidget(
             viewer, smlm_data=smlm_data
@@ -43,23 +40,19 @@ class TestCollectionSeriesQWidget:
         )
 
     def test_CollectionSeriesQWidget_features(
-        self, make_napari_viewer, locdata_two_cluster_with_noise_2d
+        self,
+        make_napari_viewer,
+        locdata_two_cluster_with_noise_2d,
+        collection_two_cluster_2d,
     ):
         viewer = make_napari_viewer()
-        smlm_data = SmlmData(locdatas=[locdata_two_cluster_with_noise_2d])
-        sel_1 = lc.LocData.from_selection(
-            locdata=locdata_two_cluster_with_noise_2d, indices=[0, 1, 2]
+        smlm_data = SmlmData(
+            locdatas=[locdata_two_cluster_with_noise_2d, collection_two_cluster_2d]
         )
-        sel_2 = lc.LocData.from_selection(
-            locdata=locdata_two_cluster_with_noise_2d, indices=[3, 4, 5]
-        )
-        collection = lc.LocData.concat([sel_1, sel_2])
-        smlm_data.append_locdata(locdata=collection)
-
+        smlm_data.index = 1
         collection_series_widget = RenderCollection2dQWidget(
             viewer, smlm_data=smlm_data
         )
-
         collection_series_widget._render_points_as_series_button_on_click()
         assert len(viewer.layers) == 1
 

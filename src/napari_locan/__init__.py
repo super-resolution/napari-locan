@@ -36,6 +36,7 @@ __all__: list[str] = [
     "ShowDataQWidget",
     "ShowMetadataQWidget",
     "ShowPropertiesQWidget",
+    "RenderCollectionFeaturesQWidget",
 ]
 
 from napari_locan.data_model._locdata import SmlmData
@@ -99,4 +100,7 @@ from napari_locan.widgets._widget_show_metadata import (
 )
 from napari_locan.widgets._widget_show_properties import (
     ShowPropertiesQWidget,
+)
+from napari_locan.widgets._widget_render_collection_features import (
+    RenderCollectionFeaturesQWidget,
 )

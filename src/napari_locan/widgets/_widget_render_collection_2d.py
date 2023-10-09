@@ -37,7 +37,19 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         self._add_other_properties_selection()
         self._add_translation_selection()
         self._add_points_buttons()
+        self._connect_signals()
         self._set_layout()
+
+    def _connect_signals(self) -> None:
+        self.smlm_data.index_signal.connect(
+            self._loc_properties_x_combobox_slot_for_smlm_data_index
+        )
+        self.smlm_data.index_signal.connect(
+            self._loc_properties_y_combobox_slot_for_smlm_data_index
+        )
+        self.smlm_data.index_signal.connect(
+            self._loc_properties_other_combobox_slot_for_smlm_data_index
+        )
 
     def _add_translation_selection(self) -> None:
         self._translation_label = QLabel("Translate to common origin:")
@@ -55,23 +67,18 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         self._loc_properties_x_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as x coordinate."
         )
-        self.smlm_data.index_signal.connect(
-            self._loc_properties_x_combobox_slot_for_smlm_data_index
-        )
+
         # condition excludes smlm_data.locdata to be None in what comes:
         if (
-            self.smlm_data.index != -1
+            self.smlm_data.locdata is not None  # self.smlm_data.index != -1
             and bool(self.smlm_data.locdata)
-            and isinstance(self.smlm_data.locdata.references, list)  # type: ignore
+            and isinstance(self.smlm_data.locdata.references, list)
         ):
-            self._loc_properties_x_combobox.addItems(
-                self.smlm_data.locdata.references[0].data.columns  # type: ignore
-            )
+            columns_ = list(self.smlm_data.locdata.references)[0].data.columns
+            self._loc_properties_x_combobox.addItems(columns_)
             try:
-                key_index = list(
-                    self.smlm_data.locdata.references[0].data.columns  # type: ignore
-                ).index(
-                    self.smlm_data.locdata.references[0].coordinate_keys[0]  # type: ignore
+                key_index = list(columns_).index(
+                    self.smlm_data.locdata.coordinate_keys[0]
                 )
                 self._loc_properties_x_combobox.setCurrentIndex(key_index)
             except IndexError:
@@ -82,22 +89,17 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         self._loc_properties_y_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as y coordinate."
         )
-        self.smlm_data.index_signal.connect(
-            self._loc_properties_y_combobox_slot_for_smlm_data_index
-        )
+
         if (
-            self.smlm_data.index != -1
+            self.smlm_data.locdata is not None  # self.smlm_data.index != -1
             and bool(self.smlm_data.locdata)
-            and isinstance(self.smlm_data.locdata.references, list)  # type: ignore
+            and isinstance(self.smlm_data.locdata.references, list)
         ):
-            self._loc_properties_y_combobox.addItems(
-                self.smlm_data.locdata.references[0].data.columns  # type: ignore
-            )
+            columns_ = list(self.smlm_data.locdata.references)[0].data.columns
+            self._loc_properties_y_combobox.addItems(columns_)
             try:
-                key_index = list(
-                    self.smlm_data.locdata.references[0].data.columns  # type: ignore
-                ).index(
-                    self.smlm_data.locdata.references[0].coordinate_keys[1]  # type: ignore
+                key_index = list(columns_).index(
+                    self.smlm_data.locdata.coordinate_keys[1]
                 )
                 self._loc_properties_y_combobox.setCurrentIndex(key_index)
             except IndexError:
@@ -115,17 +117,14 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         self._loc_properties_other_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as pixel value."
         )
-        self.smlm_data.index_signal.connect(
-            self._loc_properties_other_combobox_slot_for_smlm_data_index
-        )
         if (
-            self.smlm_data.index != -1
+            self.smlm_data.locdata is not None  # self.smlm_data.index != -1
             and bool(self.smlm_data.locdata)
-            and isinstance(self.smlm_data.locdata.references, list)  # type: ignore
+            and isinstance(self.smlm_data.locdata.references, list)
         ):
             self._loc_properties_other_combobox.addItem("")
             self._loc_properties_other_combobox.addItems(
-                self.smlm_data.locdata.references[0].data.columns  # type: ignore
+                self.smlm_data.locdata.references[0].data.columns
             )
         key_index = 0
         self._loc_properties_other_combobox.setCurrentIndex(key_index)
@@ -137,18 +136,20 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
     def _loc_properties_x_combobox_slot_for_smlm_data_index(self, index: int) -> None:
         key_index = self._loc_properties_x_combobox.currentIndex()
         self._loc_properties_x_combobox.clear()
-        if self.smlm_data.locdata.references is None:  # type: ignore
-            raise TypeError("SMLM data must be a LocData collection.")
-        if index != -1 and self.smlm_data.locdata.references is not None:  # type: ignore
-            self._loc_properties_x_combobox.addItems(
-                self.smlm_data.locdata.references[0].data.columns  # type: ignore
-            )
+        if self.smlm_data.locdata is None:
+            return None
+        elif self.smlm_data.locdata.references is None or isinstance(
+            self.smlm_data.locdata.references, lc.LocData
+        ):
+            # raise TypeError("SMLM data must be a LocData collection.")
+            return None
+        else:
+            columns_ = list(self.smlm_data.locdata.references)[0].data.columns
+            self._loc_properties_x_combobox.addItems(columns_)
             if key_index == -1:
                 if bool(self.smlm_data.locdata):
-                    new_key_index = list(
-                        self.smlm_data.locdata.references[0].data.columns  # type: ignore
-                    ).index(
-                        self.smlm_data.locdata.references[0].coordinate_keys[0]  # type: ignore
+                    new_key_index = list(columns_).index(
+                        self.smlm_data.locdata.coordinate_keys[0]
                     )
                     self._loc_properties_x_combobox.setCurrentIndex(new_key_index)
                 else:
@@ -159,16 +160,20 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
     def _loc_properties_y_combobox_slot_for_smlm_data_index(self, index: int) -> None:
         key_index = self._loc_properties_y_combobox.currentIndex()
         self._loc_properties_y_combobox.clear()
-        if index != -1 and self.smlm_data.locdata.references is not None:  # type: ignore
-            self._loc_properties_y_combobox.addItems(
-                self.smlm_data.locdata.references[0].data.columns  # type: ignore
-            )
+        if self.smlm_data.locdata is None:
+            return None
+        elif self.smlm_data.locdata.references is None or isinstance(
+            self.smlm_data.locdata.references, lc.LocData
+        ):
+            # raise TypeError("SMLM data must be a LocData collection.")
+            return None
+        else:
+            columns_ = list(self.smlm_data.locdata.references)[0].data.columns
+            self._loc_properties_y_combobox.addItems(columns_)
             if key_index == -1:
                 if bool(self.smlm_data.locdata):
-                    new_key_index = list(
-                        self.smlm_data.locdata.references[0].data.columns  # type: ignore
-                    ).index(
-                        self.smlm_data.locdata.references[0].coordinate_keys[1]  # type: ignore
+                    new_key_index = list(columns_).index(
+                        self.smlm_data.locdata.coordinate_keys[1]
                     )
                     self._loc_properties_y_combobox.setCurrentIndex(new_key_index)
                 else:
@@ -182,10 +187,16 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         key_index = self._loc_properties_other_combobox.currentIndex()
         self._loc_properties_other_combobox.clear()
         self._loc_properties_other_combobox.addItem("")
-        if index != -1 and self.smlm_data.locdata.references is not None:  # type: ignore
-            self._loc_properties_other_combobox.addItems(
-                self.smlm_data.locdata.references[0].data.columns  # type: ignore
-            )
+        if self.smlm_data.locdata is None:
+            return None
+        elif self.smlm_data.locdata.references is None or isinstance(
+            self.smlm_data.locdata.references, lc.LocData
+        ):
+            # raise TypeError("SMLM data must be a LocData collection.")
+            return None
+        else:
+            columns_ = list(self.smlm_data.locdata.references)[0].data.columns
+            self._loc_properties_other_combobox.addItems(columns_)
             if key_index == -1:
                 self._loc_properties_other_combobox.setCurrentIndex(0)
             else:
@@ -228,13 +239,14 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
     def _prepare_collection_for_rendering(
         self,
     ) -> tuple[list[str], str | None, lc.LocData] | None:
-        locdata: lc.LocData = self.smlm_data.locdata
-        if locdata is None:
+        if self.smlm_data.locdata is None:
             raise ValueError("There is no SMLM data available.")
-        if bool(locdata) is False:
+        elif bool(self.smlm_data.locdata) is False:
             raise ValueError("Locdata is empty.")
-        if self._get_message_feedback() is False:
+        elif self._get_message_feedback() is False:
             return None
+        else:
+            locdata = self.smlm_data.locdata
 
         loc_properties = [
             self._loc_properties_x_combobox.currentText(),
@@ -246,7 +258,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         # translation to centroid.
         if self._translation_check_box.isChecked():
             if any(
-                loc_property_ not in locdata.coordinate_keys
+                loc_property_ not in self.smlm_data.locdata.coordinate_keys
                 for loc_property_ in loc_properties
             ):
                 raise ValueError(
@@ -254,7 +266,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
                 )
             else:
                 locdata = lc.overlay(
-                    locdatas=locdata.references,
+                    locdatas=self.smlm_data.locdata.references,
                     centers="centroid",
                     orientations=None,
                 )
@@ -266,7 +278,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
             return None
         else:
             loc_properties, other_property, locdata = returned
-        locdata = lc.LocData.concat(locdatas=locdata.references)
+        locdata = lc.LocData.concat(locdatas=locdata.references)  # type: ignore
         self.smlm_data.append_locdata(locdata=locdata, set_index=False)
 
     def _render_points_button_on_click(self) -> None:
@@ -276,7 +288,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         else:
             loc_properties, other_property, locdata = returned
 
-        locdata = lc.LocData.concat(locdatas=locdata.references)
+        locdata = lc.LocData.concat(locdatas=locdata.references)  # type: ignore
         data = locdata.data[loc_properties].to_numpy()
 
         if other_property is None:
@@ -306,7 +318,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
 
         reference_data = [
             reference.data[loc_properties].to_numpy()
-            for reference in locdata.references
+            for reference in locdata.references  # type: ignore
         ]
 
         img_stack = [
@@ -321,7 +333,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         else:
             other_property_stack = [
                 reference.data[other_property].to_numpy()
-                for reference in locdata.references
+                for reference in locdata.references  # type: ignore
             ]
             other_data = np.concatenate(other_property_stack, axis=0)
             other_property_data = lc.adjust_contrast(
