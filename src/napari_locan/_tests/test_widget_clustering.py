@@ -28,6 +28,8 @@ class TestClusteringQWidgetQWidget:
         assert my_widget._eps_spin_box.value() == 20
         assert my_widget._min_points_spin_box.value() == 3
         assert isinstance(smlm_data.locdata.references, list)
+        assert smlm_data.index == 2
+        assert smlm_data.locdata_name.endswith("cluster")
 
         smlm_data.index = 0
         my_widget._compute_button_on_click_thread_worker()

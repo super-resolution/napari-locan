@@ -106,8 +106,9 @@ class SmlmData(QObject):  # type: ignore
             return self._locdata_names[self._index]
 
     @locdata_name.setter
-    def locdata_name(self, loccdata_name: str) -> None:
-        self._locdata_names[self._index] = loccdata_name
+    def locdata_name(self, text: str) -> None:
+        self._locdata_names[self._index] = text
+        self.locdata_names_signal.emit(self._locdata_names)
 
     def change_event(self) -> None:
         """QT signal for any change"""
