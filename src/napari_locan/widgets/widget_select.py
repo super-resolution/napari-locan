@@ -215,10 +215,13 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
 
     def _get_spinbox_boundaries(self) -> tuple[float, float]:
         loc_property = self._loc_property_combobox.currentText()
-        min_value = self.smlm_data.locdata.data[loc_property].min()  # type: ignore[union-attr]
-        max_value = self.smlm_data.locdata.data[loc_property].max()  # type: ignore[union-attr]
-        min_ = min_value * 10 if min_value < 0 else 0
-        max_ = max_value * 10
+        if self.smlm_data.locdata is None:
+            min_, max_ = 0, 0
+        else:
+            min_value = self.smlm_data.locdata.data[loc_property].min()
+            max_value = self.smlm_data.locdata.data[loc_property].max()
+            min_ = min_value * 10 if min_value < 0 else 0
+            max_ = max_value * 10
         return min_, max_
 
     def _filter_specifications_index_on_changed(self) -> None:
