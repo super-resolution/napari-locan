@@ -45,13 +45,13 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         self._set_layout()
 
     def _connect_signals(self) -> None:
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_x_combobox_slot_for_smlm_data_index
         )
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_y_combobox_slot_for_smlm_data_index
         )
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_other_combobox_slot_for_smlm_data_index
         )
 
@@ -283,7 +283,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
         else:
             loc_properties, other_property, locdata = returned
         locdata = lc.LocData.concat(locdatas=locdata.references)  # type: ignore
-        self.smlm_data.append_locdata(locdata=locdata, set_index=False)
+        self.smlm_data.append_item(locdata=locdata, set_index=False)
 
     def _render_points_button_on_click(self) -> None:
         with progress() as progress_bar:

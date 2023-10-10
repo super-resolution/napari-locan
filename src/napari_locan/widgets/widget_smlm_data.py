@@ -27,7 +27,7 @@ from napari_locan.data_model.smlm_data import SmlmData
 logger = logging.getLogger(__name__)
 
 
-class LocdatasQWidget(QWidget):  # type: ignore
+class SmlmDataQWidget(QWidget):  # type: ignore
     def __init__(self, napari_viewer: Viewer, smlm_data: SmlmData = smlm_data):
         super().__init__()
         self.viewer = napari_viewer
@@ -45,18 +45,25 @@ class LocdatasQWidget(QWidget):  # type: ignore
         self._locdatas_layout.addWidget(self._locdatas_combobox)
 
     def _connect_locdatas_combobox_and_smlm_data(self) -> None:
-        self.smlm_data.locdata_names_signal.connect(
+        self.smlm_data.locdata_names_changed_signal.connect(
             self._synchronize_smlm_data_to_combobox
         )
-        self.smlm_data.index_signal.connect(self._locdatas_combobox.setCurrentIndex)
+        self.smlm_data.locdata_names_changed_signal.emit(self.smlm_data.locdata_names)
+
+        self.smlm_data.index_changed_signal.connect(
+            self._locdatas_combobox.setCurrentIndex
+        )
+        self.smlm_data.index_changed_signal.emit(self.smlm_data.index)
+
         self._locdatas_combobox.currentIndexChanged.connect(
             self.smlm_data.set_index_slot
         )
-        self.smlm_data.change_event()
 
     def _synchronize_smlm_data_to_combobox(self, locdata_names: list[str]) -> None:
+        current_index = self.smlm_data.index
         self._locdatas_combobox.clear()
         self._locdatas_combobox.addItems(locdata_names)
+        self._locdatas_combobox.setCurrentIndex(current_index)
 
     def _add_buttons(self) -> None:
         self._save_button = QPushButton("Save")
@@ -83,16 +90,7 @@ class LocdatasQWidget(QWidget):  # type: ignore
         self.setLayout(layout)
 
     def _delete_button_on_click(self) -> None:
-        current_index = self._locdatas_combobox.currentIndex()
-        if current_index == -1:
-            raise KeyError("No item available to be deleted.")
-        else:
-            self.smlm_data.locdatas.pop(current_index)
-            self.smlm_data.locdatas = (
-                self.smlm_data.locdatas
-            )  # needed to activate setter
-
-            self.smlm_data.change_event()
+        self.smlm_data.delete_item()
 
     def _delete_all_button_on_click(self) -> None:
         msgBox = QMessageBox()
@@ -101,8 +99,7 @@ class LocdatasQWidget(QWidget):  # type: ignore
         msgBox.setDefaultButton(QMessageBox.Cancel)
         return_value = msgBox.exec()
         if return_value == QMessageBox.Ok:
-            self.smlm_data.locdatas = None  # type: ignore
-            self.smlm_data.change_event()
+            self.smlm_data.delete_all()
         else:
             return
 

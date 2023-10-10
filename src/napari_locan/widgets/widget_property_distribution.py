@@ -64,7 +64,7 @@ class PropertyDistributionQWidget(QWidget):  # type: ignore[misc]
         self._loc_property_selector_layout.addWidget(self._loc_property_combobox)
 
     def _connect_loc_property_selector(self) -> None:
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_property_combobox_slot_for_smlm_data_index
         )
         self._loc_property_combobox.currentIndexChanged.connect(

@@ -32,11 +32,11 @@ class ShowPropertiesQWidget(QWidget):  # type: ignore
 
     def _add_properties_text(self) -> None:
         self._properties_text_edit = QPlainTextEdit()
-        self.smlm_data.index_signal.connect(self._update_properties_text)
+        self.smlm_data.index_changed_signal.connect(self._update_properties_text)
 
         self._properties_layout = QHBoxLayout()
         self._properties_layout.addWidget(self._properties_text_edit)
-        self.smlm_data.index_signal.emit(self.smlm_data.index)
+        self.smlm_data.index_changed_signal.emit(self.smlm_data.index)
 
     def _update_properties_text(self) -> None:
         if self.smlm_data.index != -1:

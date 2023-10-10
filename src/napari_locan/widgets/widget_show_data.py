@@ -60,12 +60,12 @@ class ShowDataQWidget(QWidget):  # type: ignore
 
     def _add_table_view(self) -> None:
         self._table_view = QTableView()
-        self.smlm_data.index_signal.connect(self._update_table_view)
+        self.smlm_data.index_changed_signal.connect(self._update_table_view)
 
         self._table_view_layout = QHBoxLayout()
         self._table_view_layout.addWidget(self._table_view)
 
-        self.smlm_data.index_signal.emit(self.smlm_data.index)
+        self.smlm_data.index_changed_signal.emit(self.smlm_data.index)
 
     def _update_table_view(self) -> None:
         if self.smlm_data.index != -1:

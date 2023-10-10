@@ -1,5 +1,4 @@
 import locan as lc
-import pytest
 
 from napari_locan import RenderPoints3dQWidget
 from napari_locan.data_model.smlm_data import SmlmData
@@ -24,15 +23,12 @@ class TestRenderQWidget:
         smlm_data = SmlmData(locdatas=[lc.LocData(), locdata_3d])
 
         render_widget = RenderPoints3dQWidget(viewer, smlm_data=smlm_data)
-
-        with pytest.raises(ValueError):
-            render_widget._points_button_on_click()
+        render_widget._points_button_on_click()
 
         smlm_data.index = 1
-
         render_widget._points_button_on_click()
-        assert len(viewer.layers) == 1
+        assert len(viewer.layers) == 2
 
         render_widget._loc_properties_other_combobox.setCurrentIndex(1)
         render_widget._points_button_on_click()
-        assert len(viewer.layers) == 2
+        assert len(viewer.layers) == 3

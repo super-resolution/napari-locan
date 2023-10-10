@@ -11,7 +11,6 @@ Upon rendering a SMLM dataset a new image is created in a new napari layer.
 from __future__ import annotations
 
 import logging
-from pathlib import Path
 
 import locan as lc
 from qtpy.QtCore import QObject, Signal  # type: ignore[attr-defined]
@@ -37,38 +36,37 @@ class SmlmData(QObject):  # type: ignore
         The selected LocData identifier
     """
 
-    locdatas_signal = Signal(list)
-    locdata_names_signal = Signal(list)
-    index_signal = Signal(int)
+    index_changed_signal = Signal(int)
+    locdata_names_changed_signal = Signal(list)
 
-    def __init__(self, locdatas: list[lc.LocData] | None = None):
+    def __init__(
+        self,
+        locdatas: list[lc.LocData] | None = None,
+        locdata_names: list[str] | None = None,
+    ) -> None:
         super().__init__()
-        self._locdatas: list[lc.LocData] = []
-        self._locdata_names: list[str] = []
-        self._index: int = -1
-
-        self.locdatas = locdatas  # type: ignore
+        if locdatas is None and locdata_names is None:
+            self._locdatas: list[lc.LocData] = []
+            self._locdata_names: list[str] = []
+            self._index: int = -1
+        elif locdata_names is None:
+            assert locdatas is not None  # type narrowing # noqa: S101
+            self._locdatas = locdatas
+            self._locdata_names = [item.meta.identifier for item in self._locdatas]
+            self._index = len(locdatas) - 1
+        elif locdatas is not None and (len(locdatas) != len(locdata_names)):
+            raise ValueError(
+                "locdata and locdata_names must correspond and be of same length."
+            )
+        else:
+            assert locdatas is not None  # type narrowing # noqa: S101
+            self._locdatas = locdatas
+            self._locdata_names = locdata_names
+            self._index = len(locdatas) - 1
 
     @property
     def locdatas(self) -> list[lc.LocData]:
         return self._locdatas
-
-    @locdatas.setter
-    def locdatas(self, value: list[lc.LocData] | None) -> None:
-        if value is None:
-            self._locdatas = []
-        else:
-            self._locdatas = value
-        if self._locdatas:
-            self._locdata_names = [
-                item.meta.identifier + "-" + str(Path(item.meta.file.path).name)
-                for item in self._locdatas
-            ]
-            self._index = 0
-        else:
-            self._locdata_names = []
-            self._index = -1
-        self.change_event()
 
     @property
     def locdata_names(self) -> list[str]:
@@ -84,8 +82,11 @@ class SmlmData(QObject):  # type: ignore
             raise IndexError(
                 f"Index is larger than n_locdatas - 1: {len(self.locdatas) - 1}"
             )
-        self._index = value
-        self.index_signal.emit(value)
+        elif value < 0:
+            self._index = -1
+        else:
+            self._index = value
+        self.index_changed_signal.emit(self._index)
 
     def set_index_slot(self, value: int) -> None:
         """QT slot for property self.index."""
@@ -98,6 +99,18 @@ class SmlmData(QObject):  # type: ignore
         else:
             return self._locdatas[self._index]
 
+    @locdata.setter
+    def locdata(self, item: lc.LocData) -> None:
+        if self._index == -1:
+            raise ValueError(
+                "Locdatas is empty. "
+                "There is no item available to be replaced."
+                "Use self.append_item instead."
+            )
+        else:
+            self._locdatas[self._index] = item
+            self.index_changed_signal.emit(self._index)
+
     @property
     def locdata_name(self) -> str:
         if self._index == -1:
@@ -107,27 +120,58 @@ class SmlmData(QObject):  # type: ignore
 
     @locdata_name.setter
     def locdata_name(self, text: str) -> None:
-        self._locdata_names[self._index] = text
-        self.locdata_names_signal.emit(self._locdata_names)
+        if self._index == -1:
+            raise ValueError(
+                "Locdata_names is empty. "
+                "There is no item available to be replaced."
+                "Use self.append_item instead."
+            )
+        else:
+            self._locdata_names[self._index] = text
+            self.locdata_names_changed_signal.emit(self._locdata_names)
 
-    def change_event(self) -> None:
-        """QT signal for any change"""
-        self.locdatas_signal.emit(self._locdatas)
-        self.locdata_names_signal.emit(self._locdata_names)
-        self.index_signal.emit(self._index)
-
-    def append_locdata(
-        self, locdata: lc.LocData | None, set_index: bool = True
+    def append_item(
+        self,
+        locdata: lc.LocData | None,
+        locdata_name: str | None = None,
+        set_index: bool = True,
     ) -> None:
         current_index = self.index
-        if locdata is not None:
+        if locdata is None and locdata_name is None:
+            return
+        elif locdata_name is None:
+            assert locdata is not None  # type narrowing # noqa: S101
             self._locdatas.append(locdata)
-            self._locdata_names = [
-                item.meta.identifier + "-" + str(Path(item.meta.file.path).name)
-                for item in self._locdatas
-            ]
-            if set_index:
-                self.index = len(self.locdatas) - 1
-            else:
-                self._index = current_index
-            self.change_event()
+            self._locdata_names.append(locdata.meta.identifier)
+        else:
+            assert locdata is not None  # type narrowing # noqa: S101
+            assert locdata_name is not None  # type narrowing # noqa: S101
+            self._locdatas.append(locdata)
+            self._locdata_names.append(locdata_name)
+        if set_index:
+            self._index = len(self.locdatas) - 1
+        else:
+            self._index = current_index
+
+        self.locdata_names_changed_signal.emit(self._locdata_names)
+        self.index_changed_signal.emit(self._index)
+
+    def delete_item(self) -> None:
+        current_index = self.index
+        try:
+            self._locdatas.pop(current_index)
+            self._locdata_names.pop(current_index)
+        except IndexError as exception:
+            raise IndexError(
+                "Index is out of range. No item available to be deleted."
+            ) from exception
+        self._index = current_index - 1
+        self.locdata_names_changed_signal.emit(self._locdata_names)
+        self.index_changed_signal.emit(self._index)
+
+    def delete_all(self) -> None:
+        self._locdatas = []
+        self._locdata_names = []
+        self._index = -1
+        self.locdata_names_changed_signal.emit(self._locdata_names)
+        self.index_changed_signal.emit(self._index)

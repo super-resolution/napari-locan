@@ -19,10 +19,10 @@ class TestLocdatasQWidget:
         assert my_widget._filter_specifications_combobox.currentText() == ""
 
     def test_FilterSpecificationsQWidget_changing_locdatas(self, make_napari_viewer):
-        smlm_data = SmlmData()
+        smlm_data = SmlmData(
+            locdatas=[lc.LocData(), lc.LocData()], locdata_names=["1", "2"]
+        )
         filter_specifications = FilterSpecifications()
-        locdata_0, locdata_1 = lc.LocData(), lc.LocData()
-        smlm_data.locdatas = [locdata_0, locdata_1]
         viewer = make_napari_viewer()
 
         selectors = {

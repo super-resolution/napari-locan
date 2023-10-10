@@ -31,11 +31,11 @@ class ShowMetadataQWidget(QWidget):  # type: ignore
 
     def _add_metadata_text(self) -> None:
         self._metadata_text_edit = QPlainTextEdit()
-        self.smlm_data.index_signal.connect(self._update_metadata_text)
+        self.smlm_data.index_changed_signal.connect(self._update_metadata_text)
 
         self._metadata_layout = QHBoxLayout()
         self._metadata_layout.addWidget(self._metadata_text_edit)
-        self.smlm_data.index_signal.emit(self.smlm_data.index)
+        self.smlm_data.index_changed_signal.emit(self.smlm_data.index)
 
     def _update_metadata_text(self) -> None:
         if self.smlm_data.index != -1:

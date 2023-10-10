@@ -24,7 +24,7 @@ def make_image_tubulin(smlm_data: SmlmData = smlm_data) -> list[LayerData]:
     with napari.utils.progress() as progress_bar:
         progress_bar.set_description("Loading data")
         locdata = lc.datasets.load_tubulin()
-        smlm_data.append_locdata(locdata=locdata)
+        smlm_data.append_item(locdata=locdata)
         data, image_kwargs, layer_type = lc.render_2d_napari_image(
             locdata,
             bin_size=10,
@@ -50,7 +50,7 @@ def make_image_npc(smlm_data: SmlmData = smlm_data) -> list[LayerData]:
     with napari.utils.progress() as progress_bar:
         progress_bar.set_description("Loading data")
         locdata = lc.datasets.load_npc()
-        smlm_data.append_locdata(locdata=locdata)
+        smlm_data.append_item(locdata=locdata)
         data, image_kwargs, layer_type = lc.render_2d_napari_image(
             locdata,
             bin_size=10,
@@ -72,7 +72,7 @@ def make_points_npc(smlm_data: SmlmData = smlm_data) -> list[LayerData]:
         locdata = lc.datasets.load_npc()
         condition = "4350 < position_x < 6350 and 6200 < position_y < 8200"
         locdata = lc.select_by_condition(locdata, condition)
-        smlm_data.append_locdata(locdata=locdata)
+        smlm_data.append_item(locdata=locdata)
         data = locdata.coordinates
     return [(data, {"name": "npc"}, "points")]
 
@@ -86,6 +86,6 @@ def make_points_tubulin(smlm_data: SmlmData = smlm_data) -> list[LayerData]:
         locdata = lc.datasets.load_tubulin()
         condition = "2800 < position_x < 5400 and 4800 < position_y < 6400"
         locdata = lc.select_by_condition(locdata, condition)
-        smlm_data.append_locdata(locdata=locdata)
+        smlm_data.append_item(locdata=locdata)
         data = locdata.coordinates
     return [(data, {"name": "tubulin"}, "points")]

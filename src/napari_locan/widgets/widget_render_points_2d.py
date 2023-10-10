@@ -44,7 +44,7 @@ class RenderPoints2dQWidget(QWidget):  # type: ignore
         self._loc_properties_x_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as x coordinate."
         )
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_x_combobox_slot_for_smlm_data_index
         )
         # condition excludes smlm_data.locdata to be None in what comes:
@@ -67,7 +67,7 @@ class RenderPoints2dQWidget(QWidget):  # type: ignore
         self._loc_properties_y_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as y coordinate."
         )
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_y_combobox_slot_for_smlm_data_index
         )
         if self.smlm_data.index != -1 and bool(self.smlm_data.locdata):
@@ -96,7 +96,7 @@ class RenderPoints2dQWidget(QWidget):  # type: ignore
         self._loc_properties_other_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as pixel value."
         )
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_other_combobox_slot_for_smlm_data_index
         )
         if self.smlm_data.index != -1 and bool(self.smlm_data.locdata):

@@ -33,7 +33,7 @@ __all__: list[str] = [
     "ClusteringQWidget",
     "FilterSpecificationsQWidget",
     "LoadQWidget",
-    "LocdatasQWidget",
+    "SmlmDataQWidget",
     "PropertyDistributionQWidget",
     "RenderCollection2dQWidget",
     "RenderFeaturesQWidget",
@@ -72,8 +72,8 @@ from napari_locan.widgets.widget_filter_specifications import (
 from napari_locan.widgets.widget_load import (
     LoadQWidget,
 )
-from napari_locan.widgets.widget_locdatas import (
-    LocdatasQWidget,
+from napari_locan.widgets.widget_smlm_data import (
+    SmlmDataQWidget,
 )
 from napari_locan.widgets.widget_property_distribution import (
     PropertyDistributionQWidget,

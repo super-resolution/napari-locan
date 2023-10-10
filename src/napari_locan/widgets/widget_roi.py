@@ -45,14 +45,18 @@ class RoiQWidget(QWidget):  # type: ignore
         self._locdatas_layout.addWidget(self._locdatas_combobox)
 
     def _connect_locdatas_combobox_and_smlm_data(self) -> None:
-        self.smlm_data.locdata_names_signal.connect(
+        self.smlm_data.locdata_names_changed_signal.connect(
             self._synchronize_smlm_data_to_combobox
         )
-        self.smlm_data.index_signal.connect(self._locdatas_combobox.setCurrentIndex)
+        self.smlm_data.locdata_names_changed_signal.emit(self.smlm_data.locdata_names)
+
+        self.smlm_data.index_changed_signal.connect(
+            self._locdatas_combobox.setCurrentIndex
+        )
         self._locdatas_combobox.currentIndexChanged.connect(
             self.smlm_data.set_index_slot
         )
-        self.smlm_data.change_event()
+        self.smlm_data.index_changed_signal.emit(self.smlm_data.index)
 
     def _synchronize_smlm_data_to_combobox(self, locdata_names: list[str]) -> None:
         self._locdatas_combobox.clear()
@@ -64,7 +68,7 @@ class RoiQWidget(QWidget):  # type: ignore
         self._loc_properties_x_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as x coordinate."
         )
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_x_combobox_slot_for_smlm_data_index
         )
         # condition excludes smlm_data.locdata to be None in what comes:
@@ -87,7 +91,7 @@ class RoiQWidget(QWidget):  # type: ignore
         self._loc_properties_y_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as y coordinate."
         )
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_y_combobox_slot_for_smlm_data_index
         )
         if self.smlm_data.index != -1 and bool(self.smlm_data.locdata):

@@ -54,7 +54,7 @@ class ClusteringQWidget(QWidget):  # type: ignore
         self._loc_properties_x_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as x coordinate."
         )
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_x_combobox_slot_for_smlm_data_index
         )
         # condition excludes smlm_data.locdata to be None in what comes:
@@ -77,7 +77,7 @@ class ClusteringQWidget(QWidget):  # type: ignore
         self._loc_properties_y_combobox.setToolTip(
             "Choose localization property for selected SMLM dataset as y coordinate."
         )
-        self.smlm_data.index_signal.connect(
+        self.smlm_data.index_changed_signal.connect(
             self._loc_properties_y_combobox_slot_for_smlm_data_index
         )
         if self.smlm_data.index != -1 and bool(self.smlm_data.locdata):
@@ -187,10 +187,12 @@ class ClusteringQWidget(QWidget):  # type: ignore
             noise, clust = lc.cluster_dbscan(
                 locdata=self.smlm_data.locdata, eps=eps_, min_samples=min_samples_
             )
-            self.smlm_data.append_locdata(noise)
-            self.smlm_data.locdata_name += "-noise"
-            self.smlm_data.append_locdata(clust)
-            self.smlm_data.locdata_name += "-cluster"
+            self.smlm_data.append_item(
+                locdata=noise, locdata_name=noise.meta.identifier + "-noise"
+            )
+            self.smlm_data.append_item(
+                locdata=clust, locdata_name=clust.meta.identifier + "-cluster"
+            )
 
     def _compute_button_on_click_thread_worker(self) -> None:
         if self.smlm_data.index == -1:
@@ -203,10 +205,12 @@ class ClusteringQWidget(QWidget):  # type: ignore
 
         def worker_return(return_value: tuple[lc.LocData, lc.LocData]) -> None:
             noise, clust = return_value
-            self.smlm_data.append_locdata(noise)
-            self.smlm_data.locdata_name += "-noise"
-            self.smlm_data.append_locdata(clust)
-            self.smlm_data.locdata_name += "-cluster"
+            self.smlm_data.append_item(
+                locdata=noise, locdata_name=noise.meta.identifier + "-noise"
+            )
+            self.smlm_data.append_item(
+                locdata=clust, locdata_name=clust.meta.identifier + "-cluster"
+            )
 
         worker = _cluster_dbscan_worker(
             locdata=self.smlm_data.locdata, eps=eps_, min_samples=min_samples_

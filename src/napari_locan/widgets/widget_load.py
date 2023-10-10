@@ -95,4 +95,6 @@ class LoadQWidget(QWidget):  # type: ignore
         with progress() as progress_bar:
             progress_bar.set_description("Loading data")
             locdata = lc.load_locdata(path=file_path, file_type=file_type)
-            self.smlm_data.append_locdata(locdata=locdata)
+            self.smlm_data.append_item(
+                locdata=locdata, locdata_name=locdata.meta.identifier + "-" + file_path
+            )
