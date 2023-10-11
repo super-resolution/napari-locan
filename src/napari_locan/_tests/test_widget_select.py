@@ -1,4 +1,5 @@
 import locan as lc
+import napari
 import pytest
 
 from napari_locan import SelectQWidget
@@ -146,3 +147,22 @@ class TestSelectQWidget:
         assert my_widget._apply_checkbox.isHidden()
 
         my_widget._loc_property_combobox.setCurrentIndex(1)
+
+
+@pytest.mark.napari
+def test_run_napari():
+    viewer = napari.Viewer()
+    viewer.open_sample("napari-locan", "tubulin_image")
+    viewer.window.add_plugin_dock_widget(
+        plugin_name="napari-locan", widget_name="SMLM data"
+    )
+    viewer.window.add_plugin_dock_widget(
+        plugin_name="napari-locan", widget_name="Show metadata"
+    )
+    viewer.window.add_plugin_dock_widget(
+        plugin_name="napari-locan", widget_name="Filter specifications"
+    )
+    viewer.window.add_plugin_dock_widget(
+        plugin_name="napari-locan", widget_name="Select"
+    )
+    napari.run()

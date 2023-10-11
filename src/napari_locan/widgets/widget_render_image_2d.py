@@ -9,6 +9,7 @@ from __future__ import annotations
 import logging
 
 import locan as lc
+from napari.utils import progress
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QCheckBox,
@@ -256,14 +257,16 @@ class RenderImage2dQWidget(QWidget):  # type: ignore
         add_kwargs = {"name": self.smlm_data.locdata_name}
 
         # render data
-        lc.render_2d_napari(
-            locdata=locdata,
-            loc_properties=loc_properties,
-            other_property=other_property,
-            viewer=self.viewer,
-            bin_size=int(self._bin_size_spin_box.value()),
-            bin_range=bin_range,
-            rescale=self._rescale_combobox.currentText(),
-            cmap=lc.COLORMAP_CONTINUOUS,
-            **add_kwargs,
-        )
+        with progress() as progress_bar:
+            progress_bar.set_description("Rendering:")
+            lc.render_2d_napari(
+                locdata=locdata,
+                loc_properties=loc_properties,
+                other_property=other_property,
+                viewer=self.viewer,
+                bin_size=int(self._bin_size_spin_box.value()),
+                bin_range=bin_range,
+                rescale=self._rescale_combobox.currentText(),
+                cmap=lc.COLORMAP_CONTINUOUS,
+                **add_kwargs,
+            )

@@ -10,6 +10,7 @@ from __future__ import annotations
 import logging
 
 import locan as lc
+from napari.utils import progress
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QCheckBox,
@@ -315,9 +316,12 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         if not self.filter_specifications.filter_condition:
             raise ValueError("Filter condition cannot be an empty string.")
 
-        new_locdata = lc.select_by_condition(
-            locdata=locdata, condition=self.filter_specifications.filter_condition
-        )
-        self.smlm_data.append_item(
-            locdata=new_locdata, locdata_name=new_locdata.meta.identifier + "-selection"
-        )
+        with progress() as progress_bar:
+            progress_bar.set_description("Selecting:")
+            new_locdata = lc.select_by_condition(
+                locdata=locdata, condition=self.filter_specifications.filter_condition
+            )
+            self.smlm_data.append_item(
+                locdata=new_locdata,
+                locdata_name=new_locdata.meta.identifier + "-selection",
+            )

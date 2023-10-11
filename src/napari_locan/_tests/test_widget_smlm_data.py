@@ -1,4 +1,5 @@
 import locan as lc
+import napari
 import pytest
 
 from napari_locan import SmlmDataQWidget
@@ -115,3 +116,16 @@ class TestSmlmDataQWidget:
         my_widget._save_button_on_click()
         my_widget._locdatas_combobox.setCurrentIndex(1)
         my_widget._save_button_on_click()
+
+
+@pytest.mark.napari
+def test_run_napari():
+    viewer = napari.Viewer()
+    viewer.open_sample("napari-locan", "tubulin_points")
+    viewer.window.add_plugin_dock_widget(
+        plugin_name="napari-locan", widget_name="SMLM data"
+    )
+    viewer.window.add_plugin_dock_widget(
+        plugin_name="napari-locan", widget_name="Show metadata"
+    )
+    napari.run()

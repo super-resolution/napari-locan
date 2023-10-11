@@ -10,6 +10,7 @@ from typing import Any
 
 import locan as lc
 import numpy.typing as npt
+from napari.utils import progress
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QComboBox,
@@ -259,7 +260,9 @@ class RenderPoints3dQWidget(QWidget):  # type: ignore
                 "face_colormap": "viridis",
             }
 
-        self.viewer.add_points(data=data, properties=point_properties, **add_kwargs)
+        with progress() as progress_bar:
+            progress_bar.set_description("Rendering:")
+            self.viewer.add_points(data=data, properties=point_properties, **add_kwargs)
 
     def _get_message_feedback(self) -> bool:
         n_localizations = len(self.smlm_data.locdata)  # type: ignore

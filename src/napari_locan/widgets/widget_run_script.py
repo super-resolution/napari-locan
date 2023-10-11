@@ -6,6 +6,7 @@ localization analysis.
 """
 from pathlib import Path
 
+from napari.utils import progress
 from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QComboBox,
@@ -151,4 +152,6 @@ class RunScriptQWidget(QWidget):  # type: ignore
 
     def _run_button_on_click(self) -> None:
         script = self._script_text_edit.toPlainText()
-        exec(script)  # noqa: S102
+        with progress() as progress_bar:
+            progress_bar.set_description("Running:")
+            exec(script)  # noqa: S102
