@@ -92,7 +92,7 @@ class RenderImage3dQWidget(QWidget):  # type: ignore
                 self.smlm_data.locdata.data.columns  # type: ignore
             )
             key_index = list(self.smlm_data.locdata.data.columns).index(  # type: ignore
-                self.smlm_data.locdata.coordinate_keys[1]  # type: ignore
+                self.smlm_data.locdata.coordinate_keys[2]  # type: ignore
             )
             self._loc_properties_z_combobox.setCurrentIndex(key_index)
 
