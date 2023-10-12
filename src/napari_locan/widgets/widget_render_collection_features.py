@@ -157,7 +157,7 @@ class RenderCollectionFeaturesQWidget(QWidget):  # type: ignore[misc]
         )
         self._render_button.clicked.connect(self._render_button_on_click)
 
-        self._render_as_series_button = QPushButton("Render points as series")
+        self._render_as_series_button = QPushButton("Render as series")
         self._render_as_series_button.setToolTip(
             "Show series of the selected features for SMLM data collection elements in new layers."
         )
