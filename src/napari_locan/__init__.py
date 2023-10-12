@@ -38,6 +38,7 @@ __all__: list[str] = [
     "RenderCollection2dQWidget",
     "RenderFeaturesQWidget",
     "RenderImage2dQWidget",
+    "RenderImage3dQWidget",
     "RenderPoints2dQWidget",
     "RenderPoints3dQWidget",
     "RoiQWidget",
@@ -86,6 +87,9 @@ from napari_locan.widgets.widget_render_features import (
 )
 from napari_locan.widgets.widget_render_image_2d import (
     RenderImage2dQWidget,
+)
+from napari_locan.widgets.widget_render_image_3d import (
+    RenderImage3dQWidget,
 )
 from napari_locan.widgets.widget_render_points_2d import (
     RenderPoints2dQWidget,

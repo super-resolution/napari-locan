@@ -64,6 +64,10 @@ contributions:
       python_name: napari_locan.widgets.widget_render_image_2d:RenderImage2dQWidget
       title: Render image 2d
 
+    - id: napari-locan.render_image_3d_qwidget
+      python_name: napari_locan.widgets.widget_render_image_3d:RenderImage3dQWidget
+      title: Render image 3d
+
     - id: napari-locan.render_features_qwidget
       python_name: napari_locan.widgets.widget_render_features:RenderFeaturesQWidget
       title: Render features
@@ -138,6 +142,9 @@ contributions:
 
     - command: napari-locan.render_image_2d_qwidget
       display_name: Render image 2d
+
+    - command: napari-locan.render_image_3d_qwidget
+      display_name: Render image 3d
 
     - command: napari-locan.render_features_qwidget
       display_name: Render features
