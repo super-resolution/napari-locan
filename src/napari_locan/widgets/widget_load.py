@@ -4,6 +4,7 @@ Load SMLM data files.
 A QWidget plugin to load SMLM data files into the SMLM data model.
 A new SMLM dataset will be created.
 """
+import ast
 import logging
 
 import locan as lc
@@ -34,6 +35,7 @@ class LoadQWidget(QWidget):  # type: ignore
 
         self._add_file_type()
         self._add_file_path()
+        self._add_kwargs_edit()
         self._add_buttons()
         self._set_layout()
 
@@ -56,11 +58,26 @@ class LoadQWidget(QWidget):  # type: ignore
         self._file_path_select_button.clicked.connect(
             self._file_path_select_button_on_click
         )
+        self._file_path_delete_button = QPushButton("Delete")
+        self._file_path_delete_button.setToolTip("Clear the file path.")
+        self._file_path_delete_button.clicked.connect(
+            self._file_path_delete_button_on_click
+        )
 
         self._file_path_layout = QHBoxLayout()
         self._file_path_layout.addWidget(self._file_path_label)
         self._file_path_layout.addWidget(self._file_path_edit)
         self._file_path_layout.addWidget(self._file_path_select_button)
+        self._file_path_layout.addWidget(self._file_path_delete_button)
+
+    def _add_kwargs_edit(self) -> None:
+        self._kwargs_edit_label = QLabel("**kwargs:")
+        self._kwargs_edit = QLineEdit()
+        self._kwargs_edit.setToolTip("Add kwargs for load function like 'nrows=10'.")
+
+        self._kwargs_edit_layout = QHBoxLayout()
+        self._kwargs_edit_layout.addWidget(self._kwargs_edit_label)
+        self._kwargs_edit_layout.addWidget(self._kwargs_edit)
 
     def _add_buttons(self) -> None:
         self._load_button = QPushButton("Load File")
@@ -71,6 +88,7 @@ class LoadQWidget(QWidget):  # type: ignore
         layout = QVBoxLayout()
         layout.addLayout(self._file_type_layout)
         layout.addLayout(self._file_path_layout)
+        layout.addLayout(self._kwargs_edit_layout)
         layout.addWidget(self._load_button)
         self.setLayout(layout)
 
@@ -86,15 +104,23 @@ class LoadQWidget(QWidget):  # type: ignore
         fname = fname_[0] if isinstance(fname_, tuple) else str(fname_)
         self._file_path_edit.setText(fname)
 
+    def _file_path_delete_button_on_click(self) -> None:
+        self._file_path_edit.clear()
+
     def _load_button_on_click(self) -> None:
         if not self._file_path_edit.text():
             self._file_path_select_button_on_click()
 
         file_path = self._file_path_edit.text()
         file_type = self._file_type_combobox.currentText()
+
+        text = self._kwargs_edit.text()
+        expr = ast.parse(f"dict({text}\n)", mode="eval")
+        kwargs = {kw.arg: ast.literal_eval(kw.value) for kw in expr.body.keywords}  # type: ignore
+
         with progress() as progress_bar:
             progress_bar.set_description("Loading data")
-            locdata = lc.load_locdata(path=file_path, file_type=file_type)
+            locdata = lc.load_locdata(path=file_path, file_type=file_type, **kwargs)
             self.smlm_data.append_item(
                 locdata=locdata, locdata_name=locdata.meta.identifier + "-" + file_path
             )
