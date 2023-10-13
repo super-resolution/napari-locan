@@ -276,6 +276,7 @@ class RenderImage3dQWidget(QWidget):  # type: ignore
         loc_properties = [
             self._loc_properties_x_combobox.currentText(),
             self._loc_properties_y_combobox.currentText(),
+            self._loc_properties_z_combobox.currentText(),
         ]
         other_property: str | None = self._loc_properties_other_combobox.currentText()
         other_property = other_property if other_property != "" else None

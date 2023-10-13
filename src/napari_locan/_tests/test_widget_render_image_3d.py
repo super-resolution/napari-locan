@@ -16,6 +16,7 @@ class TestRenderImage3dQWidget:
         render_widget = RenderImage3dQWidget(viewer, smlm_data=smlm_data)
         assert render_widget._loc_properties_x_combobox.currentIndex() == 0
         assert render_widget._loc_properties_y_combobox.currentIndex() == 1
+        assert render_widget._loc_properties_z_combobox.currentIndex() == 2
         assert render_widget._loc_properties_other_combobox.currentText() == ""
         assert render_widget._loc_properties_other_combobox.currentIndex() == 0
 
