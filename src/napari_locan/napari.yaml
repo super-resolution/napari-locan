@@ -95,19 +95,19 @@ contributions:
   sample_data:
     - command: napari-locan.make_image_npc
       key: npc_image
-      display_name: Nuclear Pore Complex (gp210)
+      display_name: Nuclear Pore Complex (2D)
 
     - command: napari-locan.make_image_tubulin
       key: tubulin_image
-      display_name: Tubulin
+      display_name: Tubulin (2D)
 
     - command: napari-locan.make_points_npc
       key: npc_points
-      display_name: Nuclear Pore Complex (gp210 - localizations)
+      display_name: Nuclear Pore Complex (2D-point cloud)
 
     - command: napari-locan.make_points_tubulin
       key: tubulin_points
-      display_name: Tubulin (localizations)
+      display_name: Tubulin (2D-point cloud)
 
   widgets:
     - command: napari-locan.smlm_data_qwidget
