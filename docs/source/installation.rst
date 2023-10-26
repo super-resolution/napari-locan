@@ -17,7 +17,7 @@ A list with all hard and optional dependencies is given in `pyproject.toml`.
 Install from pypi
 ------------------------------
 
-Install locan directly from the Python Package Index::
+Install napari-locan directly from the Python Package Index::
 
     pip install napari-locan
 
