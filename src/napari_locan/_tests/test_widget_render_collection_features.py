@@ -6,6 +6,12 @@ from napari_locan.data_model.smlm_data import SmlmData
 
 
 class TestRenderCollectionFeaturesQWidget:
+    def test_RenderCollectionFeaturesQWidget_init(self, make_napari_viewer):
+        smlm_data = SmlmData()
+        viewer = make_napari_viewer()
+        render_widget = RenderCollectionFeaturesQWidget(viewer, smlm_data=smlm_data)
+        assert render_widget
+
     def test_RenderCollectionFeaturesQWidget(
         self,
         make_napari_viewer,

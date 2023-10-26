@@ -12,8 +12,11 @@ class TestCollectionSeriesQWidget:
         locdata_two_cluster_with_noise_2d,
         collection_two_cluster_2d,
     ):
+        smlm_data = SmlmData()
         viewer = make_napari_viewer()
-        collection_series_widget = RenderCollection2dQWidget(viewer)
+        collection_series_widget = RenderCollection2dQWidget(
+            viewer, smlm_data=smlm_data
+        )
         assert collection_series_widget
 
         smlm_data = SmlmData(locdatas=[locdata_two_cluster_with_noise_2d])

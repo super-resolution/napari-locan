@@ -4,6 +4,11 @@ from napari_locan.data_model.smlm_data import SmlmData
 
 class TestClusteringQWidgetQWidget:
     def test_ClusteringQWidget_init(self, make_napari_viewer, locdata_2d):
+        smlm_data = SmlmData()
+        viewer = make_napari_viewer()
+        my_widget = ClusteringQWidget(viewer, smlm_data=smlm_data)
+        assert my_widget
+
         smlm_data = SmlmData(locdatas=[locdata_2d])
         viewer = make_napari_viewer()
         my_widget = ClusteringQWidget(viewer, smlm_data=smlm_data)

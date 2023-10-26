@@ -8,8 +8,9 @@ from napari_locan.data_model.smlm_data import SmlmData
 
 class TestRenderImage3dQWidget:
     def test_RenderImage3dQWidget_init(self, make_napari_viewer, locdata_3d):
+        smlm_data = SmlmData()
         viewer = make_napari_viewer()
-        render_widget = RenderImage3dQWidget(viewer)
+        render_widget = RenderImage3dQWidget(viewer, smlm_data=smlm_data)
         assert render_widget
 
         smlm_data = SmlmData(locdatas=[locdata_3d])

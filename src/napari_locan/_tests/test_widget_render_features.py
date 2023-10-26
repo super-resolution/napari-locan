@@ -8,6 +8,11 @@ from napari_locan.data_model.smlm_data import SmlmData
 
 class TestShowFeaturesQWidget:
     def test_ShowFeaturesQWidget_init(self, make_napari_viewer, locdata_2d):
+        smlm_data = SmlmData()
+        viewer = make_napari_viewer()
+        render_widget = RenderFeaturesQWidget(viewer, smlm_data=smlm_data)
+        assert render_widget
+
         locdata_2d = copy(locdata_2d)
         viewer = make_napari_viewer()
         smlm_data = SmlmData(locdatas=[locdata_2d])
