@@ -46,7 +46,7 @@ classifiers = [
 ]
 dynamic = ["version"]
 dependencies = [
-    "locan>=0.15",
+    "locan>=0.17",
     "magicgui",
     "napari",
     "napari_matplotlib",
