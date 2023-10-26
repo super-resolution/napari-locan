@@ -33,7 +33,7 @@ jobs:
       - name: "Format with black"
         run: black --check --diff "."
       - name: "Lint with ruff"
-        run: ruff --format=github "."
+        run: ruff --output-format=github "."
 
       # these libraries enable testing on Qt on linux
       - uses: tlambert03/setup-qt-libs@v1
