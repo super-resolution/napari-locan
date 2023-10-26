@@ -1,13 +1,16 @@
 [build-system]
 requires = [
-    "setuptools>=42",
+    "setuptools>=61",
     "wheel",
-    "setuptools_scm[toml]>=3.4"
+    "setuptools_scm[toml]>=6.2"
     ]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-packages = ["src"]
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+napari_locan = ["napari.yaml"]
 
 [tool.setuptools_scm]
 write_to = "src/napari_locan/_version.py"
@@ -16,7 +19,7 @@ write_to = "src/napari_locan/_version.py"
 name = "napari_locan"
 description = "Use locan methods in napari"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = {file = "LICENSE.md"}
 authors = [
   {name = "napari-locan Developers"},
@@ -35,7 +38,6 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -44,8 +46,10 @@ classifiers = [
 ]
 dynamic = ["version"]
 dependencies = [
-    "locan",
+    "locan>=0.15",
     "magicgui",
+    "napari",
+    "napari_matplotlib",
     "numpy",
     "qtpy",
     "tomli>=1.1.0; python_version<'3.11'",
@@ -53,35 +57,49 @@ dependencies = [
 
 [project.optional-dependencies]
 test =[
-    "napari",
     "pyqt5",
     "pytest",
-    "pytest-cov",
     "pytest-qt",
     "tox",
 ]
 dev = [
-    "coverage",
-    "build",
-    "twine",
     "black",
+    "build",
+    "coverage[toml]",
+    "mypy",
     "pre-commit",
     "ruff",
-    "mypy",
+    "twine",
+]
+docs = [
+    "furo",
+    "ipython",
+    "myst-nb",
+    "sphinx",
+    "sphinx_autodoc_typehints",
+    "sphinx-copybutton",
 ]
 
 [project.urls]
 homepage = "https://github.com/super-resolution/napari-locan"
-documentation = "https://locan.readthedocs.io/"
+documentation = "https://napari-locan.readthedocs.io/"
 repository = "https://github.com/super-resolution/napari-locan"
 issues = "https://github.com/super-resolution/napari-locan/issues"
-changelog = "https://github.com/super-resolution/napari-locan"
+changelog = "https://github.com/super-resolution/napari-locan/CHANGES.rst"
 
 [project.entry-points."napari.manifest"]
 napari-locan = "napari_locan:napari.yaml"
 
 [tool.black]
 line-length = 88
+
+[tool.pytest.ini_options]
+filterwarnings = [
+]
+addopts = "-m 'not napari'"
+markers = [
+    "napari: marks tests that run napari (skipped by default)",
+]
 
 [tool.coverage.run]
 source = ["src"]
@@ -124,7 +142,7 @@ fixable = ["I"]
 # S307 suspicious-eval-usage
 # S605 start-process-with-a-shell
 # S607 start-process-with-partial-path
-ignore = []
+ignore = ["E501"]
 # automatically exclude files that are ignored by .gitignore
 exclude = [
     ".*",
@@ -134,19 +152,43 @@ exclude = [
 ]
 
 [tool.ruff.per-file-ignores]
-"__init__.py" = ["E402", "F401", "F403", "F405"]
+"__init__.py" = ["E402", "F401", "F403", "F405", "I001"]
 "_version.py" = ["Q000"]
 "test_*.py" = ["S101", "S605", "S607"]
 
 [tool.ruff.pydocstyle]
 convention = "numpy"
 
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
+
+[tool.ruff.flake8-import-conventions]
+[tool.ruff.flake8-import-conventions.aliases]
+locan = "lc"
+matplotlib = "mpl"
+"matplotlib.pyplot" = "plt"
+numpy = "np"
+pandas = "pd"
+scipy = "sp"
+
 [tool.napari.manifest]
 display_name = "napari-locan"
 
 [tool.mypy]
+plugins = ['numpy.typing.mypy_plugin']
 files = ["src"]
 strict = true
+
+# warn-unused-ignores is not quite reproducible
+warn_unused_ignores = false
+
+[[tool.mypy.overrides]]
+module = [
+    'matplotlib.*',
+    'napari_matplotlib.*',
+    'napari.*',
+    'qtpy.*',
+]
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
@@ -160,3 +202,6 @@ module = [
     'napari_locan._tests.*',
 ]
 disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = false
+ignore_errors = true

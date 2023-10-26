@@ -1,6 +1,7 @@
-# napari-locan
+![logo](./docs/_static/logo.png) napari-locan
+==================================================
 
-[![License](https://img.shields.io/pypi/l/napari-locan.svg?color=green)](https://github.com/super-resolution/napari-locan/raw/main/LICENSE)
+[![License](https://img.shields.io/pypi/l/napari-locan.svg?color=green)](https://github.com/super-resolution/napari-locan/blob/main/LICENSE.md)
 [![PyPI](https://img.shields.io/pypi/v/napari-locan.svg?color=green)](https://pypi.org/project/napari-locan)
 [![Python Version](https://img.shields.io/pypi/pyversions/napari-locan.svg?color=green)](https://python.org)
 [![tests](https://github.com/super-resolution/napari-locan/workflows/tests/badge.svg)](https://github.com/super-resolution/napari-locan/actions)
@@ -8,17 +9,20 @@
 [![codecov](https://codecov.io/gh/super-resolution/napari-locan/branch/main/graph/badge.svg)](https://codecov.io/gh/super-resolution/napari-locan)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-locan)](https://napari-hub.org/plugins/napari-locan)
 
-Use locan methods in napari
+Use locan methods in napari.
+
+This plugin allows loading, visualizing and analyzing
+single-molecule localization (SMLM) data.
+napari-locan is well suited for exploratory data analysis.
+
+It implements a subset of methods from [locan], a python-based library with
+code for analyzing SMLM data.
+Locan provides extended functionality that is better suited for script- or
+notebook-based analysis procedures.
+
+For details on usage and development of napari-locan please read the [documentation].
 
 ----------------------------------
-
-<!--
-Don't miss the full getting started guide to set up your new package:
-https://github.com/napari/cookiecutter-napari-plugin#getting-started
-
-and review the napari docs for plugin developers:
-https://napari.org/plugins/index.html
--->
 
 ## Installation
 
@@ -30,18 +34,28 @@ You can install `napari-locan` via [pip]:
 
 To install latest development version :
 
-    pip install git+https://github.com/super-resolution/napari-locan.git
+    pip install git+https://github.com/super-resolution/napari-locan.git@main
 
+
+## Usage
+
+Please read the [documentation] for details.
 
 ## Contributing
 
-Contributions are very welcome. Tests can be run with [tox], please ensure
-the coverage at least stays the same before you submit a pull request.
+Contributions are very welcome.
+Please read the [documentation on development] for details.
+
+## Credit
+
+The plugin was developed in the Department of Biotechnology and Biophysics, Würzburg University, Germany.
+It is based on locan. So credit goes to the [locan developers].
 
 ## License
 
 Distributed under the terms of the [BSD-3] license,
-"napari-locan" is free and open source software
+"napari-locan" is free and open source software.
+See the [LICENSE](LICENSE.md) file for details.
 
 ## Issues
 
@@ -54,17 +68,14 @@ This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookie
 [napari]: https://github.com/napari/napari
 [Cookiecutter]: https://github.com/audreyr/cookiecutter
 [@napari]: https://github.com/napari
-[MIT]: http://opensource.org/licenses/MIT
 [BSD-3]: http://opensource.org/licenses/BSD-3-Clause
-[GNU GPL v3.0]: http://www.gnu.org/licenses/gpl-3.0.txt
-[GNU LGPL v3.0]: http://www.gnu.org/licenses/lgpl-3.0.txt
-[Apache Software License 2.0]: http://www.apache.org/licenses/LICENSE-2.0
-[Mozilla Public License 2.0]: https://www.mozilla.org/media/MPL/2.0/index.txt
 [cookiecutter-napari-plugin]: https://github.com/napari/cookiecutter-napari-plugin
 
 [file an issue]: https://github.com/super-resolution/napari-locan/issues
+[locan]: https://locan.readthedocs.io/en/latest/
+[locan developers]: https://github.com/super-resolution/locan
+[documentation]: https://napari-locan.readthedocs.io
+[documentation on development]: https://locan.readthedocs.io
 
-[napari]: https://github.com/napari/napari
-[tox]: https://tox.readthedocs.io/en/latest/
 [pip]: https://pypi.org/project/pip/
 [PyPI]: https://pypi.org/
