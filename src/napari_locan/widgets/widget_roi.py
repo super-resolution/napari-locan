@@ -437,7 +437,7 @@ class RoiQWidget(QWidget):  # type: ignore
                 # kwargs: parent, message, directory, filter
                 # but kw_names are different for different qt_bindings
             )
-            new_file_path = Path(fname[0]) if isinstance(fname, tuple) else Path(fname)
+            new_file_path = Path(fname[0]) if isinstance(fname, tuple) else Path(fname)  # type: ignore[arg-type]
         else:
             new_file_path = Path(file_path)
         new_roi = lc.Roi.from_yaml(path=new_file_path)
@@ -537,7 +537,7 @@ class RoiQWidget(QWidget):  # type: ignore
                 # kwargs: parent, message, directory, filter
                 # but kw_names are different for different qt_bindings
             )
-            file_path = Path(fname[0]) if isinstance(fname, tuple) else Path(fname)
+            file_path = Path(fname[0]) if isinstance(fname, tuple) else Path(fname)  # type: ignore[arg-type]
             reference["file_path"] = file_path
 
             items = [member.name for member in lc.FileType]

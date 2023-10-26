@@ -240,7 +240,7 @@ class RenderPoints3dQWidget(QWidget):  # type: ignore
             self._loc_properties_y_combobox.currentText(),
             self._loc_properties_z_combobox.currentText(),
         ]
-        other_property = self._loc_properties_other_combobox.currentText()
+        other_property: str | None = self._loc_properties_other_combobox.currentText()
         other_property = other_property if other_property != "" else None
         data = locdata.data[loc_properties].to_numpy()
 

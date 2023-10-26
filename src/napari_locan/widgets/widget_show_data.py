@@ -29,7 +29,7 @@ class TableModel(QAbstractTableModel):  # type: ignore
         self._data = data
 
     def data(self, index, role) -> str:  # type: ignore
-        if role == Qt.DisplayRole:
+        if role == Qt.DisplayRole:  # type: ignore[attr-defined]
             value = self._data.iloc[index.row(), index.column()]
             return str(value)
 
@@ -41,11 +41,11 @@ class TableModel(QAbstractTableModel):  # type: ignore
 
     def headerData(self, section, orientation: Qt.Horizontal | Qt.Vertical, role) -> str:  # type: ignore
         # section is the index of the column/row.
-        if role == Qt.DisplayRole:
-            if orientation == Qt.Horizontal:
+        if role == Qt.DisplayRole:  # type: ignore[attr-defined]
+            if orientation == Qt.Horizontal:  # type: ignore[attr-defined]
                 return str(self._data.columns[section])
 
-            if orientation == Qt.Vertical:
+            if orientation == Qt.Vertical:  # type: ignore[attr-defined]
                 return str(self._data.index[section])
 
 
