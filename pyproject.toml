@@ -61,7 +61,6 @@ test =[
     "pyqt5",
     "pytest",
     "pytest-qt",
-    "tox",
 ]
 dev = [
     "black",
