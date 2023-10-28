@@ -49,7 +49,8 @@ Please read the [documentation on development] for details.
 ## Credit
 
 The plugin was developed in the Department of Biotechnology and Biophysics, Würzburg University, Germany.
-It is based on locan. So credit goes to the [locan developers].
+It is based on locan. So credit goes to the [locan developers]
+and can be [cited](CITATION.cff).
 
 ## License
 

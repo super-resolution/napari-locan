@@ -14,10 +14,15 @@ Dependencies
 
 A list with all hard and optional dependencies is given in `pyproject.toml`.
 
+napari, locan and napari-locan require a Qt library like pyqt5 or pyside2,
+which is not specified as hard requirement.
+Make sure to have one (and only one) installed directly or through napari[pyqt5]
+or locan[pyqt5].
+
 Install from pypi
 ------------------------------
 
-Install locan directly from the Python Package Index::
+Install napari-locan directly from the Python Package Index::
 
     pip install napari-locan
 

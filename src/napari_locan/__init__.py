@@ -33,9 +33,9 @@ __all__: list[str] = [
     "ClusteringQWidget",
     "FilterSpecificationsQWidget",
     "LoadQWidget",
-    "SmlmDataQWidget",
     "PropertyDistributionQWidget",
     "RenderCollection2dQWidget",
+    "RenderCollectionFeaturesQWidget",
     "RenderFeaturesQWidget",
     "RenderImage2dQWidget",
     "RenderImage3dQWidget",
@@ -47,7 +47,7 @@ __all__: list[str] = [
     "ShowDataQWidget",
     "ShowMetadataQWidget",
     "ShowPropertiesQWidget",
-    "RenderCollectionFeaturesQWidget",
+    "SmlmDataQWidget",
 ]
 
 from napari_locan.data_model.smlm_data import SmlmData
@@ -73,14 +73,14 @@ from napari_locan.widgets.widget_filter_specifications import (
 from napari_locan.widgets.widget_load import (
     LoadQWidget,
 )
-from napari_locan.widgets.widget_smlm_data import (
-    SmlmDataQWidget,
-)
 from napari_locan.widgets.widget_property_distribution import (
     PropertyDistributionQWidget,
 )
 from napari_locan.widgets.widget_render_collection_2d import (
     RenderCollection2dQWidget,
+)
+from napari_locan.widgets.widget_render_collection_features import (
+    RenderCollectionFeaturesQWidget,
 )
 from napari_locan.widgets.widget_render_features import (
     RenderFeaturesQWidget,
@@ -115,6 +115,6 @@ from napari_locan.widgets.widget_show_metadata import (
 from napari_locan.widgets.widget_show_properties import (
     ShowPropertiesQWidget,
 )
-from napari_locan.widgets.widget_render_collection_features import (
-    RenderCollectionFeaturesQWidget,
+from napari_locan.widgets.widget_smlm_data import (
+    SmlmDataQWidget,
 )

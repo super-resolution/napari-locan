@@ -16,7 +16,7 @@ napari_locan = ["napari.yaml"]
 write_to = "src/napari_locan/_version.py"
 
 [project]
-name = "napari_locan"
+name = "napari-locan"
 description = "Use locan methods in napari"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -43,13 +43,14 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Image Processing",
 ]
 dynamic = ["version"]
 dependencies = [
-    "locan>=0.15",
+    "locan>=0.17",
     "magicgui",
     "napari",
-    "napari_matplotlib",
+    "napari-matplotlib",
     "numpy",
     "qtpy",
     "tomli>=1.1.0; python_version<'3.11'",
@@ -57,10 +58,8 @@ dependencies = [
 
 [project.optional-dependencies]
 test =[
-    "pyqt5",
     "pytest",
     "pytest-qt",
-    "tox",
 ]
 dev = [
     "black",
