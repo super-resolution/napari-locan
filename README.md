@@ -23,8 +23,6 @@ notebook-based analysis procedures.
 
 For details on usage and development of napari-locan please read the [documentation].
 
-----------------------------------
-
 ## Installation
 
 Make sure to have Qt bindings installed in your python environment of choice.
