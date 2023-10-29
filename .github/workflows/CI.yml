@@ -53,9 +53,7 @@ jobs:
         run: coverage report --fail-under=80
 
       - name: "Upload coverage to CodeCov"
-        # todo: activate
-        if: false
-        # if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
@@ -71,29 +69,3 @@ jobs:
         with:
           name: ${{ env.REQUIREMENTS_FILE }}
           path: ${{ env.REQUIREMENTS_FILE }}
-
-  deploy:
-    # this will run when you have tagged a commit, starting with "v*"
-    # and requires that you have put your twine API key in your
-    # github secrets
-    needs: [check]
-    runs-on: ubuntu-latest
-    if: contains(github.ref, 'tags')
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -U setuptools setuptools_scm wheel twine build
-      - name: Build and publish
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.TWINE_API_KEY }}
-        run: |
-          git tag
-          python -m build .
-          twine upload dist/*
