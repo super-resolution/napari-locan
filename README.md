@@ -1,13 +1,14 @@
 ![logo](./docs/_static/logo.png) napari-locan
 ==================================================
 
-[![License](https://img.shields.io/pypi/l/napari-locan.svg?color=green)](https://github.com/super-resolution/napari-locan/blob/main/LICENSE.md)
+[![License](https://img.shields.io/github/license/super-resolution/napari-locan)](https://github.com/super-resolution/napari-locan/blob/main/LICENSE.md)
+[![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-locan)](https://napari-hub.org/plugins/napari-locan)
 [![PyPI](https://img.shields.io/pypi/v/napari-locan.svg?color=green)](https://pypi.org/project/napari-locan)
 [![Python Version](https://img.shields.io/pypi/pyversions/napari-locan.svg?color=green)](https://python.org)
 [![tests](https://github.com/super-resolution/napari-locan/workflows/tests/badge.svg)](https://github.com/super-resolution/napari-locan/actions)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![codecov](https://codecov.io/gh/super-resolution/napari-locan/branch/main/graph/badge.svg)](https://codecov.io/gh/super-resolution/napari-locan)
-[![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-locan)](https://napari-hub.org/plugins/napari-locan)
+[![Documentation Status](https://readthedocs.org/projects/napari-locan/badge/?version=latest)](https://napari-locan.readthedocs.io/en/latest/?badge=latest)
 
 Use locan methods in napari.
 
@@ -26,16 +27,13 @@ For details on usage and development of napari-locan please read the [documentat
 
 ## Installation
 
-You can install `napari-locan` via [pip]:
+Make sure to have Qt bindings installed in your python environment of choice.
+
+You can install napari-locan via pip:
 
     pip install napari-locan
 
-
-
-To install latest development version :
-
-    pip install git+https://github.com/super-resolution/napari-locan.git@main
-
+Please read the [documentation on installation] for more details.
 
 ## Usage
 
@@ -48,14 +46,16 @@ Please read the [documentation on development] for details.
 
 ## Credit
 
-The plugin was developed in the Department of Biotechnology and Biophysics, Würzburg University, Germany.
+The plugin was developed in the Department of Biotechnology and Biophysics,
+Würzburg University, Germany.
 It is based on locan. So credit goes to the [locan developers]
 and can be [cited](CITATION.cff).
 
 ## License
 
-Distributed under the terms of the [BSD-3] license,
-"napari-locan" is free and open source software.
+Distributed under the terms of the
+[BSD-3](http://opensource.org/licenses/BSD-3-Clause)
+license, "napari-locan" is free and open source software.
 See the [LICENSE](LICENSE.md) file for details.
 
 ## Issues
@@ -69,14 +69,12 @@ This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookie
 [napari]: https://github.com/napari/napari
 [Cookiecutter]: https://github.com/audreyr/cookiecutter
 [@napari]: https://github.com/napari
-[BSD-3]: http://opensource.org/licenses/BSD-3-Clause
 [cookiecutter-napari-plugin]: https://github.com/napari/cookiecutter-napari-plugin
 
-[file an issue]: https://github.com/super-resolution/napari-locan/issues
-[locan]: https://locan.readthedocs.io/en/latest/
+[locan]: https://github.com/super-resolution/locan
 [locan developers]: https://github.com/super-resolution/locan
-[documentation]: https://napari-locan.readthedocs.io
-[documentation on development]: https://locan.readthedocs.io
 
-[pip]: https://pypi.org/project/pip/
-[PyPI]: https://pypi.org/
+[documentation]: https://napari-locan.readthedocs.io
+[documentation on installation]: https://napari-locan.readthedocs.io/en/latest/source/installation.html
+[documentation on development]: https://napari-locan.readthedocs.io/en/latest/source/development.html
+[file an issue]: https://github.com/super-resolution/napari-locan/issues
