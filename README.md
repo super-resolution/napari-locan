@@ -37,7 +37,7 @@ Please read the [documentation on installation] for more details.
 
 ## Usage
 
-![](https://github.com/super-resolution/napari-locan/docs/animation/napari-locan-animation.gif)
+![](https://github.com/super-resolution/napari-locan/docs/resources/screenshot_0.png)
 
 Please read the [documentation] for details.
 
