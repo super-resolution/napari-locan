@@ -37,7 +37,7 @@ Please read the [documentation on installation] for more details.
 
 ## Usage
 
-![img.png](https://github.com/super-resolution/napari-locan/raw/main/docs/resources/screenshot_0.png)
+![](https://github.com/super-resolution/napari-locan/raw/main/docs/resources/screenshot_0.png?raw=true)
 
 Please read the [documentation] for details.
 
