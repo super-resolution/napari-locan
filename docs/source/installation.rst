@@ -30,6 +30,14 @@ Extra dependencies can be included::
 
     pip install napari-locan[test,dev,docs]
 
+Install from conda-forge
+------------------------------
+
+Install locan with the conda package manager (use mamba for better performance)::
+
+    mamba install -c conda-forge napari-locan
+
+
 Install from distribution or sources
 -------------------------------------
 
