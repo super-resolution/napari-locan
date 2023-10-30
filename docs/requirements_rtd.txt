@@ -1,3 +1,4 @@
-# requirements for building the documentation for napar-locan on readthedocs
-
-pyqt5
+#
+# requirements for building the documentation for napari-locan on readthedocs
+#
+pyqt6
