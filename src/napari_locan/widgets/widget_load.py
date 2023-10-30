@@ -42,9 +42,13 @@ class LoadQWidget(QWidget):  # type: ignore
     def _add_file_type(self) -> None:
         self._file_type_label = QLabel("File type:")
         self._file_type_combobox = QComboBox()
-        file_types = list(lc.FileType.__members__.keys())
+        file_types = [
+            type_.name
+            for type_ in lc.FileType
+            if type_.name != lc.FileType.UNKNOWN_FILE_TYPE.name
+        ]
         self._file_type_combobox.addItems(file_types)
-        self._file_type_combobox.setCurrentIndex(lc.FileType.RAPIDSTORM.value)
+        self._file_type_combobox.setCurrentText(lc.FileType.RAPIDSTORM.name)
 
         self._file_type_layout = QHBoxLayout()
         self._file_type_layout.addWidget(self._file_type_label)
@@ -110,6 +114,17 @@ class LoadQWidget(QWidget):  # type: ignore
     def _load_button_on_click(self) -> None:
         if not self._file_path_edit.text():
             self._file_path_select_button_on_click()
+        else:
+            fname_ = QFileDialog.getOpenFileName(
+                None,
+                "message",
+                self._file_path_edit.text(),
+                filter=""
+                # kwargs: parent, message, directory, filter
+                # but kw_names are different for different qt_bindings
+            )
+            fname = fname_[0] if isinstance(fname_, tuple) else str(fname_)
+            self._file_path_edit.setText(fname)
 
         file_path = self._file_path_edit.text()
         file_type = self._file_type_combobox.currentText()

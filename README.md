@@ -11,7 +11,7 @@
 [![codecov](https://codecov.io/gh/super-resolution/napari-locan/branch/main/graph/badge.svg)](https://codecov.io/gh/super-resolution/napari-locan)
 [![Documentation Status](https://readthedocs.org/projects/napari-locan/badge/?version=latest)](https://napari-locan.readthedocs.io/en/latest/?badge=latest)
 
-Load, visualize and analyze single-molecule localization (SMLM) data.
+Load, visualize and analyze single-molecule localization microscopy (SMLM) data.
 
 napari-locan is a napari plugin that implements a subset of methods from [locan],
 a python-based library with code for analyzing SMLM data.
@@ -25,11 +25,11 @@ For details on usage and development of napari-locan please read the [documentat
 
 Make sure to have Qt bindings installed in your python environment of choice.
 
-You can install napari-locan via pip:
+You can install napari-locan from PyPI:
 
     pip install napari-locan
 
-or via conda:
+or from conda-forge:
 
     mamba install -c conda-forge napari-locan
 
