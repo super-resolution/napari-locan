@@ -110,6 +110,17 @@ class LoadQWidget(QWidget):  # type: ignore
     def _load_button_on_click(self) -> None:
         if not self._file_path_edit.text():
             self._file_path_select_button_on_click()
+        else:
+            fname_ = QFileDialog.getOpenFileName(
+                None,
+                "message",
+                self._file_path_edit.text(),
+                filter=""
+                # kwargs: parent, message, directory, filter
+                # but kw_names are different for different qt_bindings
+            )
+            fname = fname_[0] if isinstance(fname_, tuple) else str(fname_)
+            self._file_path_edit.setText(fname)
 
         file_path = self._file_path_edit.text()
         file_type = self._file_type_combobox.currentText()
