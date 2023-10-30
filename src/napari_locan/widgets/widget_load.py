@@ -42,9 +42,13 @@ class LoadQWidget(QWidget):  # type: ignore
     def _add_file_type(self) -> None:
         self._file_type_label = QLabel("File type:")
         self._file_type_combobox = QComboBox()
-        file_types = list(lc.FileType.__members__.keys())
+        file_types = [
+            type_.name
+            for type_ in lc.FileType
+            if type_.name != lc.FileType.UNKNOWN_FILE_TYPE.name
+        ]
         self._file_type_combobox.addItems(file_types)
-        self._file_type_combobox.setCurrentIndex(lc.FileType.RAPIDSTORM.value)
+        self._file_type_combobox.setCurrentText(lc.FileType.RAPIDSTORM.name)
 
         self._file_type_layout = QHBoxLayout()
         self._file_type_layout.addWidget(self._file_type_label)
