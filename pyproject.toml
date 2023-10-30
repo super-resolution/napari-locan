@@ -99,7 +99,7 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ["src"]
+source = ["src/napari_locan"]
 omit = [
     "src/napari_locan/_tests/*",
     "src/napari_locan/scripts/*",

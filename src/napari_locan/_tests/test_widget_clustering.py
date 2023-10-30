@@ -38,5 +38,5 @@ class TestClusteringQWidgetQWidget:
 
         smlm_data.index = 0
         my_widget._compute_button_on_click_thread_worker()
-        # todo: wait for completion
+        # you would have to wait for worker.finished() to assert - so we skip this:
         # assert len(smlm_data.locdatas) == 5
