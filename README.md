@@ -4,22 +4,20 @@
 [![License](https://img.shields.io/github/license/super-resolution/napari-locan)](https://github.com/super-resolution/napari-locan/blob/main/LICENSE.md)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-locan)](https://napari-hub.org/plugins/napari-locan)
 [![PyPI](https://img.shields.io/pypi/v/napari-locan.svg?color=green)](https://pypi.org/project/napari-locan)
+[![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/napari-locan)](https://anaconda.org/conda-forge/napari-locan)
 [![Python Version](https://img.shields.io/pypi/pyversions/napari-locan.svg?color=green)](https://python.org)
 [![tests](https://github.com/super-resolution/napari-locan/workflows/tests/badge.svg)](https://github.com/super-resolution/napari-locan/actions)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![codecov](https://codecov.io/gh/super-resolution/napari-locan/branch/main/graph/badge.svg)](https://codecov.io/gh/super-resolution/napari-locan)
 [![Documentation Status](https://readthedocs.org/projects/napari-locan/badge/?version=latest)](https://napari-locan.readthedocs.io/en/latest/?badge=latest)
 
-Use locan methods in napari.
+Load, visualize and analyze single-molecule localization (SMLM) data.
 
-This plugin allows loading, visualizing and analyzing
-single-molecule localization (SMLM) data.
-napari-locan is well suited for exploratory data analysis.
-
-It implements a subset of methods from [locan], a python-based library with
-code for analyzing SMLM data.
+napari-locan is a napari plugin that implements a subset of methods from [locan],
+a python-based library with code for analyzing SMLM data.
 Locan provides extended functionality that is better suited for script- or
 notebook-based analysis procedures.
+napari-locan is well suited for exploratory data analysis within napari.
 
 For details on usage and development of napari-locan please read the [documentation].
 
@@ -31,9 +29,15 @@ You can install napari-locan via pip:
 
     pip install napari-locan
 
+or via conda:
+
+    mamba install -c conda-forge napari-locan
+
 Please read the [documentation on installation] for more details.
 
 ## Usage
+
+![](https://github.com/super-resolution/napari-locan/raw/main/docs/resources/screenshot_0.png?raw=true)
 
 Please read the [documentation] for details.
 
@@ -47,14 +51,14 @@ Please read the [documentation on development] for details.
 The plugin was developed in the Department of Biotechnology and Biophysics,
 Würzburg University, Germany.
 It is based on locan. So credit goes to the [locan developers]
-and can be [cited](CITATION.cff).
+and can be [cited](https://github.com/super-resolution/napari-locan/CITATION.cff).
 
 ## License
 
 Distributed under the terms of the
 [BSD-3](http://opensource.org/licenses/BSD-3-Clause)
 license, "napari-locan" is free and open source software.
-See the [LICENSE](LICENSE.md) file for details.
+See the [LICENSE](https://github.com/super-resolution/napari-locan/LICENSE.md) file for details.
 
 ## Issues
 
