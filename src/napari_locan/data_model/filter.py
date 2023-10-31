@@ -24,6 +24,12 @@ class FilterSpecifications(QObject):  # type: ignore
 
     Attributes
     ----------
+    filters_signal
+        A Qt signal for filters
+    filter_names_signal
+        A Qt signal for filter_names
+    index_signal
+        A Qt signal for index
     filters
         Collection of mapping between certain loc_properties and selectors
     filter_names
@@ -36,9 +42,9 @@ class FilterSpecifications(QObject):  # type: ignore
         The selected filter identifier
     """
 
-    filters_signal = Signal(list)
-    filter_names_signal = Signal(list)
-    index_signal = Signal(int)
+    filters_signal: Signal = Signal(list)
+    filter_names_signal: Signal = Signal(list)
+    index_signal: Signal = Signal(int)
 
     def __init__(self, filters: list[dict[str, lc.Selector]] | None = None) -> None:
         super().__init__()

@@ -24,6 +24,10 @@ class SmlmData(QObject):  # type: ignore
 
     Attributes
     ----------
+    index_changed_signal
+        A Qt signal for index
+    locdata_names_changed_signal
+        A Qt signal for locdata_names
     locdatas
         Localization datasets
     locdata_names
@@ -36,8 +40,8 @@ class SmlmData(QObject):  # type: ignore
         The selected LocData identifier
     """
 
-    index_changed_signal = Signal(int)
-    locdata_names_changed_signal = Signal(list)
+    index_changed_signal: Signal = Signal(int)
+    locdata_names_changed_signal: Signal = Signal(list)
 
     def __init__(
         self,

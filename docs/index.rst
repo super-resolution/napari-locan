@@ -25,6 +25,7 @@ Welcome to napari-locan!
    :name: mastertoc_use
 
    ./source/widgets
+   ./source/guide_on_rois
 
 
 .. toctree::

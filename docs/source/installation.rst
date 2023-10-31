@@ -19,7 +19,7 @@ which is not specified as hard requirement.
 Make sure to have one (and only one) installed directly or through napari[pyqt5]
 or locan[pyqt5].
 
-Install from pypi
+Install from PyPI
 ------------------------------
 
 Install napari-locan directly from the Python Package Index::

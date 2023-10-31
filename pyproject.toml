@@ -72,8 +72,9 @@ docs = [
     "furo",
     "ipython",
     "myst-nb",
+    "napari>=0.4.17",
     "sphinx",
-    "sphinx_autodoc_typehints",
+    "sphinx-autodoc-typehints",
     "sphinx-copybutton",
 ]
 

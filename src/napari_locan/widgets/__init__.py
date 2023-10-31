@@ -10,7 +10,7 @@ Submodules:
 
     widget_clustering
     widget_filter_specifications
-    widget_locdatas
+    widget_load
     widget_property_distribution
     widget_render_collection_2d
     widget_render_collection_features
