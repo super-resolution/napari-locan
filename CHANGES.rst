@@ -2,24 +2,20 @@
 Changelog
 =======================
 
-0.2 - dev
+0.2.0 - 2023-10-31
 =================
-
-New Features
-------------
--
-
-API Changes
------------
--
 
 Bug Fixes
 ---------
--
+- correct requirements
+- always open dialog with load button
+- remove unknown_file_format from load options
+- fix dockerfile
+- fix readthedocs
 
 Other Changes and Additions
 ---------------------------
--
+- add to documentation
 
 0.1.0 - 2023-10-29
 =======================
