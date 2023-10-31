@@ -4,8 +4,8 @@ FROM python:${PYTHON_VERSION}-slim-bookworm
 
 ARG PYTHON_VERSION
 ARG ENVIRONMENT_NAME="napari-locan"
-# one of pyside2, pyqt5, pyqt6
-ARG QT_BINDING="pyqt6"
+# one of pyside2, pyqt5
+ARG QT_BINDING="pyqt5"
 
 ENV PYTHON_VERSION=${PYTHON_VERSION} \
     ENVIRONMENT_NAME=${ENVIRONMENT_NAME} \
@@ -43,7 +43,7 @@ RUN python -m venv $VIRTUAL_ENV
 ENV PATH "$VIRTUAL_ENV/bin:$PATH"
 
 # Update and install any needed packages and the project
-RUN pip install pip setuptools wheel --trusted-host pypi.org --upgrade --no-cache-dir && \
+RUN pip install pip setuptools wheel pip-tools --trusted-host pypi.org --upgrade --no-cache-dir && \
     # xvfb needed to run tests with pytest_qt fixture\
     pip install $QT_BINDING && \
     pip install pytest-xvfb && \
@@ -55,6 +55,9 @@ VOLUME ["/shared"]
 # Run a command when the container launches
 CMD today=$(date +"%Y-%m-%d") && \
     base=${ENVIRONMENT_NAME}_$today && \
-    pip freeze --all > "/shared/requirements_$base.txt" && \
+    pip freeze --all > "/shared/frozen_requirements_$base.txt" && \
+    pip-compile --extra test --output-file "/shared/requirements_$base.txt" pyproject.toml && \
+    date > "/shared/napari_info_$base.txt" && \
+    napari --info >> "/shared/napari_info_$base.txt" && \
     date > "/shared/test_results_$base.txt" && \
     pytest >> "/shared/test_results_$base.txt"
