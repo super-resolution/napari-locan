@@ -51,14 +51,14 @@ Please read the [documentation on development] for details.
 The plugin was developed in the Department of Biotechnology and Biophysics,
 Würzburg University, Germany.
 It is based on locan. So credit goes to the [locan developers]
-and can be [cited](https://github.com/super-resolution/napari-locan/CITATION.cff).
+and can be [cited](https://github.com/super-resolution/napari-locan/blob/main/CITATION.cff).
 
 ## License
 
 Distributed under the terms of the
 [BSD-3](http://opensource.org/licenses/BSD-3-Clause)
 license, "napari-locan" is free and open source software.
-See the [LICENSE](https://github.com/super-resolution/napari-locan/LICENSE.md) file for details.
+See the [LICENSE](https://github.com/super-resolution/napari-locan/blob/main/LICENSE.md) file for details.
 
 ## Issues
 
