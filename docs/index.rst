@@ -25,8 +25,8 @@ Welcome to napari-locan!
    :name: mastertoc_use
 
    ./source/widgets
+   ./source/guide_on_smlmdata_and_collections
    ./source/guide_on_rois
-
 
 .. toctree::
    :maxdepth: 1
