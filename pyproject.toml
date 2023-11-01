@@ -17,7 +17,7 @@ write_to = "src/napari_locan/_version.py"
 
 [project]
 name = "napari-locan"
-description = "Use locan methods in napari"
+description = "Use locan methods in napari for single-molecule localization microscopy data."
 readme = "README.md"
 requires-python = ">=3.9"
 license = {file = "LICENSE.md"}
