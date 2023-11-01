@@ -2,24 +2,16 @@
 Changelog
 =======================
 
-0.3 - dev
+0.3 - 2023-11-01
 =================
-
-New Features
-------------
--
-
-API Changes
------------
--
 
 Bug Fixes
 ---------
--
+- add dependency for matplotlip<3.8.0
 
 Other Changes and Additions
 ---------------------------
--
+- additions to the documentation
 
 0.2.0 - 2023-10-31
 =================
