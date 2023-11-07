@@ -24,9 +24,15 @@ from qtpy.QtWidgets import (
     QWidget,
 )
 
-from napari_locan import filter_specifications, region_specifications, smlm_data
+from napari_locan import (
+    filter_specifications,
+    region_specifications,
+    roi_specifications,
+    smlm_data,
+)
 from napari_locan.data_model.filter import FilterSpecifications
 from napari_locan.data_model.region_specifications import RegionSpecifications
+from napari_locan.data_model.roi_specifications import RoiSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
@@ -38,12 +44,14 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
         napari_viewer: Viewer,
         filter_specifications: FilterSpecifications = filter_specifications,
         region_specifications: RegionSpecifications = region_specifications,
+        roi_specifications: RoiSpecifications = roi_specifications,
         smlm_data: SmlmData = smlm_data,
     ) -> None:
         super().__init__()
         self.viewer = napari_viewer
         self.filter_specifications = filter_specifications
         self.region_specifications = region_specifications
+        self.roi_specifications = roi_specifications
         self.smlm_data = smlm_data
 
         self._add_buttons()
@@ -73,9 +81,10 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
         self.setLayout(layout)
 
     def _new_button_on_click(self) -> None:
-        self.smlm_data.delete_all()
         self.filter_specifications.delete_all()
         self.region_specifications.delete_all()
+        self.roi_specifications.delete_all()
+        self.smlm_data.delete_all()
 
     def _load_button_on_click(self) -> None:
         fname_ = QFileDialog.getOpenFileName(
@@ -113,6 +122,7 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
         napari_locan_state = {}
         napari_locan_state["filter_specifications"] = self.filter_specifications
         napari_locan_state["region_specifications"] = self.region_specifications
+        napari_locan_state["roi_specifications"] = self.roi_specifications
         napari_locan_state["smlm_data"] = self.smlm_data
         return napari_locan_state
 
@@ -149,6 +159,19 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
         )
         self.region_specifications.index_changed_signal.emit(
             self.region_specifications._index
+        )
+
+        # unpack roi_specifications
+        self.roi_specifications._datasets = napari_locan_state[
+            "roi_specifications"
+        ]._datasets
+        self.roi_specifications._names = napari_locan_state["roi_specifications"]._names
+        self.roi_specifications._index = napari_locan_state["roi_specifications"]._index
+        self.roi_specifications.names_changed_signal.emit(
+            self.roi_specifications._names
+        )
+        self.roi_specifications.index_changed_signal.emit(
+            self.roi_specifications._index
         )
 
         # unpack smlm_data

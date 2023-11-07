@@ -29,6 +29,8 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
 
     Attributes
     ----------
+    count
+        Monotonically increasing integer counting the overall created datasets.
     datasets_changed_signal
         A Qt signal for index
     names_changed_signal
@@ -46,6 +48,8 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
     name
         The selected data identifier
     """
+
+    count: int = 0
 
     datasets_changed_signal: Signal = Signal(int)
     names_changed_signal: Signal = Signal(list)
@@ -65,6 +69,7 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
     def __getstate__(self) -> dict[str, Any]:
         """Modify pickling behavior."""
         state: dict[str, Any] = {}
+        state["count"] = self.count
         state["_datasets"] = self._datasets
         state["_names"] = self._names
         state["_index"] = self._index
@@ -109,6 +114,8 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
             self._names = names
             self._index = len(datasets) - 1
 
+        self.count += len(self._datasets)
+
         self.datasets_changed_signal.emit(self._datasets)
         self.names_changed_signal.emit(self._names)
         self.index_changed_signal.emit(self._index)
@@ -150,6 +157,7 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
             )
         else:
             self._datasets[self._index] = item
+            self.count += 1
         self.datasets_changed_signal.emit(self._dataset)
         self.index_changed_signal.emit(self._index)
 
@@ -199,6 +207,7 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
             self._index = len(self.datasets) - 1
         else:
             self._index = current_index
+        self.count += 1
         self.datasets_changed_signal.emit(self.datasets)
         self.names_changed_signal.emit(self.names)
         self.index_changed_signal.emit(self.index)

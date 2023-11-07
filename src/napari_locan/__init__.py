@@ -24,12 +24,17 @@ except ImportError:
 
 
 __all__: list[str] = [
-    "smlm_data",
+    # data models
     "filter_specifications",
+    "region_specifications",
+    "roi_specifications",
+    "smlm_data",
+    # sample data
     "make_image_npc",
     "make_image_tubulin",
     "make_points_npc",
     "make_points_tubulin",
+    # widgets
     "ClusteringQWidget",
     "FilterSpecificationsQWidget",
     "LoadQWidget",
@@ -43,6 +48,7 @@ __all__: list[str] = [
     "RenderPoints2dQWidget",
     "RenderPoints3dQWidget",
     "RegionSpecifications",
+    "RoiSpecifications",
     "RoiQWidget",
     "RunScriptQWidget",
     "SelectQWidget",
@@ -52,9 +58,7 @@ __all__: list[str] = [
     "SmlmDataQWidget",
 ]
 
-from napari_locan.data_model.smlm_data import SmlmData
-
-smlm_data: SmlmData = SmlmData()
+# data models
 
 from napari_locan.data_model.filter import FilterSpecifications
 
@@ -64,12 +68,25 @@ from napari_locan.data_model.region_specifications import RegionSpecifications
 
 region_specifications: RegionSpecifications = RegionSpecifications()
 
+from napari_locan.data_model.roi_specifications import RoiSpecifications
+
+roi_specifications: RoiSpecifications = RoiSpecifications()
+
+from napari_locan.data_model.smlm_data import SmlmData
+
+smlm_data: SmlmData = SmlmData()
+
+# sample data
+
 from napari_locan.sample_data.sample_data import (
     make_image_npc,
     make_image_tubulin,
     make_points_npc,
     make_points_tubulin,
 )
+
+# widgets
+
 from napari_locan.widgets.widget_clustering import (
     ClusteringQWidget,
 )

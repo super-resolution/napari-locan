@@ -27,8 +27,9 @@ from qtpy.QtWidgets import (
     QWidget,
 )
 
-from napari_locan import region_specifications, smlm_data
+from napari_locan import region_specifications, roi_specifications, smlm_data
 from napari_locan.data_model.region_specifications import RegionSpecifications
+from napari_locan.data_model.roi_specifications import RoiSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
@@ -39,14 +40,14 @@ class RoiQWidget(QWidget):  # type: ignore
         self,
         napari_viewer: Viewer,
         region_specifications: RegionSpecifications = region_specifications,
+        roi_specifications: RoiSpecifications = roi_specifications,
         smlm_data: SmlmData = smlm_data,
     ) -> None:
         super().__init__()
         self.viewer = napari_viewer
         self.smlm_data = smlm_data
         self.region_specifications = region_specifications
-        self._rois: list[lc.Roi] = []
-        self._roi_count = 0
+        self.roi_specifications = roi_specifications
 
         self._add_regions_widgets()
         self._add_regions_text()
@@ -351,9 +352,31 @@ class RoiQWidget(QWidget):  # type: ignore
     def _add_rois_combobox(self) -> None:
         self._rois_combobox = QComboBox()
         self._rois_combobox.setToolTip("Roi specifications.")
+        self._connect_rois_combobox_and_roi_specifications()
 
         self._rois_combobox_layout = QHBoxLayout()
         self._rois_combobox_layout.addWidget(self._rois_combobox)
+
+    def _connect_rois_combobox_and_roi_specifications(self) -> None:
+        self.roi_specifications.names_changed_signal.connect(
+            self._synchronize_roi_specifications_to_combobox
+        )
+        self.roi_specifications.names_changed_signal.emit(self.roi_specifications.names)
+
+        self.roi_specifications.index_changed_signal.connect(
+            self._rois_combobox.setCurrentIndex
+        )
+        self.roi_specifications.index_changed_signal.emit(self.roi_specifications.index)
+
+        self._rois_combobox.currentIndexChanged.connect(
+            self.roi_specifications.set_index_slot
+        )
+
+    def _synchronize_roi_specifications_to_combobox(self, names: list[str]) -> None:
+        current_index = self.roi_specifications.index
+        self._rois_combobox.clear()
+        self._rois_combobox.addItems(names)
+        self._rois_combobox.setCurrentIndex(current_index)
 
     def _add_roi_text(self) -> None:
         self._roi_text_edit = QPlainTextEdit()
@@ -363,9 +386,8 @@ class RoiQWidget(QWidget):  # type: ignore
         self._roi_text_layout.addWidget(self._roi_text_edit)
 
     def _update_roi_text(self) -> None:
-        current_index = self._rois_combobox.currentIndex()
-        if current_index != -1:
-            text = str(self._rois[current_index])  # type: ignore
+        if self.roi_specifications.dataset is not None:
+            text = str(self.roi_specifications.dataset)  # type: ignore
             self._roi_text_edit.setPlainText(text)
         else:
             self._roi_text_edit.setPlainText("")
@@ -416,11 +438,6 @@ class RoiQWidget(QWidget):  # type: ignore
         for region_, name_ in zip(new_regions, repr_list):
             self.region_specifications.append_item(dataset=region_, name=name_)
 
-        current_index = self.region_specifications.index
-        self._regions_combobox.clear()
-        self._regions_combobox.addItems(self.region_specifications.names)
-        self._regions_combobox.setCurrentIndex(current_index)
-
     def _delete_all_roi_button_on_click(self) -> None:
         msgBox = QMessageBox()
         msgBox.setText("Do you really want to delete ALL roi specifications?")
@@ -428,24 +445,12 @@ class RoiQWidget(QWidget):  # type: ignore
         msgBox.setDefaultButton(QMessageBox.Cancel)
         return_value = msgBox.exec()
         if return_value == QMessageBox.Ok:
-            self._rois = []
-            self._rois_combobox.clear()
+            self.roi_specifications.delete_all()
         else:
             return
 
     def _delete_roi_button_on_click(self) -> None:
-        current_index = self._rois_combobox.currentIndex()
-        if current_index == -1:
-            raise KeyError("No item available to be deleted.")
-        else:
-            self._rois_combobox.removeItem(current_index)
-            self._rois.pop(current_index)
-            if current_index > 0:
-                self._rois_combobox.setCurrentIndex(current_index - 1)
-            elif self._rois_combobox.count() > 0:
-                self._rois_combobox.setCurrentIndex(0)
-            else:
-                self._rois_combobox.setCurrentIndex(current_index - 1)
+        self.roi_specifications.delete_item()
 
     def _load_roi_button_on_click(
         self, value: bool = False, file_path: str | os.PathLike[Any] | None = None
@@ -463,17 +468,15 @@ class RoiQWidget(QWidget):  # type: ignore
         else:
             new_file_path = Path(file_path)
         new_roi = lc.Roi.from_yaml(path=new_file_path)
-        self._rois.append(new_roi)
-        self._roi_count += 1
-        self._rois_combobox.addItem(f"roi_{self._roi_count}")
-        self._rois_combobox.setCurrentIndex(len(self._rois) - 1)
+        self.roi_specifications.append_item(
+            dataset=new_roi, name=f"roi_{self.roi_specifications.count}"
+        )
 
     def _save_roi_button_on_click(self) -> None:
-        current_index = self._rois_combobox.currentIndex()
-        if current_index == -1:
+        if self.roi_specifications.dataset is None:
             raise KeyError("No item available to save.")
         else:
-            roi = self._rois[current_index]
+            roi = self.roi_specifications.dataset
 
             # choose file interactively
             file_path = None if roi.reference is None else "roi_reference"
@@ -515,11 +518,10 @@ class RoiQWidget(QWidget):  # type: ignore
             napari.utils.notifications.show_info(f"Roi file was saved as: {roi_path}")
 
     def _apply_roi_button_on_click(self) -> None:
-        current_index = self._rois_combobox.currentIndex()
-        if current_index == -1:
+        if self.roi_specifications.dataset is None:
             raise KeyError("No item available to apply.")
         else:
-            roi = self._rois[current_index]
+            roi = self.roi_specifications.dataset
             with progress() as progress_bar:
                 progress_bar.set_description("Selecting roi:")
                 new_locdata = roi.locdata()
@@ -586,10 +588,9 @@ class RoiQWidget(QWidget):  # type: ignore
             region=self.region_specifications.dataset,
             loc_properties=loc_properties,
         )
-        self._rois.append(new_roi)
-        self._roi_count += 1
-        self._rois_combobox.addItem(f"roi_{self._roi_count}")
-        self._rois_combobox.setCurrentIndex(len(self._rois) - 1)
+        self.roi_specifications.append_item(
+            dataset=new_roi, name=f"roi_{self.roi_specifications.count + 1}"
+        )
 
     def _get_current_shapes_layer(self) -> napari.layers.Layer:
         """return a selected shapes layer or raise exception"""

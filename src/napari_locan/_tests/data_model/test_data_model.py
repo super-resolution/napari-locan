@@ -104,6 +104,9 @@ class TestDataModel:
 
         with pytest.warns():
             data_model.index = 0
-
         with pytest.warns():
             data_model.name = "other name"
+        with pytest.warns():
+            data_model.append_item(dataset=3, name="3")
+        with pytest.warns():
+            data_model.append_item(dataset=4)
