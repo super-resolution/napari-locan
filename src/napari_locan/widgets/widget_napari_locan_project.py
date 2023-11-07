@@ -24,8 +24,9 @@ from qtpy.QtWidgets import (
     QWidget,
 )
 
-from napari_locan import filter_specifications, smlm_data
+from napari_locan import filter_specifications, region_specifications, smlm_data
 from napari_locan.data_model.filter import FilterSpecifications
+from napari_locan.data_model.region_specifications import RegionSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
@@ -35,13 +36,15 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
     def __init__(
         self,
         napari_viewer: Viewer,
-        smlm_data: SmlmData = smlm_data,
         filter_specifications: FilterSpecifications = filter_specifications,
+        region_specifications: RegionSpecifications = region_specifications,
+        smlm_data: SmlmData = smlm_data,
     ) -> None:
         super().__init__()
         self.viewer = napari_viewer
-        self.smlm_data = smlm_data
         self.filter_specifications = filter_specifications
+        self.region_specifications = region_specifications
+        self.smlm_data = smlm_data
 
         self._add_buttons()
         self._set_layout()
@@ -72,6 +75,7 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
     def _new_button_on_click(self) -> None:
         self.smlm_data.delete_all()
         self.filter_specifications.delete_all()
+        self.region_specifications.delete_all()
 
     def _load_button_on_click(self) -> None:
         fname_ = QFileDialog.getOpenFileName(
@@ -107,18 +111,12 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
 
     def _pack_napari_locan_state(self) -> dict[str, Any]:
         napari_locan_state = {}
-        napari_locan_state["smlm_data"] = self.smlm_data
         napari_locan_state["filter_specifications"] = self.filter_specifications
+        napari_locan_state["region_specifications"] = self.region_specifications
+        napari_locan_state["smlm_data"] = self.smlm_data
         return napari_locan_state
 
     def _unpack_napari_locan_state(self, napari_locan_state: dict[str, Any]) -> None:
-        # unpack smlm_data
-        self.smlm_data._locdatas = napari_locan_state["smlm_data"]._locdatas
-        self.smlm_data._locdata_names = napari_locan_state["smlm_data"]._locdata_names
-        self.smlm_data._index = napari_locan_state["smlm_data"]._index
-        self.smlm_data.locdata_names_changed_signal.emit(self.smlm_data._locdata_names)
-        self.smlm_data.index_changed_signal.emit(self.smlm_data._index)
-
         # unpack filter_specifications
         self.filter_specifications._filters = napari_locan_state[
             "filter_specifications"
@@ -135,3 +133,27 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
         self.filter_specifications.index_changed_signal.emit(
             self.filter_specifications._index
         )
+
+        # unpack region_specifications
+        self.region_specifications._datasets = napari_locan_state[
+            "region_specifications"
+        ]._datasets
+        self.region_specifications._names = napari_locan_state[
+            "region_specifications"
+        ]._names
+        self.region_specifications._index = napari_locan_state[
+            "region_specifications"
+        ]._index
+        self.region_specifications.names_changed_signal.emit(
+            self.region_specifications._names
+        )
+        self.region_specifications.index_changed_signal.emit(
+            self.region_specifications._index
+        )
+
+        # unpack smlm_data
+        self.smlm_data._locdatas = napari_locan_state["smlm_data"]._locdatas
+        self.smlm_data._locdata_names = napari_locan_state["smlm_data"]._locdata_names
+        self.smlm_data._index = napari_locan_state["smlm_data"]._index
+        self.smlm_data.locdata_names_changed_signal.emit(self.smlm_data._locdata_names)
+        self.smlm_data.index_changed_signal.emit(self.smlm_data._index)

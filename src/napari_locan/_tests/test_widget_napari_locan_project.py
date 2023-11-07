@@ -3,17 +3,22 @@ import napari
 import pytest
 
 from napari_locan.data_model.filter import FilterSpecifications
+from napari_locan.data_model.region_specifications import RegionSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
 from napari_locan.widgets.widget_napari_locan_project import NapariLocanProjectQWidget
 
 
 class TestNapariLocanStateQWidget:
     def test_NapariLocanProjectQWidget_init(self, make_napari_viewer):
-        smlm_data = SmlmData()
         filter_specifications = FilterSpecifications()
+        region_specifications = RegionSpecifications()
+        smlm_data = SmlmData()
         viewer = make_napari_viewer()
         my_widget = NapariLocanProjectQWidget(
-            viewer, smlm_data=smlm_data, filter_specifications=filter_specifications
+            viewer,
+            smlm_data=smlm_data,
+            filter_specifications=filter_specifications,
+            region_specifications=region_specifications,
         )
         assert my_widget
 
@@ -31,18 +36,28 @@ class TestNapariLocanStateQWidget:
         filter_specifications.append_item(filter=selectors)
         filter_specifications.append_item(filter=selectors)
 
+        region_specifications = RegionSpecifications(
+            datasets=[lc.Rectangle(), lc.EmptyRegion()], names=["rectange", "empty"]
+        )
+
         viewer = make_napari_viewer()
         my_widget = NapariLocanProjectQWidget(
-            viewer, smlm_data=smlm_data_0, filter_specifications=filter_specifications
+            viewer,
+            smlm_data=smlm_data_0,
+            filter_specifications=filter_specifications,
+            region_specifications=region_specifications,
         )
 
         my_widget._new_button_on_click()
-        assert my_widget.smlm_data.index == -1
-        assert my_widget.smlm_data.locdatas == []
-        assert my_widget.smlm_data.locdata_names == []
         assert my_widget.filter_specifications.index == -1
         assert my_widget.filter_specifications.filters == []
         assert my_widget.filter_specifications.filter_names == []
+        assert my_widget.region_specifications.datasets == []
+        assert my_widget.region_specifications.names == []
+        assert my_widget.region_specifications.index == -1
+        assert my_widget.smlm_data.index == -1
+        assert my_widget.smlm_data.locdatas == []
+        assert my_widget.smlm_data.locdata_names == []
 
     @pytest.mark.skip("needs user interaction")
     def test_NapariLocanProjectQWidget_save_and_load(
@@ -59,18 +74,30 @@ class TestNapariLocanStateQWidget:
         }
         filter_specifications_0 = FilterSpecifications()
         filter_specifications_0.append_item(filter=selectors)
+
+        region_specifications_0 = RegionSpecifications(
+            datasets=[lc.Rectangle(), lc.EmptyRegion()], names=["rectange", "empty"]
+        )
+
         viewer = make_napari_viewer()
         my_widget = NapariLocanProjectQWidget(
-            viewer, smlm_data=smlm_data_0, filter_specifications=filter_specifications_0
+            viewer,
+            smlm_data=smlm_data_0,
+            filter_specifications=filter_specifications_0,
+            region_specifications=region_specifications_0,
         )
 
         my_widget._save_button_on_click()
 
         smlm_data_1 = SmlmData()
         filter_specifications_1 = FilterSpecifications()
+        region_specifications_1 = RegionSpecifications()
         viewer = make_napari_viewer()
         new_widget = NapariLocanProjectQWidget(
-            viewer, smlm_data=smlm_data_1, filter_specifications=filter_specifications_1
+            viewer,
+            smlm_data=smlm_data_1,
+            filter_specifications=filter_specifications_1,
+            region_specifications=region_specifications_1,
         )
 
         new_widget._load_button_on_click()
@@ -95,6 +122,19 @@ class TestNapariLocanStateQWidget:
             == new_widget.filter_specifications._index
         )
         assert new_widget.filter_specifications == filter_specifications_1
+
+        assert repr(my_widget.region_specifications._datasets[0]) == repr(
+            new_widget.region_specifications._datasets[0]
+        )
+        assert (
+            my_widget.region_specifications._names
+            == new_widget.region_specifications._names
+        )
+        assert (
+            my_widget.region_specifications._index
+            == new_widget.region_specifications._index
+        )
+        assert new_widget.region_specifications == region_specifications_1
 
 
 @pytest.mark.napari
