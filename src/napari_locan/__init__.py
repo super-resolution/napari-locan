@@ -42,6 +42,7 @@ __all__: list[str] = [
     "RenderImage3dQWidget",
     "RenderPoints2dQWidget",
     "RenderPoints3dQWidget",
+    "RegionSpecifications",
     "RoiQWidget",
     "RunScriptQWidget",
     "SelectQWidget",
@@ -58,6 +59,10 @@ smlm_data: SmlmData = SmlmData()
 from napari_locan.data_model.filter import FilterSpecifications
 
 filter_specifications: FilterSpecifications = FilterSpecifications()
+
+from napari_locan.data_model.region_specifications import RegionSpecifications
+
+region_specifications: RegionSpecifications = RegionSpecifications()
 
 from napari_locan.sample_data.sample_data import (
     make_image_npc,

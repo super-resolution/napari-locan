@@ -6,16 +6,20 @@ import numpy as np
 import pytest
 
 from napari_locan import RoiQWidget
+from napari_locan.data_model.region_specifications import RegionSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
 
 
 class TestRoiQWidgetQWidget:
     def test_RoiQWidget_init(self, make_napari_viewer, locdata_2d):
         smlm_data = SmlmData()
+        region_specifications = RegionSpecifications()
         viewer = make_napari_viewer()
-        my_widget = RoiQWidget(viewer, smlm_data=smlm_data)
+        my_widget = RoiQWidget(
+            viewer, smlm_data=smlm_data, region_specifications=region_specifications
+        )
 
-        assert len(my_widget._regions) == 0
+        assert len(my_widget.region_specifications.datasets) == 0
         assert len(my_widget._rois) == 0
 
         assert my_widget._regions_combobox.count() == 0
@@ -35,10 +39,13 @@ class TestRoiQWidgetQWidget:
         assert my_widget._roi_text_edit.toPlainText() == ""
 
         smlm_data = SmlmData(locdatas=[locdata_2d])
+        region_specifications = RegionSpecifications()
         viewer = make_napari_viewer()
-        my_widget = RoiQWidget(viewer, smlm_data=smlm_data)
+        my_widget = RoiQWidget(
+            viewer, smlm_data=smlm_data, region_specifications=region_specifications
+        )
 
-        assert len(my_widget._regions) == 0
+        assert len(my_widget.region_specifications.datasets) == 0
         assert len(my_widget._rois) == 0
 
         assert my_widget._regions_combobox.count() == 0
@@ -59,8 +66,11 @@ class TestRoiQWidgetQWidget:
 
     def test_RoiQWidget_regions(self, make_napari_viewer, locdata_2d):
         smlm_data = SmlmData(locdatas=[locdata_2d])
+        region_specifications = RegionSpecifications()
         viewer = make_napari_viewer()
-        my_widget = RoiQWidget(viewer, smlm_data=smlm_data)
+        my_widget = RoiQWidget(
+            viewer, smlm_data=smlm_data, region_specifications=region_specifications
+        )
 
         shape_data = [
             (np.array([[0, 0], [0, 2.5], [3.1, 2.5], [3.1, 0]]), "rectangle"),
@@ -72,7 +82,7 @@ class TestRoiQWidgetQWidget:
         my_widget._scale_layer_button_on_click()
 
         my_widget._get_regions_button_on_click()
-        assert len(my_widget._regions) == 3
+        assert len(my_widget.region_specifications.datasets) == 3
         assert my_widget._regions_combobox.count() == 3
         assert my_widget._regions_combobox.currentIndex() == 2
         assert (
@@ -81,7 +91,7 @@ class TestRoiQWidgetQWidget:
         )
 
         my_widget._delete_regions_button_on_click()
-        assert len(my_widget._regions) == 2
+        assert len(my_widget.region_specifications.datasets) == 2
         assert my_widget._regions_combobox.count() == 2
         assert my_widget._regions_combobox.currentIndex() == 1
         assert my_widget._regions_text_edit.toPlainText() != ""
@@ -89,8 +99,11 @@ class TestRoiQWidgetQWidget:
     @pytest.mark.skip("requires user interaction")
     def test_RoiQWidget_regions_delete_all(self, make_napari_viewer, locdata_2d):
         smlm_data = SmlmData(locdatas=[locdata_2d])
+        region_specifications = RegionSpecifications()
         viewer = make_napari_viewer()
-        my_widget = RoiQWidget(viewer, smlm_data=smlm_data)
+        my_widget = RoiQWidget(
+            viewer, smlm_data=smlm_data, region_specifications=region_specifications
+        )
 
         shape_data = [
             (np.array([[0, 0], [0, 2.5], [3.1, 2.5], [3.1, 0]]), "rectangle"),
@@ -100,20 +113,23 @@ class TestRoiQWidgetQWidget:
         viewer.add_shapes(shape_data)
 
         my_widget._get_regions_button_on_click()
-        assert len(my_widget._regions) == 3
+        assert len(my_widget.region_specifications.datasets) == 3
         assert my_widget._regions_combobox.count() == 3
         assert my_widget._regions_combobox.currentIndex() == 2
 
         # requires user interaction
         my_widget._delete_all_regions_button_on_click()
-        assert len(my_widget._regions) == 0
+        assert len(my_widget.region_specifications.datasets) == 0
         assert my_widget._regions_combobox.count() == 0
         assert my_widget._regions_combobox.currentIndex() == -1
 
     def test_RoiQWidget_rois(self, make_napari_viewer, locdata_2d):
         smlm_data = SmlmData(locdatas=[locdata_2d])
+        region_specifications = RegionSpecifications()
         viewer = make_napari_viewer()
-        my_widget = RoiQWidget(viewer, smlm_data=smlm_data)
+        my_widget = RoiQWidget(
+            viewer, smlm_data=smlm_data, region_specifications=region_specifications
+        )
 
         smlm_data.locdata.meta.file.path = "locdata_2d.txt"
         smlm_data.locdata.meta.file.type = "RAPIDSTORM"
@@ -124,7 +140,7 @@ class TestRoiQWidgetQWidget:
         viewer.add_shapes(shape_data)
 
         my_widget._get_regions_button_on_click()
-        assert len(my_widget._regions) == 1
+        assert len(my_widget.region_specifications.datasets) == 1
 
         my_widget._reference_combobox.setCurrentIndex(0)
         assert my_widget._reference_combobox.currentText() == "None"
@@ -133,7 +149,7 @@ class TestRoiQWidgetQWidget:
         assert my_widget._rois_combobox.count() == 1
         assert my_widget._rois_combobox.currentIndex() == 0
         assert my_widget._rois[0].reference is None
-        assert my_widget._rois[0].region == my_widget._regions[0]
+        assert my_widget._rois[0].region == my_widget.region_specifications.datasets[0]
         assert my_widget._rois[0].loc_properties == ["position_x", "position_y"]
         assert my_widget._roi_text_edit.toPlainText() != ""
 
@@ -144,7 +160,7 @@ class TestRoiQWidgetQWidget:
         assert my_widget._rois_combobox.count() == 2
         assert my_widget._rois_combobox.currentIndex() == 1
         assert my_widget._rois[1].reference is my_widget.smlm_data.locdata
-        assert my_widget._rois[1].region == my_widget._regions[0]
+        assert my_widget._rois[1].region == my_widget.region_specifications.datasets[0]
         assert my_widget._rois[1].loc_properties == ["position_x", "position_y"]
         assert my_widget._roi_text_edit.toPlainText() != ""
 
@@ -161,7 +177,7 @@ class TestRoiQWidgetQWidget:
         assert (
             my_widget._rois[2].reference.file.type == smlm_data.locdata.meta.file.type
         )
-        assert my_widget._rois[2].region == my_widget._regions[0]
+        assert my_widget._rois[2].region == my_widget.region_specifications.datasets[0]
         assert my_widget._rois[2].loc_properties == ["position_x", "position_y"]
         assert my_widget._roi_text_edit.toPlainText() != ""
 
@@ -187,8 +203,11 @@ class TestRoiQWidgetQWidget:
         self, make_napari_viewer, locdata_2d
     ):
         smlm_data = SmlmData(locdatas=[locdata_2d])
+        region_specifications = RegionSpecifications()
         viewer = make_napari_viewer()
-        my_widget = RoiQWidget(viewer, smlm_data=smlm_data)
+        my_widget = RoiQWidget(
+            viewer, smlm_data=smlm_data, region_specifications=region_specifications
+        )
 
         shape_data = [
             (np.array([[0, 0], [0, 2.5], [3.1, 2.5], [3.1, 0]]), "rectangle"),
@@ -196,7 +215,7 @@ class TestRoiQWidgetQWidget:
         viewer.add_shapes(shape_data)
 
         my_widget._get_regions_button_on_click()
-        assert len(my_widget._regions) == 1
+        assert len(my_widget.region_specifications.datasets) == 1
 
         my_widget._reference_combobox.setCurrentIndex(3)
         assert my_widget._reference_combobox.currentText() == "File dialog"
@@ -216,8 +235,11 @@ class TestRoiQWidgetQWidget:
 
     def test_RoiQWidget_save_rois(self, make_napari_viewer, locdata_2d, tmp_path):
         smlm_data = SmlmData(locdatas=[locdata_2d])
+        region_specifications = RegionSpecifications()
         viewer = make_napari_viewer()
-        my_widget = RoiQWidget(viewer, smlm_data=smlm_data)
+        my_widget = RoiQWidget(
+            viewer, smlm_data=smlm_data, region_specifications=region_specifications
+        )
 
         smlm_data.locdata.meta.file.path = str(tmp_path / "locdata_2d.txt")
         smlm_data.locdata.meta.file.type = "RAPIDSTORM"
@@ -257,8 +279,11 @@ class TestRoiQWidgetQWidget:
         self, make_napari_viewer, locdata_2d, tmp_path
     ):
         smlm_data = SmlmData()
+        region_specifications = RegionSpecifications()
         viewer = make_napari_viewer()
-        my_widget = RoiQWidget(viewer, smlm_data=smlm_data)
+        my_widget = RoiQWidget(
+            viewer, smlm_data=smlm_data, region_specifications=region_specifications
+        )
 
         shape_data = [
             (np.array([[0, 0], [0, 2.5], [3.1, 2.5], [3.1, 0]]), "rectangle"),

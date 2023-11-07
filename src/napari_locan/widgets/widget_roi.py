@@ -27,18 +27,24 @@ from qtpy.QtWidgets import (
     QWidget,
 )
 
-from napari_locan import smlm_data
+from napari_locan import region_specifications, smlm_data
+from napari_locan.data_model.region_specifications import RegionSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
 
 
 class RoiQWidget(QWidget):  # type: ignore
-    def __init__(self, napari_viewer: Viewer, smlm_data: SmlmData = smlm_data):
+    def __init__(
+        self,
+        napari_viewer: Viewer,
+        region_specifications: RegionSpecifications = region_specifications,
+        smlm_data: SmlmData = smlm_data,
+    ) -> None:
         super().__init__()
         self.viewer = napari_viewer
         self.smlm_data = smlm_data
-        self._regions: list[lc.Region] = []
+        self.region_specifications = region_specifications
         self._rois: list[lc.Roi] = []
         self._roi_count = 0
 
@@ -86,6 +92,7 @@ class RoiQWidget(QWidget):  # type: ignore
 
         self._regions_combobox = QComboBox()
         self._regions_combobox.setToolTip("Region specifications.")
+        self._connect_regions_combobox_and_region_specifications()
 
         self._regions_buttons_layout = QHBoxLayout()
         self._regions_buttons_layout.addWidget(self._delete_all_regions_button)
@@ -98,6 +105,31 @@ class RoiQWidget(QWidget):  # type: ignore
         self._regions_widgets_layout.addWidget(self._get_regions_button)
         self._regions_widgets_layout.addWidget(self._regions_combobox)
 
+    def _connect_regions_combobox_and_region_specifications(self) -> None:
+        self.region_specifications.names_changed_signal.connect(
+            self._synchronize_region_specifications_to_combobox
+        )
+        self.region_specifications.names_changed_signal.emit(
+            self.region_specifications.names
+        )
+
+        self.region_specifications.index_changed_signal.connect(
+            self._regions_combobox.setCurrentIndex
+        )
+        self.region_specifications.index_changed_signal.emit(
+            self.region_specifications.index
+        )
+
+        self._regions_combobox.currentIndexChanged.connect(
+            self.region_specifications.set_index_slot
+        )
+
+    def _synchronize_region_specifications_to_combobox(self, names: list[str]) -> None:
+        current_index = self.region_specifications.index
+        self._regions_combobox.clear()
+        self._regions_combobox.addItems(names)
+        self._regions_combobox.setCurrentIndex(current_index)
+
     def _add_regions_text(self) -> None:
         self._regions_text_edit = QPlainTextEdit()
         self._regions_combobox.currentIndexChanged.connect(self._update_regions_text)
@@ -106,9 +138,8 @@ class RoiQWidget(QWidget):  # type: ignore
         self._regions_text_layout.addWidget(self._regions_text_edit)
 
     def _update_regions_text(self) -> None:
-        current_index = self._regions_combobox.currentIndex()
-        if current_index != -1:
-            text = str(self._regions[current_index])  # type: ignore
+        if self.region_specifications.index != -1:
+            text = str(self.region_specifications.dataset)
             self._regions_text_edit.setPlainText(text)
         else:
             self._regions_text_edit.setPlainText("")
@@ -358,24 +389,12 @@ class RoiQWidget(QWidget):  # type: ignore
         msgBox.setDefaultButton(QMessageBox.Cancel)
         return_value = msgBox.exec()
         if return_value == QMessageBox.Ok:
-            self._regions = []
-            self._regions_combobox.clear()
+            self.region_specifications.delete_all()
         else:
             return
 
     def _delete_regions_button_on_click(self) -> None:
-        current_index = self._regions_combobox.currentIndex()
-        if current_index == -1:
-            raise KeyError("No item available to be deleted.")
-        else:
-            self._regions_combobox.removeItem(current_index)
-            self._regions.pop(current_index)
-            if current_index > 0:
-                self._regions_combobox.setCurrentIndex(current_index - 1)
-            elif self._regions_combobox.count() > 0:
-                self._regions_combobox.setCurrentIndex(0)
-            else:
-                self._regions_combobox.setCurrentIndex(current_index - 1)
+        self.region_specifications.delete_item()
 
     def _scale_layer_button_on_click(self) -> None:
         """
@@ -393,11 +412,14 @@ class RoiQWidget(QWidget):  # type: ignore
         new_regions = lc.visualize.napari.utilities._shapes_to_regions(
             shapes_data=shapes_data
         )
-        self._regions.extend(new_regions)
-        repr_list = [repr(item_) for item_ in self._regions]
+        repr_list = [repr(item_) for item_ in new_regions]
+        for region_, name_ in zip(new_regions, repr_list):
+            self.region_specifications.append_item(dataset=region_, name=name_)
+
+        current_index = self.region_specifications.index
         self._regions_combobox.clear()
-        self._regions_combobox.addItems(repr_list)
-        self._regions_combobox.setCurrentIndex(len(self._regions) - 1)
+        self._regions_combobox.addItems(self.region_specifications.names)
+        self._regions_combobox.setCurrentIndex(current_index)
 
     def _delete_all_roi_button_on_click(self) -> None:
         msgBox = QMessageBox()
@@ -510,9 +532,7 @@ class RoiQWidget(QWidget):  # type: ignore
                 )
 
     def _create_roi_button_on_click(self) -> None:
-        if self._regions_combobox.currentIndex() > -1:
-            region = self._regions[self._regions_combobox.currentIndex()]
-        else:
+        if self.region_specifications.dataset is None:
             raise LookupError(
                 "There is no region available. Please provide a valid region."
             )
@@ -562,7 +582,9 @@ class RoiQWidget(QWidget):  # type: ignore
         ]
 
         new_roi = lc.Roi(
-            reference=reference, region=region, loc_properties=loc_properties
+            reference=reference,
+            region=self.region_specifications.dataset,
+            loc_properties=loc_properties,
         )
         self._rois.append(new_roi)
         self._roi_count += 1

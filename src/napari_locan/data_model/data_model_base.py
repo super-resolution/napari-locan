@@ -87,6 +87,9 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
     def set_datasets_and_names(
         self, datasets: list[Any] | None = None, names: list[str] | None = None
     ) -> None:
+        """
+        Set datasets and names to the given values and point index to the last item.
+        """
         if datasets is None and names is None:
             self._datasets = []
             self._names = []
@@ -175,6 +178,10 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
         name: str | None = None,
         set_index: bool = True,
     ) -> None:
+        """
+        Append a new item to the end of datasets and point index to new dataset
+        if set_index is true.
+        """
         current_index = self.index
         if dataset is None and name is None:
             return
@@ -197,6 +204,9 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
         self.index_changed_signal.emit(self.index)
 
     def delete_item(self) -> None:
+        """
+        Delete current dataset and set index to the previous dataset.
+        """
         current_index = self.index
         try:
             self._datasets.pop(current_index)
@@ -210,6 +220,9 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
         self.index_changed_signal.emit(self.index)
 
     def delete_all(self) -> None:
+        """
+        Delete all datasets and set index to -1.
+        """
         self._datasets = []
         self._names = []
         self._index = -1

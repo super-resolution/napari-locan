@@ -115,6 +115,6 @@ class SmlmDataQWidget(QWidget):  # type: ignore
                 filter="ASDF file (*.asdf)",
             )
             file_path = Path(file_path_return[0])
-            print(file_path)
+            print("Save SmlmDdata at:", file_path)
             if file_path:
                 lc.save_asdf(locdata=self.smlm_data.locdata, path=file_path)
