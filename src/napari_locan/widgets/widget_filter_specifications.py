@@ -48,10 +48,10 @@ class FilterSpecificationsQWidget(QWidget):  # type: ignore
         )
 
     def _connect_filter_specifications_combobox_and_filter_specifications(self) -> None:
-        self.filter_specifications.filter_names_signal.connect(
+        self.filter_specifications.filter_names_changed_signal.connect(
             self._synchronize_filter_specifications_to_combobox
         )
-        self.filter_specifications.index_signal.connect(
+        self.filter_specifications.index_changed_signal.connect(
             self._filter_specifications_combobox.setCurrentIndex
         )
         self._filter_specifications_combobox.currentIndexChanged.connect(
@@ -62,8 +62,10 @@ class FilterSpecificationsQWidget(QWidget):  # type: ignore
     def _synchronize_filter_specifications_to_combobox(
         self, filter_names: list[str]
     ) -> None:
+        current_index = self.filter_specifications.index
         self._filter_specifications_combobox.clear()
         self._filter_specifications_combobox.addItems(filter_names)
+        self._filter_specifications_combobox.setCurrentIndex(current_index)
 
     def _add_buttons(self) -> None:
         self._delete_button = QPushButton("Delete")
@@ -97,4 +99,4 @@ class FilterSpecificationsQWidget(QWidget):  # type: ignore
             self.filter_specifications.change_event()
 
     def _new_button_on_click(self) -> None:
-        self.filter_specifications.append_filter(filter={})
+        self.filter_specifications.append_item(filter={})

@@ -11,6 +11,7 @@ Upon rendering a SMLM dataset a new image is created in a new napari layer.
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 import locan as lc
 from qtpy.QtCore import QObject, Signal  # type: ignore[attr-defined]
@@ -67,6 +68,20 @@ class SmlmData(QObject):  # type: ignore
             self._locdatas = locdatas
             self._locdata_names = locdata_names
             self._index = len(locdatas) - 1
+
+    def __getstate__(self) -> dict[str, Any]:
+        """Modify pickling behavior."""
+        state: dict[str, Any] = {}
+        state["_locdatas"] = self._locdatas
+        state["_locdata_names"] = self._locdata_names
+        state["_index"] = self._index
+        return state
+
+    def __setstate__(self, state: dict[str, Any]) -> None:
+        """Modify pickling behavior."""
+        # Restore instance attributes.
+        self.__dict__.update(state)
+        super().__init__()
 
     @property
     def locdatas(self) -> list[lc.LocData]:

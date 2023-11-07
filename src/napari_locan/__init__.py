@@ -33,6 +33,7 @@ __all__: list[str] = [
     "ClusteringQWidget",
     "FilterSpecificationsQWidget",
     "LoadQWidget",
+    "NapariLocanProjectQWidget",
     "PropertyDistributionQWidget",
     "RenderCollection2dQWidget",
     "RenderCollectionFeaturesQWidget",
@@ -72,6 +73,9 @@ from napari_locan.widgets.widget_filter_specifications import (
 )
 from napari_locan.widgets.widget_load import (
     LoadQWidget,
+)
+from napari_locan.widgets.widget_napari_locan_project import (
+    NapariLocanProjectQWidget,
 )
 from napari_locan.widgets.widget_property_distribution import (
     PropertyDistributionQWidget,

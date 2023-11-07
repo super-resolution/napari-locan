@@ -11,6 +11,7 @@ Submodules:
     widget_clustering
     widget_filter_specifications
     widget_load
+    widget_napari_locan_project
     widget_property_distribution
     widget_render_collection_2d
     widget_render_collection_features

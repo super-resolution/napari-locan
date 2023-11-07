@@ -43,7 +43,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         self.smlm_data = smlm_data
         self.filter_specifications = filter_specifications
         if self.filter_specifications.filter is None:
-            self.filter_specifications.append_filter(filter={})
+            self.filter_specifications.append_item(filter={})
 
         self._add_loc_property_selector()
         self._add_selection_tools()
@@ -79,7 +79,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         self.smlm_data.index_changed_signal.connect(
             self._loc_property_combobox_slot_for_smlm_data_index
         )
-        self.filter_specifications.index_signal.connect(
+        self.filter_specifications.index_changed_signal.connect(
             self._loc_property_combobox_slot_for_filter_specifications_index
         )
         self._loc_property_combobox.currentIndexChanged.connect(
@@ -120,7 +120,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         self._condition_text_layout.addWidget(self._condition_text_edit)
 
     def _connect_condition_text(self) -> None:
-        self.filter_specifications.index_signal.connect(
+        self.filter_specifications.index_changed_signal.connect(
             self._filter_specifications_index_on_changed
         )
 

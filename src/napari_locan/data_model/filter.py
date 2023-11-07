@@ -11,6 +11,7 @@ It is entirely independent of napari layers.
 from __future__ import annotations
 
 import logging
+from typing import Any
 
 import locan as lc
 from qtpy.QtCore import QObject, Signal  # type: ignore[attr-defined]
@@ -24,11 +25,11 @@ class FilterSpecifications(QObject):  # type: ignore
 
     Attributes
     ----------
-    filters_signal
+    filters_changed_signal
         A Qt signal for filters
-    filter_names_signal
+    filter_names_changed_signal
         A Qt signal for filter_names
-    index_signal
+    index_changed_signal
         A Qt signal for index
     filters
         Collection of mapping between certain loc_properties and selectors
@@ -42,9 +43,9 @@ class FilterSpecifications(QObject):  # type: ignore
         The selected filter identifier
     """
 
-    filters_signal: Signal = Signal(list)
-    filter_names_signal: Signal = Signal(list)
-    index_signal: Signal = Signal(int)
+    filters_changed_signal: Signal = Signal(list)
+    filter_names_changed_signal: Signal = Signal(list)
+    index_changed_signal: Signal = Signal(int)
 
     def __init__(self, filters: list[dict[str, lc.Selector]] | None = None) -> None:
         super().__init__()
@@ -53,6 +54,20 @@ class FilterSpecifications(QObject):  # type: ignore
         self._index: int = -1
 
         self.filters = filters  # type: ignore
+
+    def __getstate__(self) -> dict[str, Any]:
+        """Modify pickling behavior."""
+        state: dict[str, Any] = {}
+        state["_filters"] = self._filters
+        state["_filter_names"] = self._filter_names
+        state["_index"] = self._index
+        return state
+
+    def __setstate__(self, state: dict[str, Any]) -> None:
+        """Modify pickling behavior."""
+        # Restore instance attributes.
+        self.__dict__.update(state)
+        super().__init__()
 
     @property
     def filters(self) -> list[dict[str, lc.Selector]]:
@@ -87,7 +102,7 @@ class FilterSpecifications(QObject):  # type: ignore
                 f"Index is larger than n_filters - 1: {len(self.filters) - 1}"
             )
         self._index = value
-        self.index_signal.emit(value)
+        self.index_changed_signal.emit(value)
 
     def set_index_slot(self, value: int) -> None:
         """QT slot for property self.index."""
@@ -119,14 +134,32 @@ class FilterSpecifications(QObject):  # type: ignore
 
     def change_event(self) -> None:
         """QT signal for any change"""
-        self.filters_signal.emit(self._filters)
-        self.filter_names_signal.emit(self._filter_names)
-        self.index_signal.emit(self._index)
+        self.filters_changed_signal.emit(self._filters)
+        self.filter_names_changed_signal.emit(self._filter_names)
+        self.index_changed_signal.emit(self._index)
 
-    def append_filter(
-        self, filter: dict[str, lc.Selector] | None  # noqa: A002
-    ) -> None:
+    def append_item(self, filter: dict[str, lc.Selector] | None) -> None:  # noqa: A002
         if filter is not None:
             self._filters.append(filter)
             self.filters = self._filters
             self.index = len(self.filters) - 1
+
+    def delete_item(self) -> None:
+        current_index = self.index
+        try:
+            self._filters.pop(current_index)
+            self._filter_names.pop(current_index)
+        except IndexError as exception:
+            raise IndexError(
+                "Index is out of range. No item available to be deleted."
+            ) from exception
+        self._index = current_index - 1
+        self.filter_names_changed_signal.emit(self._filter_names)
+        self.index_changed_signal.emit(self._index)
+
+    def delete_all(self) -> None:
+        self._filters = []
+        self._filter_names = []
+        self._index = -1
+        self.filter_names_changed_signal.emit(self._filter_names)
+        self.index_changed_signal.emit(self._index)

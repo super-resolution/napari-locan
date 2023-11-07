@@ -92,6 +92,10 @@ contributions:
       python_name: napari_locan.widgets.widget_run_script:RunScriptQWidget
       title: Run script
 
+    - id: napari-locan.napari_locan_project
+      python_name: napari_locan.widgets.widget_napari_locan_project:NapariLocanProjectQWidget
+      title: Project
+
   sample_data:
     - command: napari-locan.make_image_npc
       key: npc_image
@@ -163,3 +167,6 @@ contributions:
 
     - command: napari-locan.run_script_qwidget
       display_name: Run script
+
+    - command: napari-locan.napari_locan_project
+      display_name: Project

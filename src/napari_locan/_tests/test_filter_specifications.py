@@ -82,13 +82,41 @@ class TestFilterSpecifications:
             ),
         }
         filter_specifications = FilterSpecifications()
-        filter_specifications.append_filter(filter=selectors)
-        filter_specifications.append_filter(filter=selectors)
+        filter_specifications.append_item(filter=selectors)
+        filter_specifications.append_item(filter=selectors)
         assert len(filter_specifications.filters) == 2
         assert len(filter_specifications.filter_names) == 2
         assert filter_specifications.index == 1
         assert isinstance(filter_specifications.filter, dict)
         assert isinstance(filter_specifications.filter_name, str)
+
+    def test_delete_item(self):
+        selectors = {
+            "position_x": lc.Selector(
+                loc_property="position_x", activate=True, lower_bound=0, upper_bound=1
+            ),
+            "position_y": lc.Selector(
+                loc_property="position_y", activate=True, lower_bound=0, upper_bound=1
+            ),
+        }
+        filter_specifications = FilterSpecifications()
+        filter_specifications.append_item(filter=selectors)
+        filter_specifications.append_item(filter=selectors)
+
+        filter_specifications.delete_item()
+        assert len(filter_specifications.filters) == 1
+        assert filter_specifications.filter_names == ["0"]
+
+        filter_specifications.delete_all()
+        assert filter_specifications.index == -1
+        assert filter_specifications.filters == []
+        assert filter_specifications.filter_names == []
+
+        # delete on empty container
+        filter_specifications.delete_all()
+        assert filter_specifications.index == -1
+        assert filter_specifications.filters == []
+        assert filter_specifications.filter_names == []
 
     def test_connect(self):
         def filters_slot(filters):
@@ -100,8 +128,8 @@ class TestFilterSpecifications:
                 warnings.warn("index not -1.", stacklevel=1)
 
         filter_specifications = FilterSpecifications()
-        filter_specifications.filters_signal.connect(filters_slot)
-        filter_specifications.index_signal.connect(index_slot)
+        filter_specifications.filters_changed_signal.connect(filters_slot)
+        filter_specifications.index_changed_signal.connect(index_slot)
 
         filter_specifications.filters = []
         assert filter_specifications.filters == []
