@@ -79,9 +79,9 @@ class SmlmDataQWidget(QWidget):  # type: ignore
         self._delete_button.clicked.connect(self._delete_button_on_click)
 
         self._buttons_layout = QHBoxLayout()
-        self._buttons_layout.addWidget(self._save_button)
         self._buttons_layout.addWidget(self._delete_all_button)
         self._buttons_layout.addWidget(self._delete_button)
+        self._buttons_layout.addWidget(self._save_button)
 
     def _set_layout(self) -> None:
         layout = QVBoxLayout()
@@ -115,6 +115,6 @@ class SmlmDataQWidget(QWidget):  # type: ignore
                 filter="ASDF file (*.asdf)",
             )
             file_path = Path(file_path_return[0])
-            print(file_path)
+            print("Save SmlmDdata at:", file_path)
             if file_path:
                 lc.save_asdf(locdata=self.smlm_data.locdata, path=file_path)

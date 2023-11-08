@@ -10,4 +10,6 @@ Submodules:
 
    smlm_data
    filter
+   region_specifications
+   roi_specifications
 """

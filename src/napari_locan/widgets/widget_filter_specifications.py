@@ -10,13 +10,14 @@ from napari.viewer import Viewer
 from qtpy.QtWidgets import (
     QComboBox,
     QHBoxLayout,
+    QMessageBox,
     QPushButton,
     QVBoxLayout,
     QWidget,
 )
 
 from napari_locan import filter_specifications, smlm_data
-from napari_locan.data_model.filter import FilterSpecifications
+from napari_locan.data_model.filter_specifications import FilterSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
@@ -48,24 +49,35 @@ class FilterSpecificationsQWidget(QWidget):  # type: ignore
         )
 
     def _connect_filter_specifications_combobox_and_filter_specifications(self) -> None:
-        self.filter_specifications.filter_names_signal.connect(
+        self.filter_specifications.names_changed_signal.connect(
             self._synchronize_filter_specifications_to_combobox
         )
-        self.filter_specifications.index_signal.connect(
+        self.filter_specifications.names_changed_signal.emit(
+            self.filter_specifications.names
+        )
+
+        self.filter_specifications.index_changed_signal.connect(
             self._filter_specifications_combobox.setCurrentIndex
         )
+        self.filter_specifications.index_changed_signal.emit(
+            self.filter_specifications.index
+        )
+
         self._filter_specifications_combobox.currentIndexChanged.connect(
             self.filter_specifications.set_index_slot
         )
-        self.filter_specifications.change_event()
 
-    def _synchronize_filter_specifications_to_combobox(
-        self, filter_names: list[str]
-    ) -> None:
+    def _synchronize_filter_specifications_to_combobox(self, names: list[str]) -> None:
+        current_index = self.filter_specifications.index
         self._filter_specifications_combobox.clear()
-        self._filter_specifications_combobox.addItems(filter_names)
+        self._filter_specifications_combobox.addItems(names)
+        self._filter_specifications_combobox.setCurrentIndex(current_index)
 
     def _add_buttons(self) -> None:
+        self._delete_all_button = QPushButton("Delete all")
+        self._delete_all_button.setToolTip("Delete all filter specifications.")
+        self._delete_all_button.clicked.connect(self._delete_all_button_on_click)
+
         self._delete_button = QPushButton("Delete")
         self._delete_button.setToolTip("Delete filter specifications dataset.")
         self._delete_button.clicked.connect(self._delete_button_on_click)
@@ -75,6 +87,7 @@ class FilterSpecificationsQWidget(QWidget):  # type: ignore
         self._new_button.clicked.connect(self._new_button_on_click)
 
         self._buttons_layout = QHBoxLayout()
+        self._buttons_layout.addWidget(self._delete_all_button)
         self._buttons_layout.addWidget(self._delete_button)
         self._buttons_layout.addWidget(self._new_button)
 
@@ -84,17 +97,19 @@ class FilterSpecificationsQWidget(QWidget):  # type: ignore
         layout.addLayout(self._filter_specifications_layout)
         self.setLayout(layout)
 
-    def _delete_button_on_click(self) -> None:
-        current_index = self._filter_specifications_combobox.currentIndex()
-        if current_index == -1:
-            raise KeyError("No item available to be deleted.")
+    def _delete_all_button_on_click(self) -> None:
+        msgBox = QMessageBox()
+        msgBox.setText("Do you really want to delete ALL filter specifications?")
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        msgBox.setDefaultButton(QMessageBox.Cancel)
+        return_value = msgBox.exec()
+        if return_value == QMessageBox.Ok:
+            self.filter_specifications.delete_all()
         else:
-            self.filter_specifications.filters.pop(current_index)
-            self.filter_specifications.filters = (
-                self.filter_specifications.filters
-            )  # needed to activate setter
+            return
 
-            self.filter_specifications.change_event()
+    def _delete_button_on_click(self) -> None:
+        self.filter_specifications.delete_item()
 
     def _new_button_on_click(self) -> None:
-        self.filter_specifications.append_filter(filter={})
+        self.filter_specifications.append_item(dataset={})

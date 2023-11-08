@@ -25,7 +25,7 @@ from qtpy.QtWidgets import (
 )
 
 from napari_locan import filter_specifications, smlm_data
-from napari_locan.data_model.filter import FilterSpecifications
+from napari_locan.data_model.filter_specifications import FilterSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
 
 logger = logging.getLogger(__name__)
@@ -42,8 +42,8 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         self.viewer = napari_viewer
         self.smlm_data = smlm_data
         self.filter_specifications = filter_specifications
-        if self.filter_specifications.filter is None:
-            self.filter_specifications.append_filter(filter={})
+        if self.filter_specifications.dataset is None:
+            self.filter_specifications.append_item(dataset={})
 
         self._add_loc_property_selector()
         self._add_selection_tools()
@@ -79,7 +79,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         self.smlm_data.index_changed_signal.connect(
             self._loc_property_combobox_slot_for_smlm_data_index
         )
-        self.filter_specifications.index_signal.connect(
+        self.filter_specifications.index_changed_signal.connect(
             self._loc_property_combobox_slot_for_filter_specifications_index
         )
         self._loc_property_combobox.currentIndexChanged.connect(
@@ -120,7 +120,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         self._condition_text_layout.addWidget(self._condition_text_edit)
 
     def _connect_condition_text(self) -> None:
-        self.filter_specifications.index_signal.connect(
+        self.filter_specifications.index_changed_signal.connect(
             self._filter_specifications_index_on_changed
         )
 
@@ -167,9 +167,9 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
                     self._loc_property_combobox.setCurrentIndex(-1)
             else:
                 self._loc_property_combobox.setCurrentIndex(key_index)
-        if self.filter_specifications.filter is not None:
+        if self.filter_specifications.dataset is not None:
             self._loc_property_combobox.addItems(
-                self.filter_specifications.filter.keys()
+                self.filter_specifications.dataset.keys()
             )
 
     def _loc_property_combobox_slot_for_filter_specifications_index(self) -> None:
@@ -195,15 +195,15 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
             self._lower_bound_spinbox.setRange(min_, max_)
             self._upper_bound_spinbox.setRange(min_, max_)
 
-            if loc_property in self.filter_specifications.filter:  # type: ignore[operator]
+            if loc_property in self.filter_specifications.dataset:  # type: ignore[operator]
                 self._lower_bound_spinbox.setValue(
-                    self.filter_specifications.filter[loc_property].lower_bound  # type: ignore[index]
+                    self.filter_specifications.dataset[loc_property].lower_bound  # type: ignore[index]
                 )
                 self._upper_bound_spinbox.setValue(
-                    self.filter_specifications.filter[loc_property].upper_bound  # type: ignore[index]
+                    self.filter_specifications.dataset[loc_property].upper_bound  # type: ignore[index]
                 )
                 self._apply_checkbox.setChecked(
-                    self.filter_specifications.filter[loc_property].activate  # type: ignore[index]
+                    self.filter_specifications.dataset[loc_property].activate  # type: ignore[index]
                 )
             else:
                 self._lower_bound_spinbox.setValue(
@@ -231,19 +231,19 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         else:
             if (
                 self._loc_property_combobox.currentText()
-                not in self.filter_specifications.filter  # type: ignore[operator]
+                not in self.filter_specifications.dataset  # type: ignore[operator]
             ):
                 self._loc_property_combobox.setCurrentIndex(0)
             else:
                 loc_property = self._loc_property_combobox.currentText()
                 self._lower_bound_spinbox.setValue(
-                    self.filter_specifications.filter[loc_property].lower_bound  # type: ignore[index]
+                    self.filter_specifications.dataset[loc_property].lower_bound  # type: ignore[index]
                 )
                 self._upper_bound_spinbox.setValue(
-                    self.filter_specifications.filter[loc_property].upper_bound  # type: ignore[index]
+                    self.filter_specifications.dataset[loc_property].upper_bound  # type: ignore[index]
                 )
                 self._apply_checkbox.setChecked(
-                    self.filter_specifications.filter[loc_property].activate  # type: ignore[index]
+                    self.filter_specifications.dataset[loc_property].activate  # type: ignore[index]
                 )
 
         self._update_condition_text()
@@ -252,7 +252,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
         loc_property = self._loc_property_combobox.currentText()
         if self._loc_property_combobox.currentIndex() != -1:
             try:
-                self.filter_specifications.filter[  # type: ignore[index]
+                self.filter_specifications.dataset[  # type: ignore[index]
                     loc_property
                 ].activate = self._apply_checkbox.isChecked()
             except KeyError:
@@ -262,14 +262,14 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
                     lower_bound=self._lower_bound_spinbox.value(),
                     upper_bound=self._upper_bound_spinbox.value(),
                 )
-                self.filter_specifications.filter[loc_property] = selector  # type: ignore[index]
+                self.filter_specifications.dataset[loc_property] = selector  # type: ignore[index]
             self._update_condition_text()
 
     def _lower_bound_spinbox_on_changed(self) -> None:
         loc_property = self._loc_property_combobox.currentText()
         if self._loc_property_combobox.currentIndex() != -1:
             try:
-                self.filter_specifications.filter[  # type: ignore[index]
+                self.filter_specifications.dataset[  # type: ignore[index]
                     loc_property
                 ].lower_bound = self._lower_bound_spinbox.value()
             except KeyError:
@@ -279,14 +279,14 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
                     lower_bound=self._lower_bound_spinbox.value(),
                     upper_bound=self._upper_bound_spinbox.value(),
                 )
-                self.filter_specifications.filter[loc_property] = selector  # type: ignore[index]
+                self.filter_specifications.dataset[loc_property] = selector  # type: ignore[index]
             self._update_condition_text()
 
     def _upper_bound_spinbox_on_changed(self) -> None:
         loc_property = self._loc_property_combobox.currentText()
         if self._loc_property_combobox.currentIndex() != -1:
             try:
-                self.filter_specifications.filter[  # type: ignore[index]
+                self.filter_specifications.dataset[  # type: ignore[index]
                     loc_property
                 ].upper_bound = self._upper_bound_spinbox.value()
             except KeyError:
@@ -296,7 +296,7 @@ class SelectQWidget(QWidget):  # type: ignore[misc]
                     lower_bound=self._lower_bound_spinbox.value(),
                     upper_bound=self._upper_bound_spinbox.value(),
                 )
-                self.filter_specifications.filter[loc_property] = selector  # type: ignore[index]
+                self.filter_specifications.dataset[loc_property] = selector  # type: ignore[index]
             self._update_condition_text()
 
     def _update_condition_text(self) -> None:

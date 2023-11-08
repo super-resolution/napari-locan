@@ -23,6 +23,10 @@ class TestSmlmDataQWidget:
         assert my_widget._locdatas_combobox.currentIndex() == 1
         assert my_widget._locdatas_combobox.currentText() != ""
 
+        smlm_data.delete_all()
+        assert my_widget._locdatas_combobox.currentIndex() == -1
+        assert my_widget._locdatas_combobox.currentText() == ""
+
     def test_SmlmDataQWidget_changing_locdatas(self, make_napari_viewer):
         smlm_data = SmlmData(
             locdatas=[lc.LocData(), lc.LocData()], locdata_names=["1", "2"]

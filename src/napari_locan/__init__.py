@@ -24,15 +24,21 @@ except ImportError:
 
 
 __all__: list[str] = [
-    "smlm_data",
+    # data models
     "filter_specifications",
+    "region_specifications",
+    "roi_specifications",
+    "smlm_data",
+    # sample data
     "make_image_npc",
     "make_image_tubulin",
     "make_points_npc",
     "make_points_tubulin",
+    # widgets
     "ClusteringQWidget",
     "FilterSpecificationsQWidget",
     "LoadQWidget",
+    "NapariLocanProjectQWidget",
     "PropertyDistributionQWidget",
     "RenderCollection2dQWidget",
     "RenderCollectionFeaturesQWidget",
@@ -41,6 +47,8 @@ __all__: list[str] = [
     "RenderImage3dQWidget",
     "RenderPoints2dQWidget",
     "RenderPoints3dQWidget",
+    "RegionSpecifications",
+    "RoiSpecifications",
     "RoiQWidget",
     "RunScriptQWidget",
     "SelectQWidget",
@@ -50,13 +58,25 @@ __all__: list[str] = [
     "SmlmDataQWidget",
 ]
 
+# data models
+
+from napari_locan.data_model.filter_specifications import FilterSpecifications
+
+filter_specifications: FilterSpecifications = FilterSpecifications()
+
+from napari_locan.data_model.region_specifications import RegionSpecifications
+
+region_specifications: RegionSpecifications = RegionSpecifications()
+
+from napari_locan.data_model.roi_specifications import RoiSpecifications
+
+roi_specifications: RoiSpecifications = RoiSpecifications()
+
 from napari_locan.data_model.smlm_data import SmlmData
 
 smlm_data: SmlmData = SmlmData()
 
-from napari_locan.data_model.filter import FilterSpecifications
-
-filter_specifications: FilterSpecifications = FilterSpecifications()
+# sample data
 
 from napari_locan.sample_data.sample_data import (
     make_image_npc,
@@ -64,6 +84,9 @@ from napari_locan.sample_data.sample_data import (
     make_points_npc,
     make_points_tubulin,
 )
+
+# widgets
+
 from napari_locan.widgets.widget_clustering import (
     ClusteringQWidget,
 )
@@ -72,6 +95,9 @@ from napari_locan.widgets.widget_filter_specifications import (
 )
 from napari_locan.widgets.widget_load import (
     LoadQWidget,
+)
+from napari_locan.widgets.widget_napari_locan_project import (
+    NapariLocanProjectQWidget,
 )
 from napari_locan.widgets.widget_property_distribution import (
     PropertyDistributionQWidget,

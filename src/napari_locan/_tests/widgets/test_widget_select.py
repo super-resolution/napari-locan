@@ -3,7 +3,7 @@ import napari
 import pytest
 
 from napari_locan import SelectQWidget
-from napari_locan.data_model.filter import FilterSpecifications
+from napari_locan.data_model.filter_specifications import FilterSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
 
 
@@ -140,7 +140,7 @@ class TestSelectQWidget:
         assert len(smlm_data.locdatas) == 2
         assert smlm_data.index == 1
 
-        my_widget.filter_specifications.filters = []
+        my_widget.filter_specifications.set_datasets_and_names(datasets=[])
         assert my_widget._loc_property_combobox.currentIndex() == -1
         assert my_widget._lower_bound_spinbox.isHidden()
         assert my_widget._upper_bound_spinbox.isHidden()

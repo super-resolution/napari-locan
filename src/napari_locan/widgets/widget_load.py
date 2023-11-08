@@ -6,6 +6,7 @@ A new SMLM dataset will be created.
 """
 import ast
 import logging
+from pathlib import Path
 
 import locan as lc
 from napari.utils import progress
@@ -136,6 +137,5 @@ class LoadQWidget(QWidget):  # type: ignore
         with progress() as progress_bar:
             progress_bar.set_description("Loading data")
             locdata = lc.load_locdata(path=file_path, file_type=file_type, **kwargs)
-            self.smlm_data.append_item(
-                locdata=locdata, locdata_name=locdata.meta.identifier + "-" + file_path
-            )
+            locdata_name = locdata.meta.identifier + "-" + str(Path(file_path).name)
+            self.smlm_data.append_item(locdata=locdata, locdata_name=locdata_name)
