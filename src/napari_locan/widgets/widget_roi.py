@@ -469,7 +469,7 @@ class RoiQWidget(QWidget):  # type: ignore
             new_file_path = Path(file_path)
         new_roi = lc.Roi.from_yaml(path=new_file_path)
         self.roi_specifications.append_item(
-            dataset=new_roi, name=f"roi_{self.roi_specifications.count}"
+            dataset=new_roi, name=f"roi_{self.roi_specifications.count + 1}"
         )
 
     def _save_roi_button_on_click(self) -> None:
