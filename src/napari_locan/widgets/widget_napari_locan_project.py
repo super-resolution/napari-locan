@@ -30,7 +30,7 @@ from napari_locan import (
     roi_specifications,
     smlm_data,
 )
-from napari_locan.data_model.filter import FilterSpecifications
+from napari_locan.data_model.filter_specifications import FilterSpecifications
 from napari_locan.data_model.region_specifications import RegionSpecifications
 from napari_locan.data_model.roi_specifications import RoiSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
@@ -128,17 +128,17 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
 
     def _unpack_napari_locan_state(self, napari_locan_state: dict[str, Any]) -> None:
         # unpack filter_specifications
-        self.filter_specifications._filters = napari_locan_state[
+        self.filter_specifications._datasets = napari_locan_state[
             "filter_specifications"
-        ]._filters
-        self.filter_specifications._filter_names = napari_locan_state[
+        ]._datasets
+        self.filter_specifications._names = napari_locan_state[
             "filter_specifications"
-        ]._filter_names
+        ]._names
         self.filter_specifications._index = napari_locan_state[
             "filter_specifications"
         ]._index
-        self.filter_specifications.filter_names_changed_signal.emit(
-            self.filter_specifications._filter_names
+        self.filter_specifications.names_changed_signal.emit(
+            self.filter_specifications._names
         )
         self.filter_specifications.index_changed_signal.emit(
             self.filter_specifications._index

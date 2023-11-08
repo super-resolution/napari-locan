@@ -60,7 +60,7 @@ __all__: list[str] = [
 
 # data models
 
-from napari_locan.data_model.filter import FilterSpecifications
+from napari_locan.data_model.filter_specifications import FilterSpecifications
 
 filter_specifications: FilterSpecifications = FilterSpecifications()
 

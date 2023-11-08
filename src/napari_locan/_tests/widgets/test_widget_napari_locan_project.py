@@ -2,7 +2,7 @@ import locan as lc
 import napari
 import pytest
 
-from napari_locan.data_model.filter import FilterSpecifications
+from napari_locan.data_model.filter_specifications import FilterSpecifications
 from napari_locan.data_model.region_specifications import RegionSpecifications
 from napari_locan.data_model.roi_specifications import RoiSpecifications
 from napari_locan.data_model.smlm_data import SmlmData
@@ -27,6 +27,7 @@ class TestNapariLocanStateQWidget:
 
     def test_NapariLocanProjectQWidget_new(self, make_napari_viewer, locdata_2d):
         smlm_data_0 = SmlmData(locdatas=[locdata_2d], locdata_names=["locdata_2d"])
+
         selectors = {
             "position_x": lc.Selector(
                 loc_property="position_x", activate=True, lower_bound=0, upper_bound=1
@@ -35,9 +36,7 @@ class TestNapariLocanStateQWidget:
                 loc_property="position_y", activate=True, lower_bound=0, upper_bound=1
             ),
         }
-        filter_specifications = FilterSpecifications()
-        filter_specifications.append_item(filter=selectors)
-        filter_specifications.append_item(filter=selectors)
+        filter_specifications = FilterSpecifications(datasets=[selectors, selectors])
 
         region_specifications = RegionSpecifications(
             datasets=[lc.Rectangle(), lc.EmptyRegion()], names=["rectange", "empty"]
@@ -58,8 +57,8 @@ class TestNapariLocanStateQWidget:
 
         my_widget._new_button_on_click()
         assert my_widget.filter_specifications.index == -1
-        assert my_widget.filter_specifications.filters == []
-        assert my_widget.filter_specifications.filter_names == []
+        assert my_widget.filter_specifications.datasets == []
+        assert my_widget.filter_specifications.names == []
         assert my_widget.region_specifications.datasets == []
         assert my_widget.region_specifications.names == []
         assert my_widget.region_specifications.index == -1
@@ -81,10 +80,10 @@ class TestNapariLocanStateQWidget:
             ),
         }
         filter_specifications_0 = FilterSpecifications()
-        filter_specifications_0.append_item(filter=selectors)
+        filter_specifications_0.append_item(dataset=selectors)
 
         region_specifications_0 = RegionSpecifications(
-            datasets=[lc.Rectangle(), lc.EmptyRegion()], names=["rectange", "empty"]
+            datasets=[lc.Rectangle(), lc.EmptyRegion()], names=["rectangle", "empty"]
         )
         roi_specifications_0 = RoiSpecifications(
             datasets=[lc.Roi(region=lc.Rectangle()), lc.Roi(region=lc.Rectangle())],
@@ -125,12 +124,12 @@ class TestNapariLocanStateQWidget:
         assert my_widget.smlm_data._index == new_widget.smlm_data._index
         assert new_widget.smlm_data == smlm_data_1
 
-        assert repr(my_widget.filter_specifications._filters) == repr(
-            new_widget.filter_specifications._filters
+        assert repr(my_widget.filter_specifications._datasets) == repr(
+            new_widget.filter_specifications._datasets
         )
         assert (
-            my_widget.filter_specifications._filter_names
-            == new_widget.filter_specifications._filter_names
+            my_widget.filter_specifications._names
+            == new_widget.filter_specifications._names
         )
         assert (
             my_widget.filter_specifications._index
