@@ -2,21 +2,13 @@
 Changelog
 =======================
 
-0.4 - dev
+0.4 - 2023-11-08
 =================
 
 New Features
 ------------
 - add widget to save and load project
 - add button to get regions from locdata hulls
-
-API Changes
------------
--
-
-Bug Fixes
----------
--
 
 Other Changes and Additions
 ---------------------------
