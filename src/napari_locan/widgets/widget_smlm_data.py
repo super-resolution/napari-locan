@@ -79,9 +79,9 @@ class SmlmDataQWidget(QWidget):  # type: ignore
         self._delete_button.clicked.connect(self._delete_button_on_click)
 
         self._buttons_layout = QHBoxLayout()
-        self._buttons_layout.addWidget(self._save_button)
         self._buttons_layout.addWidget(self._delete_all_button)
         self._buttons_layout.addWidget(self._delete_button)
+        self._buttons_layout.addWidget(self._save_button)
 
     def _set_layout(self) -> None:
         layout = QVBoxLayout()
