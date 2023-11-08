@@ -460,7 +460,7 @@ class RoiQWidget(QWidget):  # type: ignore
                 None,
                 "Open roi file...",
                 "",
-                filter="",
+                filter="ROI file (*.yaml);; All files (*)",
                 # kwargs: parent, message, directory, filter
                 # but kw_names are different for different qt_bindings
             )
@@ -485,7 +485,7 @@ class RoiQWidget(QWidget):  # type: ignore
                     None,
                     "Set file path and base name...",
                     "",
-                    filter="",
+                    filter="ROI file (*.yaml);; All files (*)",
                     # options=QFileDialog.DontConfirmOverwrite
                     # kwargs: parent, message, directory, filter
                     # but kw_names are different for different qt_bindings
@@ -513,6 +513,18 @@ class RoiQWidget(QWidget):  # type: ignore
                 new_file_path.stem + "_" + self._rois_combobox.currentText() + ".yaml"
             )
             roi_path = new_file_path.with_name(roi_file)
+
+            fname_ = QFileDialog.getSaveFileName(
+                None,
+                "Save roi file as...",
+                str(roi_path),
+                filter="ROI file (*.yaml);; All files (*)",
+                # kwargs: parent, message, directory, filter
+                # but kw_names are different for different qt_bindings
+            )
+            fname = fname_[0] if isinstance(fname_, tuple) else str(fname_)
+            roi_path = Path(fname)
+
             roi.to_yaml(path=roi_path)
 
             napari.utils.notifications.show_info(f"Roi file was saved as: {roi_path}")

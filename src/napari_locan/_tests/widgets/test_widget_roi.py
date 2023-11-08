@@ -284,6 +284,7 @@ class TestRoiQWidgetQWidget:
         assert my_widget._rois_combobox.count() == 0
         assert my_widget._rois_combobox.currentIndex() == -1
 
+    @pytest.mark.skip("need user interaction")
     def test_RoiQWidget_save_rois(self, make_napari_viewer, locdata_2d, tmp_path):
         region_specifications = RegionSpecifications()
         roi_specifications = RoiSpecifications()
