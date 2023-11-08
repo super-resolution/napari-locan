@@ -121,7 +121,7 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
                     pickle.dump(napari_locan_state, file, protocol=5)
 
     def _pack_napari_locan_state(self) -> dict[str, Any]:
-        napari_locan_state = {}
+        napari_locan_state: dict[str, Any] = {}
         napari_locan_state["filter_specifications"] = self.filter_specifications
         napari_locan_state["region_specifications"] = self.region_specifications
         napari_locan_state["roi_specifications"] = self.roi_specifications

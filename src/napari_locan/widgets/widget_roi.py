@@ -470,7 +470,8 @@ class RoiQWidget(QWidget):  # type: ignore
                     new_region = self.smlm_data.locdata.region
             elif item == "bounding_box":
                 if (
-                    isinstance(self.smlm_data.locdata.bounding_box, lc.EmptyRegion)
+                    self.smlm_data.locdata.bounding_box is None
+                    or isinstance(self.smlm_data.locdata.bounding_box, lc.EmptyRegion)
                     or self.smlm_data.locdata.convex_hull is None
                 ):
                     napari.utils.notifications.show_info(
@@ -610,8 +611,8 @@ class RoiQWidget(QWidget):  # type: ignore
                 # kwargs: parent, message, directory, filter
                 # but kw_names are different for different qt_bindings
             )
-            fname = fname_[0] if isinstance(fname_, tuple) else str(fname_)
-            roi_path = Path(fname)
+            fname = fname_[0] if isinstance(fname_, tuple) else str(fname_)  # type: ignore[assignment]
+            roi_path = Path(fname)  # type: ignore[union-attr]
 
             roi.to_yaml(path=roi_path)
 

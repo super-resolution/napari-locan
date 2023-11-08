@@ -158,7 +158,7 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
         else:
             self._datasets[self._index] = item
             self.count += 1
-        self.datasets_changed_signal.emit(self._dataset)
+        self.datasets_changed_signal.emit(self._datasets)
         self.index_changed_signal.emit(self._index)
 
     @property
