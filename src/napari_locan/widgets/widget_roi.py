@@ -78,12 +78,6 @@ class RoiQWidget(QWidget):  # type: ignore
             self._delete_regions_button_on_click
         )
 
-        self._get_regions_button = QPushButton("Get")
-        self._get_regions_button.setToolTip(
-            "Get region specifications from selected shapes layer."
-        )
-        self._get_regions_button.clicked.connect(self._get_regions_button_on_click)
-
         self._scale_layer_button = QPushButton("Reset scale")
         self._scale_layer_button.setToolTip(
             "Reset scale of the selected shapes layer. "
@@ -91,19 +85,41 @@ class RoiQWidget(QWidget):  # type: ignore
         )
         self._scale_layer_button.clicked.connect(self._scale_layer_button_on_click)
 
+        self._get_regions_from_smlm_data_button = QPushButton("From SmlmData")
+        self._get_regions_from_smlm_data_button.setToolTip(
+            "Get region specifications from regions in the selected smlm dataset."
+        )
+        self._get_regions_from_smlm_data_button.clicked.connect(
+            self._get_regions_from_smlm_data_button_on_click
+        )
+
+        self._get_regions_from_shapes_button = QPushButton("From shapes")
+        self._get_regions_from_shapes_button.setToolTip(
+            "Get region specifications from selected shapes layer."
+        )
+        self._get_regions_from_shapes_button.clicked.connect(
+            self._get_regions_from_shapes_button_on_click
+        )
+
         self._regions_combobox = QComboBox()
         self._regions_combobox.setToolTip("Region specifications.")
         self._connect_regions_combobox_and_region_specifications()
 
-        self._regions_buttons_layout = QHBoxLayout()
-        self._regions_buttons_layout.addWidget(self._delete_all_regions_button)
-        self._regions_buttons_layout.addWidget(self._delete_regions_button)
-        self._regions_buttons_layout.addWidget(self._scale_layer_button)
+        self._regions_buttons_1_layout = QHBoxLayout()
+        self._regions_buttons_1_layout.addWidget(self._delete_all_regions_button)
+        self._regions_buttons_1_layout.addWidget(self._delete_regions_button)
+        self._regions_buttons_1_layout.addWidget(self._scale_layer_button)
+
+        self._regions_buttons_2_layout = QHBoxLayout()
+        self._regions_buttons_2_layout.addWidget(
+            self._get_regions_from_smlm_data_button
+        )
+        self._regions_buttons_2_layout.addWidget(self._get_regions_from_shapes_button)
 
         self._regions_widgets_layout = QVBoxLayout()
         self._regions_widgets_layout.addWidget(self._regions_label)
-        self._regions_widgets_layout.addLayout(self._regions_buttons_layout)
-        self._regions_widgets_layout.addWidget(self._get_regions_button)
+        self._regions_widgets_layout.addLayout(self._regions_buttons_1_layout)
+        self._regions_widgets_layout.addLayout(self._regions_buttons_2_layout)
         self._regions_widgets_layout.addWidget(self._regions_combobox)
 
     def _connect_regions_combobox_and_region_specifications(self) -> None:
@@ -427,7 +443,74 @@ class RoiQWidget(QWidget):  # type: ignore
         shapes_layer = self._get_current_shapes_layer()
         shapes_layer.scale = tuple(1 for i in range(shapes_layer.ndim))
 
-    def _get_regions_button_on_click(self) -> None:
+    def _get_regions_from_smlm_data_button_on_click(self) -> None:
+        if self.smlm_data.locdata is None:
+            raise ValueError("There is nto smlm dataset available.")
+
+        # items = ["region", "bounding_box", "convex_hull", "alpha_shape"]
+        items = ["region", "bounding_box", "convex_hull", "alpha_shape"]
+        item, ok = QInputDialog().getItem(
+            self,
+            "Choose region or hull...",
+            "LocData attribute:",
+            items,
+            0,
+            False,
+        )
+        if not ok:
+            return
+        else:
+            if item == "region":
+                if self.smlm_data.locdata.region is None:
+                    napari.utils.notifications.show_info(
+                        "smlm_data.locdata.region is None."
+                    )
+                    new_region = None
+                else:
+                    new_region = self.smlm_data.locdata.region
+            elif item == "bounding_box":
+                if (
+                    isinstance(self.smlm_data.locdata.bounding_box, lc.EmptyRegion)
+                    or self.smlm_data.locdata.convex_hull is None
+                ):
+                    napari.utils.notifications.show_info(
+                        "self.smlm_data.locdata.bounding_box.region is not available."
+                    )
+                    new_region = None
+                else:
+                    new_region = self.smlm_data.locdata.bounding_box.region
+            elif item == "convex_hull":
+                if (
+                    self.smlm_data.locdata.convex_hull is None
+                    or self.smlm_data.locdata.convex_hull.region is None
+                ):
+                    napari.utils.notifications.show_info(
+                        "smlm_data.locdata.convex_hull.region is not available."
+                    )
+                    new_region = None
+                else:
+                    new_region = self.smlm_data.locdata.convex_hull.region
+            elif item == "alpha_shape":
+                if (
+                    self.smlm_data.locdata.alpha_shape is None
+                    or self.smlm_data.locdata.alpha_shape.region is None
+                ):
+                    napari.utils.notifications.show_info(
+                        "smlm_data.locdata.alpha_shape.region is not available."
+                    )
+                    new_region = None
+                else:
+                    new_region = self.smlm_data.locdata.alpha_shape.region
+            else:
+                raise AttributeError
+
+        if new_region is not None:
+            identifier_ = self.roi_specifications.count + 1
+            repr_ = repr(new_region).split("(")[0]
+            name_ = f"{identifier_}-{repr_}"
+            self.region_specifications.append_item(dataset=new_region, name=name_)
+
+    def _get_regions_from_shapes_button_on_click(self) -> None:
         shapes_layer = self._get_current_shapes_layer()
         shapes_data = shapes_layer.as_layer_data_tuple()
 
