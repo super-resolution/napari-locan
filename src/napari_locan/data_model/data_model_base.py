@@ -224,7 +224,14 @@ class DataModel(QObject, ABC, metaclass=QABCMeta):  # type: ignore
             raise IndexError(
                 "Index is out of range. No item available to be deleted."
             ) from exception
-        self._index = current_index - 1
+
+        if len(self._datasets) == 0:
+            self._index = -1
+        elif current_index == 0:
+            self._index = 0
+        else:
+            self._index = current_index - 1
+
         self.names_changed_signal.emit(self.names)
         self.index_changed_signal.emit(self.index)
 

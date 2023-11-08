@@ -172,8 +172,8 @@ class SmlmData(QObject):  # type: ignore
         else:
             self._index = current_index
 
-        self.locdata_names_changed_signal.emit(self._locdata_names)
-        self.index_changed_signal.emit(self._index)
+        self.locdata_names_changed_signal.emit(self.locdata_names)
+        self.index_changed_signal.emit(self.index)
 
     def delete_item(self) -> None:
         current_index = self.index
@@ -184,13 +184,20 @@ class SmlmData(QObject):  # type: ignore
             raise IndexError(
                 "Index is out of range. No item available to be deleted."
             ) from exception
-        self._index = current_index - 1
-        self.locdata_names_changed_signal.emit(self._locdata_names)
-        self.index_changed_signal.emit(self._index)
+
+        if len(self._locdatas) == 0:
+            self._index = -1
+        elif current_index == 0:
+            self._index = 0
+        else:
+            self._index = current_index - 1
+
+        self.locdata_names_changed_signal.emit(self.locdata_names)
+        self.index_changed_signal.emit(self.index)
 
     def delete_all(self) -> None:
         self._locdatas = []
         self._locdata_names = []
         self._index = -1
-        self.locdata_names_changed_signal.emit(self._locdata_names)
-        self.index_changed_signal.emit(self._index)
+        self.locdata_names_changed_signal.emit(self.locdata_names)
+        self.index_changed_signal.emit(self.index)
