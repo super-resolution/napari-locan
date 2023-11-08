@@ -434,8 +434,13 @@ class RoiQWidget(QWidget):  # type: ignore
         new_regions = lc.visualize.napari.utilities._shapes_to_regions(
             shapes_data=shapes_data
         )
-        repr_list = [repr(item_) for item_ in new_regions]
-        for region_, name_ in zip(new_regions, repr_list):
+        repr_list = [repr(item_).split("(")[0] for item_ in new_regions]
+        region_identifier = range(
+            self.roi_specifications.count + 1,
+            self.roi_specifications.count + 1 + len(new_regions),
+        )
+        names_list = [f"{i}-{repr_}" for i, repr_ in zip(region_identifier, repr_list)]
+        for region_, name_ in zip(new_regions, names_list):
             self.region_specifications.append_item(dataset=region_, name=name_)
 
     def _delete_all_roi_button_on_click(self) -> None:

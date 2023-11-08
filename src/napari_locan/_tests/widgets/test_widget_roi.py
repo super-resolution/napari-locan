@@ -98,6 +98,7 @@ class TestRoiQWidgetQWidget:
         assert len(my_widget.region_specifications.datasets) == 3
         assert my_widget._regions_combobox.count() == 3
         assert my_widget._regions_combobox.currentIndex() == 2
+        assert my_widget._regions_combobox.currentText() == "3-Polygon"
         assert (
             my_widget._regions_text_edit.toPlainText()
             != "Rectangle((0.0, 0.0), 3.1, 2.5, 0)"
