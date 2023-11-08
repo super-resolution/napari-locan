@@ -4,8 +4,10 @@ Save and load the current state of napari-locan.
 QWidget plugin to save and load the napari-locan state,
 which currently includes the following data models
 
-1) smlm_data
-2) filter_specifications
+1) filter_specifications
+2) region_specifications
+3) roi_specifications
+4) smlm_data
 
 The data is serialized by the pickle module using protocol 5.
 """
