@@ -612,7 +612,7 @@ class RoiQWidget(QWidget):  # type: ignore
                 # but kw_names are different for different qt_bindings
             )
             fname = fname_[0] if isinstance(fname_, tuple) else str(fname_)  # type: ignore[assignment]
-            roi_path = Path(fname)  # type: ignore[union-attr]
+            roi_path = Path(fname)  # type: ignore[arg-type]
 
             roi.to_yaml(path=roi_path)
 
