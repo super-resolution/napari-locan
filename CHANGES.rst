@@ -7,7 +7,8 @@ Changelog
 
 New Features
 ------------
--
+- add widget to save and load project
+- add button to get regions from locdata hulls
 
 API Changes
 -----------
@@ -19,7 +20,11 @@ Bug Fixes
 
 Other Changes and Additions
 ---------------------------
--
+- add abstract base class for DataModels
+- add data model for region specifications
+- add data model for roi specifications
+- add data model for filter specifications
+- minor modifications like button rearrangement
 
 0.3 - 2023-11-01
 =================
