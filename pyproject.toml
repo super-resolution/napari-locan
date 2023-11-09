@@ -30,12 +30,15 @@ maintainers = [
 keywords = ["napari plugin", "locan"]
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Environment :: X11 Applications :: Qt",
     "Framework :: napari",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
-    "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",
-    "Operating System :: OS Independent",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -44,6 +47,8 @@ classifiers = [
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Visualization",
 ]
 dynamic = ["version"]
 dependencies = [
