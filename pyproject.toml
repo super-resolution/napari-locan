@@ -87,9 +87,12 @@ docs = [
 [project.urls]
 homepage = "https://github.com/super-resolution/napari-locan"
 documentation = "https://napari-locan.readthedocs.io/"
-repository = "https://github.com/super-resolution/napari-locan"
 issues = "https://github.com/super-resolution/napari-locan/issues"
+discussions = "https://github.com/super-resolution/napari-locan/discussions"
 changelog = "https://github.com/super-resolution/napari-locan/CHANGES.rst"
+"Source Code" = "https://github.com/super-resolution/napari-locan"
+"Bug Tracker" = "https://github.com/super-resolution/napari-locan/issues"
+"User Support" = "https://github.com/super-resolution/napari-locan/discussions"
 
 [project.entry-points."napari.manifest"]
 napari-locan = "napari_locan:napari.yaml"
