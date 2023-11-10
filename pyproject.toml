@@ -6,12 +6,6 @@ requires = [
     ]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.package-data]
-napari_locan = ["napari.yaml"]
-
 [tool.setuptools_scm]
 write_to = "src/napari_locan/_version.py"
 
