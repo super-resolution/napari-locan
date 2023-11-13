@@ -1,9 +1,9 @@
-=======================
+========================
 Changelog
-=======================
+========================
 
 0.5 - dev
-=================
+========================
 
 New Features
 ------------
@@ -21,8 +21,8 @@ Other Changes and Additions
 ---------------------------
 -
 
-0.4 - 2023-11-08
-=================
+0.4.0 - 2023-11-08
+========================
 
 New Features
 ------------
@@ -37,8 +37,8 @@ Other Changes and Additions
 - add data model for filter specifications
 - minor modifications like button rearrangement
 
-0.3 - 2023-11-01
-=================
+0.3.0 - 2023-11-01
+========================
 
 Bug Fixes
 ---------
@@ -49,7 +49,7 @@ Other Changes and Additions
 - additions to the documentation
 
 0.2.0 - 2023-10-31
-=================
+========================
 
 Bug Fixes
 ---------
@@ -64,7 +64,7 @@ Other Changes and Additions
 - add to documentation
 
 0.1.0 - 2023-10-29
-=======================
+========================
 
 New Features
 ------------

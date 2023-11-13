@@ -8,8 +8,9 @@ Submodules:
 .. autosummary::
    :toctree: ./
 
-   smlm_data
-   filter
+   data_model_base
+   filter_specifications
    region_specifications
    roi_specifications
+   smlm_data
 """
