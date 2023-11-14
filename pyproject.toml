@@ -1,16 +1,10 @@
 [build-system]
 requires = [
-    "setuptools>=61",
+    "setuptools>=64",
     "wheel",
-    "setuptools_scm[toml]>=6.2"
+    "setuptools_scm>=8"
     ]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.package-data]
-napari_locan = ["napari.yaml"]
 
 [tool.setuptools_scm]
 write_to = "src/napari_locan/_version.py"
@@ -30,12 +24,15 @@ maintainers = [
 keywords = ["napari plugin", "locan"]
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Environment :: X11 Applications :: Qt",
     "Framework :: napari",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
-    "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",
-    "Operating System :: OS Independent",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -44,6 +41,8 @@ classifiers = [
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Visualization",
 ]
 dynamic = ["version"]
 dependencies = [
@@ -82,9 +81,12 @@ docs = [
 [project.urls]
 homepage = "https://github.com/super-resolution/napari-locan"
 documentation = "https://napari-locan.readthedocs.io/"
-repository = "https://github.com/super-resolution/napari-locan"
 issues = "https://github.com/super-resolution/napari-locan/issues"
+discussions = "https://github.com/super-resolution/napari-locan/discussions"
 changelog = "https://github.com/super-resolution/napari-locan/CHANGES.rst"
+"Source Code" = "https://github.com/super-resolution/napari-locan"
+"Bug Tracker" = "https://github.com/super-resolution/napari-locan/issues"
+"User Support" = "https://github.com/super-resolution/napari-locan/discussions"
 
 [project.entry-points."napari.manifest"]
 napari-locan = "napari_locan:napari.yaml"
