@@ -1,13 +1,13 @@
 [build-system]
 requires = [
     "setuptools>=64",
-    "wheel",
     "setuptools_scm>=8"
     ]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-write_to = "src/napari_locan/_version.py"
+version_file = "src/napari_locan/_version.py"
+version_scheme = "release-branch-semver"
 
 [project]
 name = "napari-locan"
