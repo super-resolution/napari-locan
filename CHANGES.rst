@@ -15,11 +15,12 @@ API Changes
 
 Bug Fixes
 ---------
--
+- fix version readout with readthedocs
 
 Other Changes and Additions
 ---------------------------
--
+- add GitHub action for deploying to PyPI and TestPyPI
+- configure setuptools_scm for branching model
 
 0.4.0 - 2023-11-08
 ========================
