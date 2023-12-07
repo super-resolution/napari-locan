@@ -185,10 +185,9 @@ warn_unused_ignores = false
 
 [[tool.mypy.overrides]]
 module = [
-    'matplotlib.*',
+    'locan.*',
     'napari_matplotlib.*',
     'napari.*',
-    'qtpy.*',
 ]
 ignore_missing_imports = true
 
