@@ -16,6 +16,7 @@ API Changes
 Bug Fixes
 ---------
 - fix version readout with readthedocs
+- fix use of new locan.colormaps module
 
 Other Changes and Additions
 ---------------------------
