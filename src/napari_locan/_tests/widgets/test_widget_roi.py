@@ -177,7 +177,7 @@ class TestRoiQWidgetQWidget:
         )
 
         smlm_data.locdata.meta.file.path = "locdata_2d.txt"
-        smlm_data.locdata.meta.file.type = "RAPIDSTORM"
+        smlm_data.locdata.meta.file.type = lc.FileType.RAPIDSTORM.value
 
         shape_data = [
             (np.array([[0, 0], [0, 2.5], [3.1, 2.5], [3.1, 0]]), "rectangle"),

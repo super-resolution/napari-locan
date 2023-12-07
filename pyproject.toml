@@ -1,13 +1,13 @@
 [build-system]
 requires = [
     "setuptools>=64",
-    "wheel",
     "setuptools_scm>=8"
     ]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-write_to = "src/napari_locan/_version.py"
+version_file = "src/napari_locan/_version.py"
+version_scheme = "release-branch-semver"
 
 [project]
 name = "napari-locan"
@@ -46,8 +46,8 @@ classifiers = [
 ]
 dynamic = ["version"]
 dependencies = [
-    "locan>=0.17",
-    "matplotlib<3.8.0",
+    "locan>=0.18",
+    "matplotlib",
     "napari",
     "napari-matplotlib",
     "numpy",
@@ -185,10 +185,9 @@ warn_unused_ignores = false
 
 [[tool.mypy.overrides]]
 module = [
-    'matplotlib.*',
+    'locan.*',
     'napari_matplotlib.*',
     'napari.*',
-    'qtpy.*',
 ]
 ignore_missing_imports = true
 

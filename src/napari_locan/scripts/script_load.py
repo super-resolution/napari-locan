@@ -33,6 +33,6 @@ lc.render_2d_napari(
     bin_range=None,
     bin_edges=None,
     rescale=lc.Trafo.EQUALIZE,
-    cmap=lc.COLORMAP_CONTINUOUS,
+    cmap=lc.COLORMAP_DEFAULTS["CONTINUOUS"],
     **add_kwargs,
 )

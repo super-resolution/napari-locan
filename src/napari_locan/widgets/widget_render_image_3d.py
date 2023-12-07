@@ -305,6 +305,6 @@ class RenderImage3dQWidget(QWidget):  # type: ignore
                 bin_size=int(self._bin_size_spin_box.value()),
                 bin_range=bin_range,
                 rescale=self._rescale_combobox.currentText(),
-                cmap=lc.COLORMAP_CONTINUOUS,
+                cmap=lc.COLORMAP_DEFAULTS["CONTINUOUS"],
                 **add_kwargs,
             )
