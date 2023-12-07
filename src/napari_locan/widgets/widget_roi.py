@@ -515,7 +515,7 @@ class RoiQWidget(QWidget):  # type: ignore
         shapes_layer = self._get_current_shapes_layer()
         shapes_data = shapes_layer.as_layer_data_tuple()
 
-        new_regions = lc.visualize.napari.utilities._shapes_to_regions(
+        new_regions = lc.visualize.render_napari.utilities._shapes_to_regions(
             shapes_data=shapes_data
         )
         repr_list = [repr(item_).split("(")[0] for item_ in new_regions]
