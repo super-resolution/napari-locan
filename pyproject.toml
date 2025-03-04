@@ -91,6 +91,38 @@ changelog = "https://github.com/super-resolution/napari-locan/CHANGES.rst"
 [project.entry-points."napari.manifest"]
 napari-locan = "napari_locan:napari.yaml"
 
+[dependency-groups]
+test = [
+    "pytest",
+    "coverage",
+]
+test-qt = [
+    {include-group = "test"},
+    "pytest-qt",
+]
+lint = [
+    "black~=24.0",
+    "ruff",
+]
+typing = [
+    "mypy",
+]
+dev = [
+    "pre-commit",
+    {include-group = "test-qt"},
+    {include-group = "lint"},
+    {include-group = "typing"},
+]
+docs = [
+    "furo",
+    "ipython",
+    "myst-nb",
+    "napari>=0.4.17",
+    "sphinx",
+    "sphinx-autodoc-typehints",
+    "sphinx-copybutton",
+]
+
 [tool.black]
 line-length = 88
 
