@@ -12,4 +12,8 @@ class TestShowPropertiesQWidget:
         smlm_data = SmlmData(locdatas=[locdata_2d])
         viewer = make_napari_viewer()
         my_widget = ShowPropertiesQWidget(viewer, smlm_data=smlm_data)
-        assert my_widget._properties_text_edit.toPlainText().startswith("{'frame': 1,")
+        assert my_widget._properties_text_edit.toPlainText().startswith(
+            "{'frame': 1,"
+        ) or my_widget._properties_text_edit.toPlainText().startswith(
+            "{'frame': np.int64(1)"
+        )

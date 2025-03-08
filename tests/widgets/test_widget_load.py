@@ -21,14 +21,10 @@ class TestLoadQWidget:
         viewer = make_napari_viewer()
         my_widget = LoadQWidget(viewer, smlm_data=smlm_data)
 
-        locan_test_data = (
-            Path(lc.__file__).resolve().parent
-            / "tests/test_data"
-            / "rapidSTORM_dstorm_data.txt"
-        )
+        locan_test_data = Path(__file__).resolve().parents / "npc_gp210.asdf"
 
         my_widget._file_path_edit.insert(str(locan_test_data))
-        my_widget._file_type_combobox.setCurrentIndex(lc.FileType.RAPIDSTORM.value)
+        my_widget._file_type_combobox.setCurrentIndex(lc.FileType.ASDF.value)
 
         my_widget._kwargs_edit.setText("nrows=10")
 

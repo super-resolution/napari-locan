@@ -1,6 +1,7 @@
 """
 Load SMLM data
 """
+
 from pathlib import Path
 
 import locan as lc
@@ -10,12 +11,8 @@ bin_size = 30
 
 viewer = napari.current_viewer()
 
-file_path = (
-    Path(lc.__file__).resolve().parent
-    / "tests/test_data"
-    / "rapidSTORM_dstorm_data.txt"
-)
-file_type = lc.FileType.RAPIDSTORM
+file_path = Path(__file__).resolve().parents[1] / "scripts/npc_gp210.asdf"
+file_type = lc.FileType.ASDF
 
 locdata = lc.load_locdata(path=file_path, file_type=file_type)
 

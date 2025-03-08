@@ -128,24 +128,48 @@ docs = [
 line-length = 88
 
 [tool.pytest.ini_options]
+testpaths = [
+    "src/napari_locan/tests",
+    "tests"
+]
 filterwarnings = [
 ]
-addopts = "-m 'not napari'"
+addopts = "--import-mode=importlib --strict-markers -m 'not napari'"
 markers = [
     "napari: marks tests that run napari (skipped by default)",
 ]
 
 [tool.coverage.run]
-source = ["src/napari_locan"]
+source = ["napari_locan"]
 omit = [
-    "src/napari_locan/_tests/*",
+    "tests/*",
+    "src/napari_locan/tests/*",
     "src/napari_locan/scripts/*",
     "src/napari_locan/napari.yaml",
 ]
 
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
 [tool.ruff]
 line-length = 88
-show-source = false
+# automatically exclude files that are ignored by .gitignore
+exclude = [
+    ".*",
+    "dist",
+    "docs",
+    "docker",
+]
+
+[tool.ruff.lint]
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
@@ -177,27 +201,20 @@ fixable = ["I"]
 # S605 start-process-with-a-shell
 # S607 start-process-with-partial-path
 ignore = ["E501"]
-# automatically exclude files that are ignored by .gitignore
-exclude = [
-    ".*",
-    "dist",
-    "docs",
-    "docker",
-]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["E402", "F401", "F403", "F405", "I001"]
 "_version.py" = ["Q000"]
 "test_*.py" = ["S101", "S605", "S607"]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
-[tool.ruff.flake8-import-conventions]
-[tool.ruff.flake8-import-conventions.aliases]
+[tool.ruff.lint.flake8-import-conventions]
+[tool.ruff.lint.flake8-import-conventions.aliases]
 locan = "lc"
 matplotlib = "mpl"
 "matplotlib.pyplot" = "plt"
@@ -232,7 +249,16 @@ ignore_errors = true
 
 [[tool.mypy.overrides]]
 module = [
-    'napari_locan._tests.*',
+    'napari_locan.tests.*'
+]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = false
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+    'tests.*'
 ]
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
