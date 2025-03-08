@@ -61,7 +61,7 @@ test =[
     "pytest-qt",
 ]
 dev = [
-    "black",
+    "black~=25.0",
     "build",
     "coverage[toml]",
     "mypy",
@@ -102,7 +102,7 @@ test-qt = [
     "pytest-qt",
 ]
 lint = [
-    "black~=24.0",
+    "black~=25.0",
     "ruff",
 ]
 typing = [
