@@ -57,6 +57,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test =[
+    "locan[http]>=0.18",
     "pytest",
     "pytest-qt",
 ]
@@ -94,7 +95,9 @@ changelog = "https://github.com/super-resolution/napari-locan/CHANGES.rst"
 napari-locan = "napari_locan:napari.yaml"
 
 [dependency-groups]
+# dependencies required to run the extended tests suite
 test = [
+    "locan[http]>=0.18",
     "pytest",
     "coverage",
 ]
