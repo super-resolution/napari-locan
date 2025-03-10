@@ -40,7 +40,7 @@ jobs:
       - name: "Install napari-locan and dependencies"
         run: |
           python -m pip install pyside6 .[test]
-          python -m pip install mypy coverage[toml] pip-tools
+          python -m pip install mypy pandas-stubs coverage[toml] pip-tools
       - name: "Type check with mypy"
         run: mypy
       - name: "Run tests"
