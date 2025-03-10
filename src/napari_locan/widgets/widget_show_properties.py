@@ -4,6 +4,7 @@ Show locdata properties for a SMLM dataset.
 QWidget plugin for showing the aggregated properties
 for a single SMLM dataset (locdata.properties).
 """
+
 import logging
 import pprint
 

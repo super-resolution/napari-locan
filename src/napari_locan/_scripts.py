@@ -1,6 +1,7 @@
 """
 Ready-to-go scripts for using locan within napari
 """
+
 from enum import Enum, unique
 
 

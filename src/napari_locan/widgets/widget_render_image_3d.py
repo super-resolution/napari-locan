@@ -4,6 +4,7 @@ Render 3d image.
 A QWidget plugin to render SMLM data as image by binning localization
 properties into 3d pixels.
 """
+
 from __future__ import annotations
 
 import logging
@@ -306,5 +307,5 @@ class RenderImage3dQWidget(QWidget):  # type: ignore
                 bin_range=bin_range,
                 rescale=self._rescale_combobox.currentText(),
                 cmap=lc.COLORMAP_DEFAULTS["CONTINUOUS"],
-                **add_kwargs,
+                **add_kwargs,  # type: ignore[arg-type]
             )

@@ -6,6 +6,7 @@ and localization-based analysis procedures are computed.
 Each dataset is kept as locdata, i.e. a locan.LocData object with metadata,
 aggregated properties, and localization properties for all localizations.
 """
+
 import logging
 from pathlib import Path
 
@@ -95,10 +96,10 @@ class SmlmDataQWidget(QWidget):  # type: ignore
     def _delete_all_button_on_click(self) -> None:
         msgBox = QMessageBox()
         msgBox.setText("Do you really want to delete ALL datasets?")
-        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        msgBox.setDefaultButton(QMessageBox.Cancel)
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)  # type: ignore[attr-defined]
+        msgBox.setDefaultButton(QMessageBox.Cancel)  # type: ignore[attr-defined]
         return_value = msgBox.exec()
-        if return_value == QMessageBox.Ok:
+        if return_value == QMessageBox.Ok:  # type: ignore[attr-defined]
             self.smlm_data.delete_all()
         else:
             return
@@ -109,7 +110,7 @@ class SmlmDataQWidget(QWidget):  # type: ignore
             raise KeyError("No item available to be saved.")
         else:
             file_dialog = QFileDialog()
-            file_dialog.setFileMode(QFileDialog.AnyFile)
+            file_dialog.setFileMode(QFileDialog.AnyFile)  # type: ignore[attr-defined]
             file_path_return = file_dialog.getSaveFileName(
                 caption="Provide file name and path to save data",
                 filter="ASDF file (*.asdf)",
@@ -117,4 +118,4 @@ class SmlmDataQWidget(QWidget):  # type: ignore
             file_path = Path(file_path_return[0])
             print("Save SmlmDdata at:", file_path)
             if file_path:
-                lc.save_asdf(locdata=self.smlm_data.locdata, path=file_path)
+                lc.save_asdf(locdata=self.smlm_data.locdata, path=file_path)  # type: ignore[arg-type]

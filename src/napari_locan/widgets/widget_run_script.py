@@ -4,6 +4,7 @@ Run python script.
 A QWidget plugin with a simple interface to handle python scripts for
 localization analysis.
 """
+
 from pathlib import Path
 
 from napari.utils import progress
@@ -78,7 +79,7 @@ class RunScriptQWidget(QWidget):  # type: ignore
             None,
             "Load python script",
             file_path,
-            filter="Python files (*.py);; All files (*)"
+            filter="Python files (*.py);; All files (*)",
             # kwargs: parent, message, directory, filter
             # but kw_names are different for different qt_bindings
         )
@@ -102,13 +103,13 @@ class RunScriptQWidget(QWidget):  # type: ignore
             file_path = ".."
 
         file_dialog = QFileDialog()
-        file_dialog.setFileMode(QFileDialog.AnyFile)
+        file_dialog.setFileMode(QFileDialog.AnyFile)  # type: ignore[attr-defined]
 
         file_name_ = file_dialog.getSaveFileName(
             None,
             "Save python script",
             file_path,
-            filter="Python files (*.py);; All files (*)"
+            filter="Python files (*.py);; All files (*)",
             # kwargs: parent, message, directory, filter
             # but kw_names are different for different qt_bindings
         )

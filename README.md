@@ -6,7 +6,7 @@
 [![PyPI](https://img.shields.io/pypi/v/napari-locan.svg?color=green)](https://pypi.org/project/napari-locan)
 [![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/napari-locan)](https://anaconda.org/conda-forge/napari-locan)
 [![Python Version](https://img.shields.io/pypi/pyversions/napari-locan.svg?color=green)](https://python.org)
-[![tests](https://github.com/super-resolution/napari-locan/workflows/tests/badge.svg)](https://github.com/super-resolution/napari-locan/actions)
+[![tests](https://github.com/super-resolution/napari-locan/workflows/test_py_matrix.yml/badge.svg?branch=main)](https://github.com/super-resolution/napari-locan/actions)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![codecov](https://codecov.io/gh/super-resolution/napari-locan/branch/main/graph/badge.svg)](https://codecov.io/gh/super-resolution/napari-locan)
 [![Documentation Status](https://readthedocs.org/projects/napari-locan/badge/?version=latest)](https://napari-locan.readthedocs.io/en/latest/?badge=latest)

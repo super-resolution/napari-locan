@@ -7,19 +7,23 @@ Changelog
 
 New Features
 ------------
--
+- add dependency-groups
 
 API Changes
 -----------
--
+- ...
 
 Bug Fixes
 ---------
--
+- fix dependence on locan test_data
 
 Other Changes and Additions
 ---------------------------
--
+- refactor: update to python 3.12
+- lint for numpy=2.0 and fix new ruff issues
+- refactor tests layout
+- add npc_gp210.asdf test data to scripts directory
+
 
 0.5 - 2023-12-07
 ========================

@@ -5,6 +5,7 @@ A QWidget plugin to represent collection features including centroid,
 bounding box, oriented bounding box, convex hull and alpha shape.
 The SMLM datasets must be kept in a Locdata collection (locdata.references).
 """
+
 from __future__ import annotations
 
 import logging
@@ -355,8 +356,8 @@ class RenderCollectionFeaturesQWidget(QWidget):  # type: ignore[misc]
                 f"The alpha shape computation will take some time."
             )
             msgBox.setInformativeText("Do you want to run the computation?")
-            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msgBox.setDefaultButton(QMessageBox.Cancel)
+            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)  # type: ignore[attr-defined]
+            msgBox.setDefaultButton(QMessageBox.Cancel)  # type: ignore[attr-defined]
             return_value = msgBox.exec()
-            run_computation = bool(return_value == QMessageBox.Ok)
+            run_computation = bool(return_value == QMessageBox.Ok)  # type: ignore[attr-defined]
         return run_computation

@@ -11,6 +11,7 @@ napari-locan consists of the following modules:
    scripts
    widgets
 """
+
 from __future__ import annotations
 
 import logging

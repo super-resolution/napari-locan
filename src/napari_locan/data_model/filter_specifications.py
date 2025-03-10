@@ -8,6 +8,7 @@ The data model is used by other napari-locan widgets to process
 localization data and yield new SMLM datasets.
 It is entirely independent of napari layers.
 """
+
 from __future__ import annotations
 
 import logging

@@ -35,11 +35,14 @@ This is enforced through ruff following specifications in pyproject.toml.
 Unit tests
 ===========
 
-For testing we use py.test_.
+For testing we use pytest_.
 
-.. _py.test: https://docs.pytest.org/en/latest/index.html
+.. _pytest: https://docs.pytest.org/en/latest/index.html
 
-A test suite is provided in /src/napari_locan/_tests.
+A minimal test suite is provided in `src/napari_locan/tests`.
+The extended test suite is provided in `tests`.
+
+For unit testing we supply test data as data files located in `tests/test_data`.
 
 Tests can also be run with tox_.
 

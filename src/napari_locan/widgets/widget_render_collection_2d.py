@@ -4,6 +4,7 @@ Render collection of SMLM data as 2d point clouds.
 A QWidget plugin to render a collection of SMLM data (e.g. a cluster collection)
 as series of point clouds in 2d.
 """
+
 from __future__ import annotations
 
 import logging
@@ -149,7 +150,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
             return None
         else:
             columns_ = list(self.smlm_data.locdata.references)[0].data.columns
-            self._loc_properties_x_combobox.addItems(columns_)
+            self._loc_properties_x_combobox.addItems(columns_)  # type: ignore[arg-type]
             if key_index == -1:
                 if bool(self.smlm_data.locdata):
                     new_key_index = list(columns_).index(
@@ -173,7 +174,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
             return None
         else:
             columns_ = list(self.smlm_data.locdata.references)[0].data.columns
-            self._loc_properties_y_combobox.addItems(columns_)
+            self._loc_properties_y_combobox.addItems(columns_)  # type: ignore[arg-type]
             if key_index == -1:
                 if bool(self.smlm_data.locdata):
                     new_key_index = list(columns_).index(
@@ -200,7 +201,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
             return None
         else:
             columns_ = list(self.smlm_data.locdata.references)[0].data.columns
-            self._loc_properties_other_combobox.addItems(columns_)
+            self._loc_properties_other_combobox.addItems(columns_)  # type: ignore[arg-type]
             if key_index == -1:
                 self._loc_properties_other_combobox.setCurrentIndex(0)
             else:
@@ -270,7 +271,7 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
                 )
             else:
                 locdata = lc.overlay(
-                    locdatas=self.smlm_data.locdata.references,
+                    locdatas=self.smlm_data.locdata.references,  # type: ignore[arg-type]
                     centers="centroid",
                     orientations=None,
                 )
@@ -368,8 +369,8 @@ class RenderCollection2dQWidget(QWidget):  # type: ignore
                 f"Rendering will take some time."
             )
             msgBox.setInformativeText("Do you want to continue?")
-            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msgBox.setDefaultButton(QMessageBox.Cancel)
+            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)  # type: ignore[attr-defined]
+            msgBox.setDefaultButton(QMessageBox.Cancel)  # type: ignore[attr-defined]
             return_value = msgBox.exec()
-            run_computation = bool(return_value == QMessageBox.Ok)
+            run_computation = bool(return_value == QMessageBox.Ok)  # type: ignore[attr-defined]
         return run_computation

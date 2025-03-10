@@ -4,6 +4,7 @@ Render selected features of a SMLM dataset.
 A QWidget plugin to represent locdata features including centroid,
 bounding box, oriented bounding box, convex hull and alpha shape.
 """
+
 import logging
 
 from napari.utils import progress
@@ -255,8 +256,8 @@ class RenderFeaturesQWidget(QWidget):  # type: ignore
                 f"The alpha shape computation will take some time."
             )
             msgBox.setInformativeText("Do you want to run the computation?")
-            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msgBox.setDefaultButton(QMessageBox.Cancel)
+            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)  # type: ignore[attr-defined]
+            msgBox.setDefaultButton(QMessageBox.Cancel)  # type: ignore[attr-defined]
             return_value = msgBox.exec()
-            run_computation = bool(return_value == QMessageBox.Ok)
+            run_computation = bool(return_value == QMessageBox.Ok)  # type: ignore[attr-defined]
         return run_computation

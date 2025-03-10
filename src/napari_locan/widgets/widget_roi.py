@@ -3,6 +3,7 @@ Create regions of interest.
 
 A QWidget plugin for managing regions of interest.
 """
+
 from __future__ import annotations
 
 import logging
@@ -423,10 +424,10 @@ class RoiQWidget(QWidget):  # type: ignore
     def _delete_all_regions_button_on_click(self) -> None:
         msgBox = QMessageBox()
         msgBox.setText("Do you really want to delete ALL regions?")
-        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        msgBox.setDefaultButton(QMessageBox.Cancel)
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)  # type: ignore[attr-defined]
+        msgBox.setDefaultButton(QMessageBox.Cancel)  # type: ignore[attr-defined]
         return_value = msgBox.exec()
-        if return_value == QMessageBox.Ok:
+        if return_value == QMessageBox.Ok:  # type: ignore[attr-defined]
             self.region_specifications.delete_all()
         else:
             return
@@ -530,10 +531,10 @@ class RoiQWidget(QWidget):  # type: ignore
     def _delete_all_roi_button_on_click(self) -> None:
         msgBox = QMessageBox()
         msgBox.setText("Do you really want to delete ALL roi specifications?")
-        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        msgBox.setDefaultButton(QMessageBox.Cancel)
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)  # type: ignore[attr-defined]
+        msgBox.setDefaultButton(QMessageBox.Cancel)  # type: ignore[attr-defined]
         return_value = msgBox.exec()
-        if return_value == QMessageBox.Ok:
+        if return_value == QMessageBox.Ok:  # type: ignore[attr-defined]
             self.roi_specifications.delete_all()
         else:
             return
@@ -640,9 +641,13 @@ class RoiQWidget(QWidget):  # type: ignore
                 "There is no region available. Please provide a valid region."
             )
 
-        reference: lc.LocData | dict[
-            str, Any
-        ] | lc.data.metadata_pb2.Metadata | lc.data.metadata_pb2.File | None
+        reference: (
+            lc.LocData
+            | dict[str, Any]
+            | lc.data.metadata_pb2.Metadata
+            | lc.data.metadata_pb2.File
+            | None
+        )
         if self._reference_combobox.currentText() == "None":
             reference = None
         elif self._reference_combobox.currentText() == "SmlmData":
@@ -656,7 +661,7 @@ class RoiQWidget(QWidget):  # type: ignore
                 "Select localization file as roi reference...",
                 "",
                 filter="",
-                options=QFileDialog.DontConfirmOverwrite
+                options=QFileDialog.DontConfirmOverwrite,  # type: ignore[attr-defined]
                 # kwargs: parent, message, directory, filter
                 # but kw_names are different for different qt_bindings
             )

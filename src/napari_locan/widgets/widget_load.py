@@ -4,6 +4,7 @@ Load SMLM data files.
 A QWidget plugin to load SMLM data files into the SMLM data model.
 A new SMLM dataset will be created.
 """
+
 import ast
 import logging
 from pathlib import Path
@@ -102,7 +103,7 @@ class LoadQWidget(QWidget):  # type: ignore
             None,
             "message",
             "",
-            filter=""
+            filter="",
             # kwargs: parent, message, directory, filter
             # but kw_names are different for different qt_bindings
         )
@@ -120,7 +121,7 @@ class LoadQWidget(QWidget):  # type: ignore
                 None,
                 "message",
                 self._file_path_edit.text(),
-                filter=""
+                filter="",
                 # kwargs: parent, message, directory, filter
                 # but kw_names are different for different qt_bindings
             )

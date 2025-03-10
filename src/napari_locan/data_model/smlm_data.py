@@ -8,6 +8,7 @@ SMLM data serves as data model for other napari-locan widgets to process or
 render the localization data. It is entirely independent of napari layers.
 Upon rendering a SMLM dataset a new image is created in a new napari layer.
 """
+
 from __future__ import annotations
 
 import logging

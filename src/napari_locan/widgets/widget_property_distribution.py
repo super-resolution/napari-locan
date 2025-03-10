@@ -3,6 +3,7 @@ Show localization property distribution.
 
 A QWidget plugin to show localization property distributions
 """
+
 from __future__ import annotations
 
 import logging
