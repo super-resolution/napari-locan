@@ -65,6 +65,7 @@ dev = [
     "build",
     "coverage[toml]",
     "mypy",
+    "pandas-stubs",
     "pre-commit",
     "ruff",
     "twine",
@@ -107,6 +108,7 @@ lint = [
 ]
 typing = [
     "mypy",
+    "pandas-stubs",
 ]
 dev = [
     "pre-commit",
@@ -227,8 +229,14 @@ display_name = "napari-locan"
 
 [tool.mypy]
 plugins = ['numpy.typing.mypy_plugin']
-files = ["src"]
+files = [
+    "src",
+    "tests"
+]
 strict = true
+# allow type checking through qtpy with pyside6 installed:
+always_false=['PYQT6', 'PYSIDE2', 'PYQT5']
+always_true=['PYSIDE6']
 
 # warn-unused-ignores is not quite reproducible
 warn_unused_ignores = false
@@ -254,7 +262,7 @@ module = [
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 check_untyped_defs = false
-ignore_errors = true
+disable_error_code = ["attr-defined"]
 
 [[tool.mypy.overrides]]
 module = [
@@ -263,4 +271,4 @@ module = [
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 check_untyped_defs = false
-ignore_errors = true
+disable_error_code = ["attr-defined"]

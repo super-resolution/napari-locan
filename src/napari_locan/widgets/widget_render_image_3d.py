@@ -307,5 +307,5 @@ class RenderImage3dQWidget(QWidget):  # type: ignore
                 bin_range=bin_range,
                 rescale=self._rescale_combobox.currentText(),
                 cmap=lc.COLORMAP_DEFAULTS["CONTINUOUS"],
-                **add_kwargs,
+                **add_kwargs,  # type: ignore[arg-type]
             )

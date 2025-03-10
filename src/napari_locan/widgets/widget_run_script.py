@@ -103,7 +103,7 @@ class RunScriptQWidget(QWidget):  # type: ignore
             file_path = ".."
 
         file_dialog = QFileDialog()
-        file_dialog.setFileMode(QFileDialog.AnyFile)
+        file_dialog.setFileMode(QFileDialog.AnyFile)  # type: ignore[attr-defined]
 
         file_name_ = file_dialog.getSaveFileName(
             None,

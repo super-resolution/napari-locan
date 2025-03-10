@@ -101,10 +101,10 @@ class FilterSpecificationsQWidget(QWidget):  # type: ignore
     def _delete_all_button_on_click(self) -> None:
         msgBox = QMessageBox()
         msgBox.setText("Do you really want to delete ALL filter specifications?")
-        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        msgBox.setDefaultButton(QMessageBox.Cancel)
+        msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)  # type: ignore[attr-defined]
+        msgBox.setDefaultButton(QMessageBox.Cancel)  # type: ignore[attr-defined]
         return_value = msgBox.exec()
-        if return_value == QMessageBox.Ok:
+        if return_value == QMessageBox.Ok:  # type: ignore[attr-defined]
             self.filter_specifications.delete_all()
         else:
             return

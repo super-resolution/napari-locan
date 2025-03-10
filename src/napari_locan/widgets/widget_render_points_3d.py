@@ -276,8 +276,8 @@ class RenderPoints3dQWidget(QWidget):  # type: ignore
                 f"Rendering will take some time."
             )
             msgBox.setInformativeText("Do you want to continue?")
-            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            msgBox.setDefaultButton(QMessageBox.Cancel)
+            msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)  # type: ignore[attr-defined]
+            msgBox.setDefaultButton(QMessageBox.Cancel)  # type: ignore[attr-defined]
             return_value = msgBox.exec()
-            run_computation = bool(return_value == QMessageBox.Ok)
+            run_computation = bool(return_value == QMessageBox.Ok)  # type: ignore[attr-defined]
         return run_computation

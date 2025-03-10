@@ -109,7 +109,7 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
         napari_locan_state = self._pack_napari_locan_state()
 
         file_dialog = QFileDialog()
-        file_dialog.setFileMode(QFileDialog.AnyFile)
+        file_dialog.setFileMode(QFileDialog.AnyFile)  # type: ignore[attr-defined]
         file_path_return = file_dialog.getSaveFileName(
             caption="Provide file name and path to save current project.",
             filter="Pickle file (*.pickle)",

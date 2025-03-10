@@ -17,7 +17,7 @@ env:
 
 jobs:
   check:
-    name: "CI with ubuntu, py3.12, pip, pyqt5"
+    name: "CI with ubuntu, py3.12, pip, pyside6"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,7 +39,7 @@ jobs:
 
       - name: "Install napari-locan and dependencies"
         run: |
-          python -m pip install pyqt5 .[test]
+          python -m pip install pyside6 .[test]
           python -m pip install mypy coverage[toml] pip-tools
       - name: "Type check with mypy"
         run: mypy
