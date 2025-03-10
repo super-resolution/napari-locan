@@ -4,6 +4,7 @@ Render selected features of a SMLM dataset.
 A QWidget plugin to represent locdata features including centroid,
 bounding box, oriented bounding box, convex hull and alpha shape.
 """
+
 import logging
 
 from napari.utils import progress

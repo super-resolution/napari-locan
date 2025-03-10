@@ -4,6 +4,7 @@ Render 2d image.
 A QWidget plugin to render SMLM data as image by binning localization
 properties into 2d pixels.
 """
+
 from __future__ import annotations
 
 import logging

@@ -5,6 +5,7 @@ A QWidget plugin to select localizations in current SMLM dataset based on a
 filter specification.
 A new SMLM dataset will be created.
 """
+
 from __future__ import annotations
 
 import logging

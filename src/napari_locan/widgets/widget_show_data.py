@@ -3,6 +3,7 @@ Show data statistics for a SMLM dataset.
 
 A QWidget plugin for showing locdata data statistics (locdata.data.describe()).
 """
+
 from __future__ import annotations
 
 import logging

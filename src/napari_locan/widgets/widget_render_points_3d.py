@@ -3,6 +3,7 @@ Render 3d point cloud.
 
 A QWidget plugin to render SMLM data in 3d.
 """
+
 from __future__ import annotations
 
 import logging

@@ -4,6 +4,7 @@ Render collection of SMLM data as 2d point clouds.
 A QWidget plugin to render a collection of SMLM data (e.g. a cluster collection)
 as series of point clouds in 2d.
 """
+
 from __future__ import annotations
 
 import logging

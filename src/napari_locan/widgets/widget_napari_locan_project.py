@@ -11,6 +11,7 @@ which currently includes the following data models
 
 The data is serialized by the pickle module using protocol 5.
 """
+
 import logging
 import pickle
 from pathlib import Path
@@ -93,7 +94,7 @@ class NapariLocanProjectQWidget(QWidget):  # type: ignore
             None,
             "Load napari_locan project from pickle file",
             "",
-            filter="Pickle file (*.pickle)"
+            filter="Pickle file (*.pickle)",
             # kwargs: parent, message, directory, filter
             # but kw_names are different for different qt_bindings
         )

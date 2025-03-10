@@ -4,6 +4,7 @@ Show metadata for a SMLM dataset.
 QWidget plugin for showing metadata
 for a single SMLM dataset (locdata.meta).
 """
+
 import logging
 
 from napari.viewer import Viewer

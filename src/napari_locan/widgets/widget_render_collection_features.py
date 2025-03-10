@@ -5,6 +5,7 @@ A QWidget plugin to represent collection features including centroid,
 bounding box, oriented bounding box, convex hull and alpha shape.
 The SMLM datasets must be kept in a Locdata collection (locdata.references).
 """
+
 from __future__ import annotations
 
 import logging

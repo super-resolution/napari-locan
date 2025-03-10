@@ -7,6 +7,7 @@ or other data structures.
 The interface provides methods to manipulate the data contents.
 
 """
+
 from __future__ import annotations
 
 import logging

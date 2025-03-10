@@ -4,6 +4,7 @@ Compute localization clusters.
 QWidget plugin for clustering SMLM data.
 More advanced clustering routines are available through locan-based scripts.
 """
+
 import logging
 from typing import Any
 

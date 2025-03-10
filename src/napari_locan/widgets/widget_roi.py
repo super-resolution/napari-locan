@@ -3,6 +3,7 @@ Create regions of interest.
 
 A QWidget plugin for managing regions of interest.
 """
+
 from __future__ import annotations
 
 import logging
@@ -640,9 +641,13 @@ class RoiQWidget(QWidget):  # type: ignore
                 "There is no region available. Please provide a valid region."
             )
 
-        reference: lc.LocData | dict[
-            str, Any
-        ] | lc.data.metadata_pb2.Metadata | lc.data.metadata_pb2.File | None
+        reference: (
+            lc.LocData
+            | dict[str, Any]
+            | lc.data.metadata_pb2.Metadata
+            | lc.data.metadata_pb2.File
+            | None
+        )
         if self._reference_combobox.currentText() == "None":
             reference = None
         elif self._reference_combobox.currentText() == "SmlmData":
@@ -656,7 +661,7 @@ class RoiQWidget(QWidget):  # type: ignore
                 "Select localization file as roi reference...",
                 "",
                 filter="",
-                options=QFileDialog.DontConfirmOverwrite
+                options=QFileDialog.DontConfirmOverwrite,
                 # kwargs: parent, message, directory, filter
                 # but kw_names are different for different qt_bindings
             )

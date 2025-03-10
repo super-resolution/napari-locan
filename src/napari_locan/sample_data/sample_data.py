@@ -7,6 +7,7 @@ as could be generated with napari-locan.
 It implements the "sample data" specification.
 see: "https://napari.org/stable/plugins/guides.html/?/#sample-data"
 """
+
 from __future__ import annotations
 
 import locan as lc

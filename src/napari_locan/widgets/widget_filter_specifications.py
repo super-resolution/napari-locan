@@ -4,6 +4,7 @@ The data model for filter specifications.
 A QWidget plugin to list filter specifications that can be applied to select
 localizations from a SMLM dataset.
 """
+
 import logging
 
 from napari.viewer import Viewer

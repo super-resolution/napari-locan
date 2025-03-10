@@ -6,6 +6,7 @@ and localization-based analysis procedures are computed.
 Each dataset is kept as locdata, i.e. a locan.LocData object with metadata,
 aggregated properties, and localization properties for all localizations.
 """
+
 import logging
 from pathlib import Path
 
