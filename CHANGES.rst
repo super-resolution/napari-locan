@@ -2,16 +2,12 @@
 Changelog
 ========================
 
-0.6 - dev
+0.6 - 2025-03-11
 =================
 
 New Features
 ------------
 - add dependency-groups
-
-API Changes
------------
-- ...
 
 Bug Fixes
 ---------
