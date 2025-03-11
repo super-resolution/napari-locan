@@ -2,16 +2,32 @@
 Changelog
 ========================
 
-0.6 - dev
+0.7.0 - dev
+=================
+
+New Features
+------------
+-
+
+API Changes
+-----------
+-
+
+Bug Fixes
+---------
+-
+
+Other Changes and Additions
+---------------------------
+-
+
+
+0.6.0 - 2025-03-11
 =================
 
 New Features
 ------------
 - add dependency-groups
-
-API Changes
------------
-- ...
 
 Bug Fixes
 ---------
@@ -27,7 +43,7 @@ Other Changes and Additions
 - fix mypy issues
 
 
-0.5 - 2023-12-07
+0.5.0 - 2023-12-07
 ========================
 
 Bug Fixes
