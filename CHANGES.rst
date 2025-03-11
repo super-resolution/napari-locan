@@ -15,7 +15,7 @@ API Changes
 
 Bug Fixes
 ---------
--
+- fix documentation
 
 Other Changes and Additions
 ---------------------------
