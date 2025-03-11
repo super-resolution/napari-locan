@@ -16,6 +16,7 @@ API Changes
 Bug Fixes
 ---------
 - fix dependence on locan test_data
+- fix documentation
 
 Other Changes and Additions
 ---------------------------
@@ -23,6 +24,7 @@ Other Changes and Additions
 - lint for numpy=2.0 and fix new ruff issues
 - refactor tests layout
 - add npc_gp210.asdf test data to scripts directory
+- fix mypy issues
 
 
 0.5 - 2023-12-07
