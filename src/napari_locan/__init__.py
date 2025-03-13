@@ -52,6 +52,7 @@ __all__: list[str] = [
     "RoiSpecifications",
     "RoiQWidget",
     "RunScriptQWidget",
+    "SaveSmlmDataQWidget",
     "SelectQWidget",
     "ShowDataQWidget",
     "ShowMetadataQWidget",
@@ -93,6 +94,9 @@ from napari_locan.widgets.widget_clustering import (
 )
 from napari_locan.widgets.widget_filter_specifications import (
     FilterSpecificationsQWidget,
+)
+from napari_locan.widgets.widget_io_save import (
+    SaveSmlmDataQWidget,
 )
 from napari_locan.widgets.widget_load import (
     LoadQWidget,

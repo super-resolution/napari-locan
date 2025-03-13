@@ -44,6 +44,10 @@ contributions:
       python_name: napari_locan.widgets.widget_load:LoadQWidget
       title: Load
 
+    - id: napari-locan.io_save_qwidget
+      python_name: napari_locan.widgets.widget_io_save:SaveSmlmDataQWidget
+      title: Save
+
     - id: napari-locan.filter_specifications_qwidget
       python_name: napari_locan.widgets.widget_filter_specifications:FilterSpecificationsQWidget
       title: Filter specifications
@@ -131,6 +135,9 @@ contributions:
 
     - command: napari-locan.load_qwidget
       display_name: Load
+
+    - command: napari-locan.io_save_qwidget
+      display_name: Save
 
     - command: napari-locan.filter_specifications_qwidget
       display_name: Filter specifications
