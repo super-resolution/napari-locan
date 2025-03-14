@@ -233,8 +233,8 @@ display_name = "napari-locan"
 [tool.mypy]
 plugins = ['numpy.typing.mypy_plugin']
 files = [
-    "src",
-    "tests"
+    "$MYPY_CONFIG_FILE_DIR/src",
+    "$MYPY_CONFIG_FILE_DIR/tests/"
 ]
 strict = true
 # allow type checking through qtpy with pyside6 installed:

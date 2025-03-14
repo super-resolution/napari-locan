@@ -126,16 +126,16 @@ class SaveSmlmDataQWidget(QWidget):  # type: ignore
         with progress() as progress_bar:
             progress_bar.set_description("Saving data")
             if file_type == lc.FileType.ASDF.name and file_path.suffix == ".asdf":
-                lc.save_asdf(locdata=self.smlm_data.locdata, path=file_path)
+                lc.save_asdf(locdata=self.smlm_data.locdata, path=file_path)  # type: ignore[arg-type]
             elif file_type == lc.FileType.SMAP.name and file_path.suffix == ".csv":
-                lc.save_SMAP_csv(locdata=self.smlm_data.locdata, path=file_path)
+                lc.save_SMAP_csv(locdata=self.smlm_data.locdata, path=file_path)  # type: ignore[arg-type]
             elif file_type == lc.FileType.SMLM.name and file_path.suffix == ".zip":
-                lc.save_SMLM(locdata=self.smlm_data.locdata, path=file_path)
+                lc.save_SMLM(locdata=self.smlm_data.locdata, path=file_path)  # type: ignore[arg-type]
             elif (
                 file_type == lc.FileType.THUNDERSTORM.name
                 and file_path.suffix == ".csv"
             ):
-                lc.save_thunderstorm_csv(locdata=self.smlm_data.locdata, path=file_path)
+                lc.save_thunderstorm_csv(locdata=self.smlm_data.locdata, path=file_path)  # type: ignore[arg-type]
             else:
                 raise TypeError(
                     "Selected file type cannot be saved. Check that file suffix is correct."
