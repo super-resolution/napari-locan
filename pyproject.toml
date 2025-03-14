@@ -95,7 +95,7 @@ changelog = "https://github.com/super-resolution/napari-locan/CHANGES.rst"
 napari-locan = "napari_locan:napari.yaml"
 
 [dependency-groups]
-# dependencies required to run the extended tests suite
+# test dependencies required to run the extended tests suite
 test = [
     "locan[http]>=0.18",
     "pytest",
@@ -233,8 +233,8 @@ display_name = "napari-locan"
 [tool.mypy]
 plugins = ['numpy.typing.mypy_plugin']
 files = [
-    "src",
-    "tests"
+    "$MYPY_CONFIG_FILE_DIR/src",
+    "$MYPY_CONFIG_FILE_DIR/tests/"
 ]
 strict = true
 # allow type checking through qtpy with pyside6 installed:

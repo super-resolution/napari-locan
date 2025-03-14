@@ -10,6 +10,7 @@ Submodules:
 
     widget_clustering
     widget_filter_specifications
+    widget_io_save
     widget_load
     widget_napari_locan_project
     widget_property_distribution
