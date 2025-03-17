@@ -25,6 +25,7 @@ Submodules:
     widget_run_script
     widget_select
     widget_show_data
+    widget_show_info
     widget_show_metadata
     widget_show_properties
     widget_smlm_data
