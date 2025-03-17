@@ -8,6 +8,7 @@ Changelog
 New Features
 ------------
 - widget to save SMLM data in selected file formats
+- widget to show information on current SMLM dataset
 
 API Changes
 -----------

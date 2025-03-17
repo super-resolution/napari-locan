@@ -246,7 +246,6 @@ warn_unused_ignores = false
 
 [[tool.mypy.overrides]]
 module = [
-    'locan.*',
     'napari_matplotlib.*',
     'napari.*',
 ]

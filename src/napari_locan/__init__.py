@@ -55,6 +55,7 @@ __all__: list[str] = [
     "SaveSmlmDataQWidget",
     "SelectQWidget",
     "ShowDataQWidget",
+    "ShowInfoQWidget",
     "ShowMetadataQWidget",
     "ShowPropertiesQWidget",
     "SmlmDataQWidget",
@@ -139,6 +140,9 @@ from napari_locan.widgets.widget_select import (
 )
 from napari_locan.widgets.widget_show_data import (
     ShowDataQWidget,
+)
+from napari_locan.widgets.widget_show_info import (
+    ShowInfoQWidget,
 )
 from napari_locan.widgets.widget_show_metadata import (
     ShowMetadataQWidget,

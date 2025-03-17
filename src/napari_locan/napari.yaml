@@ -24,6 +24,10 @@ contributions:
       python_name: napari_locan.widgets.widget_smlm_data:SmlmDataQWidget
       title: SMLM data
 
+    - id: napari-locan.show_info_qwidget
+      python_name: napari_locan.widgets.widget_show_info:ShowInfoQWidget
+      title: Show information
+
     - id: napari-locan.show_metadata_qwidget
       python_name: napari_locan.widgets.widget_show_metadata:ShowMetadataQWidget
       title: Show metadata
@@ -120,6 +124,9 @@ contributions:
   widgets:
     - command: napari-locan.smlm_data_qwidget
       display_name: SMLM data
+
+    - command: napari-locan.show_info_qwidget
+      display_name: Show information
 
     - command: napari-locan.show_metadata_qwidget
       display_name: Show metadata
