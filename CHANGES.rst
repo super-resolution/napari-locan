@@ -2,29 +2,21 @@
 Changelog
 ========================
 
-0.7.0 - dev
-=================
+0.7.0 - 2025-03-17
+==================
 
 New Features
 ------------
 - widget to save SMLM data in selected file formats
 - widget to show information on current SMLM dataset
 
-API Changes
------------
--
-
 Bug Fixes
 ---------
 - fix documentation
 
-Other Changes and Additions
----------------------------
--
-
 
 0.6.0 - 2025-03-11
-=================
+==================
 
 New Features
 ------------
