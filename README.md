@@ -31,7 +31,7 @@ You can install napari-locan from PyPI:
 
 or from conda-forge:
 
-    mamba install -c conda-forge napari-locan
+    conda install -c conda-forge napari-locan
 
 Please read the [documentation on installation] for more details.
 

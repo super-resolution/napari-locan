@@ -67,6 +67,12 @@ We use black_ for formating and ruff_ for code linting.
 
 Configurations are kept in pyproject.toml.
 
+We use mypy_ for type checking.
+
+.. _mypy: https://github.com/python/mypy
+
+Configurations are kept in pyproject.toml.
+
 Versioning
 ===========
 
@@ -95,14 +101,6 @@ To update the documentation from sources delete ``/docs/sources/generated`` and 
 
     sphinx-build -b html -E YOUR_PATH\napari-locan\docs YOUR_PATH\napari-locan\docs\_build
 
-Type hints
-==============
-
-We try to make use of type checking using mypy_ as much as possible.
-
-.. _mypy: https://pypi.org/project/mypy
-
-Configurations are kept in pyproject.toml.
 
 To remember
 ============
