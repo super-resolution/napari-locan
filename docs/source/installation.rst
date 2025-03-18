@@ -33,9 +33,9 @@ Extra dependencies can be included::
 Install from conda-forge
 ------------------------------
 
-Install locan with the conda package manager (use mamba for better performance)::
+Install locan with the conda package manager::
 
-    mamba install -c conda-forge napari-locan
+    conda install -c conda-forge napari-locan
 
 
 Install from distribution or sources
@@ -57,6 +57,6 @@ Install from local sources::
 Run tests
 -----------------------
 
-Use pytest to run the tests from the source directory::
+Use pytest to run the tests from the source or tests directory::
 
     pytest

@@ -6,39 +6,45 @@ Widgets
 
 The plugin napari-locan contains the following widgets:
 
-1) Inspecting SMLM data
+1) Input/Output of SMLM data
+
+    * Load
+    * Save
+
+2) Inspect SMLM data
 
     * SMLM data
+    * Show information
     * Show metadata
     * Show properties
     * Show localization data
     * Show localization property distributions
 
-2) Providing SMLM data
+3) Select SMLM data
 
-    * Load
     * Filter specifications
     * Select
     * Region of interest
 
-3) Render SMLM data
+4) Render SMLM data
 
     * Render points 2D / 3D
     * Render image 2D / 3D
     * Render features of a SMLM dataset
 
-4) Processing SMLM data
+5) Processing SMLM data
 
     * Cluster
 
-5) Collections of SMLM datasets
+6) Collections of SMLM datasets
 
     * Render collection as 2D / 3D point cloud
     * Render collection features
 
-6) Miscellaneous
+7) Miscellaneous
 
     * Run script
+    * Save and recover the whole plugin state
 
 
 Look up the API documentation for further details.
