@@ -6,6 +6,7 @@ import pytest
 
 from napari_locan import LoadQWidget
 from napari_locan.data_model.smlm_data import SmlmData
+from tests import TEST_DIR
 
 
 class TestLoadQWidget:
@@ -21,10 +22,10 @@ class TestLoadQWidget:
         viewer = make_napari_viewer()
         my_widget = LoadQWidget(viewer, smlm_data=smlm_data)
 
-        locan_test_data = Path(__file__).resolve().parents / "npc_gp210.asdf"
+        locan_test_data = TEST_DIR / "test_data/npc_gp210.asdf"
 
         my_widget._file_path_edit.insert(str(locan_test_data))
-        my_widget._file_type_combobox.setCurrentIndex(lc.FileType.ASDF.value)
+        my_widget._file_type_combobox.setCurrentText(lc.FileType.ASDF.name)
 
         my_widget._kwargs_edit.setText("nrows=10")
 

@@ -48,7 +48,7 @@ class LoadQWidget(QWidget):  # type: ignore
             type_.name
             for type_ in lc.FileType
             if type_.name != lc.FileType.UNKNOWN_FILE_TYPE.name
-        ]
+        ] + ["ROI"]
         self._file_type_combobox.addItems(file_types)
         self._file_type_combobox.setCurrentText(lc.FileType.RAPIDSTORM.name)
 
@@ -137,6 +137,9 @@ class LoadQWidget(QWidget):  # type: ignore
 
         with progress() as progress_bar:
             progress_bar.set_description("Loading data")
-            locdata = lc.load_locdata(path=file_path, file_type=file_type, **kwargs)
+            if file_type == "ROI":
+                locdata = lc.load_locdata_from_roi_file(path=file_path, **kwargs)
+            else:
+                locdata = lc.load_locdata(path=file_path, file_type=file_type, **kwargs)
             locdata_name = locdata.meta.identifier + "-" + str(Path(file_path).name)
             self.smlm_data.append_item(locdata=locdata, locdata_name=locdata_name)
