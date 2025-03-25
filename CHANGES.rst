@@ -7,7 +7,7 @@ Changelog
 
 New Features
 ------------
--
+- add option to load locdata from roi.yaml file in load widget.
 
 API Changes
 -----------
