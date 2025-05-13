@@ -256,7 +256,7 @@ class RenderPoints3dQWidget(QWidget):  # type: ignore
             point_properties = {"other_property": other_property_data}
             add_kwargs = {
                 "name": self.smlm_data.locdata_name,
-                "edge_color": "",
+                "border_color": "",
                 "face_color": "other_property",
                 "face_colormap": "viridis",
             }
